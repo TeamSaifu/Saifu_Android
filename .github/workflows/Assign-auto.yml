@@ -2,11 +2,11 @@ name: Assign auto
 
 on:
   pull_request:
-    types: opened # プルリクを作成したタイミングだけで動かす
+    types: opened
 
 jobs:
   assign:
-    name: Set assignees
+    name: Set assignees and reviewers
     runs-on: ubuntu-18.04
     steps:
       - name: Set assignees
@@ -21,4 +21,17 @@ jobs:
                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                  -d "{ \"assignees\": $assignees }" \
                  https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/assignees
+          fi
+      - name: Set reviewers
+        env:
+          REVIEWERS: "tak-2180264,2180417,Toyoda9" # edit here
+        run: |
+          reviewer_count=$(cat ${{ github.event_path }} | jq '.pull_request.requested_reviewers | length')
+          if [[ 0 == $reviewer_count ]]; then
+            reviewers=$(echo "\"${REVIEWERS// /}\"" | jq 'split(",") | .-["${{ github.actor }}"]')
+            curl -X POST \
+                 -H "Content-Type: application/json" \
+                 -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                 -d "{ \"reviewers\": $reviewers }" \
+                 https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
           fi
