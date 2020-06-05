@@ -24,7 +24,7 @@ jobs:
           fi
       - name: Set reviewers
         env:
-          REVIEWERS: "tak-2180264,2180417,Toyoda9" # edit here
+          REVIEWERS: "tak-2180264,2180417,Toyoda9,akutsutakuya" # edit here
         run: |
           reviewer_count=$(cat ${{ github.event_path }} | jq '.pull_request.requested_reviewers | length')
           if [[ 0 == $reviewer_count ]]; then
@@ -35,3 +35,8 @@ jobs:
                  -d "{ \"reviewers\": $reviewers }" \
                  https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
           fi
+      - name: Create comments
+        run: |
+          echo "プルリクエストが作成されました。" >> comments
+          echo "コードをチェックしてレビューをしてください。" >> comments
+          sed -i -z 's/\n/\\n/g' comments
