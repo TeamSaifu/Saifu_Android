@@ -24,7 +24,7 @@ jobs:
           fi
       - name: Set reviewers
         env:
-          REVIEWERS: "tak-2180264,2180417,Toyoda9" # edit here
+          REVIEWERS: "tak-2180264,Nakafuji-2180417,Toyoda9,akutsutakuya" # edit here
         run: |
           reviewer_count=$(cat ${{ github.event_path }} | jq '.pull_request.requested_reviewers | length')
           if [[ 0 == $reviewer_count ]]; then
@@ -33,5 +33,6 @@ jobs:
                  -H "Content-Type: application/json" \
                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                  -d "{ \"reviewers\": $reviewers }" \
-                 https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
+                 
+          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers
           fi
