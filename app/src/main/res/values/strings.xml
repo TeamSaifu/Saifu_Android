@@ -4,4 +4,8 @@
     <string name="title_want">欲しい</string>
     <string name="title_log">記録</string>
     <string name="title_setting">設定</string>
+    <string name="title_activity_settings">設定</string>
+    <string name="notifications">通知</string>
+    <string name="budget">予算入力</string>
+    <string name="category_config">カテゴリ設定</string>
 </resources>

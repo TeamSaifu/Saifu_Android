@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_setting"
-        android:name="com.example.saifu_android.ui.setting.settingFragment"
+        android:name="com.example.saifu_android.ui.setting.SettingsActivity$SettingsFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting"/>
 
