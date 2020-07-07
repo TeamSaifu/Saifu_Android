@@ -19,8 +19,6 @@ class logFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_log, container, false)
-        val textView: TextView = root.findViewById(R.id.text_log)
-            textView.text = "ろぐ"
         return root
     }
 }
