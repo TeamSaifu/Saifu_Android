@@ -8,4 +8,7 @@
     <string name="notifications">通知</string>
     <string name="budget">予算入力</string>
     <string name="category_config">カテゴリ設定</string>
+    <string name="search">検索</string>
+    <string name="graph">グラフ</string>
+    <string name="Report">レポート</string>
 </resources>
