@@ -27,4 +27,7 @@
     <string name="times">回</string>
     <string name="pertimes_kari">1,500 円 ／ 回</string>
     <string name="split">分割する</string>
+    <string name="search">検索</string>
+    <string name="graph">グラフ</string>
+    <string name="Report">レポート</string>
 </resources>
