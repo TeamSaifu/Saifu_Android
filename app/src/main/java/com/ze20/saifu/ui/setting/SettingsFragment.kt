@@ -1,9 +1,9 @@
-package com.example.saifu_android.ui.setting
+package com.ze20.saifu.ui.setting
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
-import com.example.saifu_android.R
+import com.ze20.saifu.R
 
 class SettingsActivity : AppCompatActivity() {
 

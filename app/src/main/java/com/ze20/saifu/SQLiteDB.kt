@@ -1,4 +1,4 @@
-package com.example.saifu_android
+package com.ze20.saifu
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
