@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CalendarActivity"></activity>
         <activity android:name=".NotificationActivity" />
+        <activity android:name=".ui.budget.SpendSettings"></activity>
         <activity android:name=".DataInputActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -18,6 +19,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".BudgetActivity">
         </activity>
     </application>
 

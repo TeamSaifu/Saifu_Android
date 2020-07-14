@@ -9,7 +9,7 @@ jobs:
     name: 担当者を自動でセット
     runs-on: ubuntu-18.04
     steps:
-      - name: Set assignees
+      - name: 担当者を自動でセット
         env:
           ASSIGNEES: "${{ github.actor }}"
         run: |
