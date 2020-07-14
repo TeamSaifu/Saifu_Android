@@ -1,10 +1,9 @@
-package com.example.saifu_android.ui.log
+package com.ze20.saifu.ui.log
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.saifu_android.R
+import com.ze20.saifu.R
 
 class logFragment : Fragment() {
 
