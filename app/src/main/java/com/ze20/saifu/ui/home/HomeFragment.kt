@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
         buttonshow.setOnClickListener {
             //表示テスト用ボタン
             //DataInputActivityの部分を表示したい名前に変更してね
-            startActivity(Intent(getActivity(), SpendSettings::class.java))
+            startActivity(Intent(getActivity(), DataInputActivity::class.java))
         }
         //メイン画面作るときにこの行は消してもらって構いません。
         return root
