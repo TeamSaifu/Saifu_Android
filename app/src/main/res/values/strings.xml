@@ -50,4 +50,6 @@
     <string name="tuesday">火</string>
     <string name="wednesday">水</string>
     <string name="tateyoko">縦横切替</string>
+    <string name="nedan_kari">￥1,000</string>
+    <string name="kari">仮</string>
 </resources>
