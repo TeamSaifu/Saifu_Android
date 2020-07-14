@@ -9,7 +9,6 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.ze20.saifu.DataInputActivity
 import com.ze20.saifu.R
-import com.ze20.saifu.ui.budget.SpendSettings
 
 class HomeFragment : Fragment() {
 
