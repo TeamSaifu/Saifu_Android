@@ -11,10 +11,10 @@ class NotificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notification)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
-    //メニュー作成時
-    override fun onCreateOptionsMenu(menu: Menu?):Boolean {
+    // メニュー作成時
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.menu_delnotification,menu)
+        inflater.inflate(R.menu.menu_delnotification, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onSupportNavigateUp(): Boolean {
