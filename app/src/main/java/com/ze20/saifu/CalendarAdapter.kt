@@ -9,7 +9,9 @@ import android.widget.AbsListView
 import android.widget.BaseAdapter
 import android.widget.TextView
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import kotlin.collections.ArrayList
 
 class CalendarAdapter(private val context: Context) : BaseAdapter() {
     private var dateArray: List<Date> = ArrayList()
@@ -17,7 +19,7 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
     private var mDateManager: DateManager = DateManager()
     private var mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)
 
-    //カスタムセルを拡張したらここでWigetを定義
+    // カスタムセルを拡張したらここでWigetを定義
     private class ViewHolder {
         var dateText: TextView? = null
     }
@@ -43,7 +45,7 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
             holder = convertViewm!!.tag as ViewHolder
         }
 
-        //セルのサイズを指定
+        //
         val dp = mContext.resources.displayMetrics.density
         val params: AbsListView.LayoutParams = AbsListView.LayoutParams(
             parent.width / 7 - dp.toInt(),
@@ -51,19 +53,19 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
         )
         convertView?.layoutParams = params
 
-        //日付のみ表示させる
+        // 日付のみ表示させる
         val dateFormat =
             SimpleDateFormat("d", Locale.US)
         holder.dateText!!.text = dateFormat.format(dateArray[position])
 
-        //当月以外のセルをグレーアウト
+        // 当月以外のセルをグレーアウト
         if (mDateManager.isCurrentMonth(dateArray[position])) {
             convertViewm!!.setBackgroundColor(Color.WHITE)
         } else {
             convertViewm!!.setBackgroundColor(Color.LTGRAY)
         }
 
-        //日曜日を赤、土曜日を青に
+        // 日曜日を赤、土曜日を青に
         val colorId: Int
         colorId = when (mDateManager.getDayOfWeek(dateArray[position])) {
             1 -> Color.RED
@@ -82,20 +84,20 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
         return null
     }
 
-    //表示月を取得
+    // 表示月を取得
     open fun getTitle(): String? {
         val format = SimpleDateFormat("yyyy年MM月", Locale.US)
         return format.format(mDateManager.mCalendar.time)
     }
 
-    //翌月表示
+    // 翌月表示
     fun nextMonth() {
         mDateManager.nextMonth()
         dateArray = mDateManager.days
         notifyDataSetChanged()
     }
 
-    //前月表示
+    // 前月表示
     fun prevMonth() {
         mDateManager.prevMonth()
         dateArray = mDateManager.days
