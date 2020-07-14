@@ -1,17 +1,17 @@
 package com.ze20.saifu.ui.budget
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import androidx.appcompat.app.AppCompatActivity
 import com.ze20.saifu.R
 
-class SpendSettings : AppCompatActivity() {
+class IncomeSettings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_spend_settings)
+        setContentView(R.layout.activity_income_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        setTitle("固定支出")
+        setTitle("固定収入")
     }
 
     //メニューアイテムを表示
