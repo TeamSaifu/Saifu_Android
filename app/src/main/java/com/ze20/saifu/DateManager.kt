@@ -48,7 +48,6 @@ class DateManager {
         return mCalendar.getActualMaximum(Calendar.WEEK_OF_MONTH)
     }
 
-
     // 曜日を取得
     fun getDayOfWeek(date: Date?): Int {
         val calendar = Calendar.getInstance()
