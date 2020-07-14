@@ -1,7 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Saifu</string>
     <string name="title_home">ホーム</string>
     <string name="title_want">欲しい</string>
     <string name="title_log">記録</string>
     <string name="title_setting">設定</string>
+    <string name="yosan">予算</string>
+    <string name="syunyu">⊕総収入</string>
+    <string name="sisyutu">⊖総支出</string>
+    <string name="Budget"><u>50000円</u></string>
+    <string name="Income"><u>100000円</u></string>
+    <string name="Spending"><u>50000円</u></string>
 </resources>
