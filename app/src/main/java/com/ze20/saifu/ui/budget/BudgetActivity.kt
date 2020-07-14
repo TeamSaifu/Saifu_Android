@@ -1,7 +1,8 @@
-package com.example.saifu_android
+package com.ze20.saifu.ui.budget
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.ze20.saifu.R
 
 class BudgetActivity : AppCompatActivity() {
 
