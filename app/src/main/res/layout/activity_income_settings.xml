@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ze20.saifu.ui.budget.SpendSettings">
+    tools:context=".ui.budget.IncomeSettings">
 
     <TextView
         android:id="@+id/item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="支出一覧"
+        android:text="収入一覧"
         android:textColor="@color/colorBlack"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
@@ -41,6 +41,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
         app:layout_constraintVertical_bias="1.0" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
