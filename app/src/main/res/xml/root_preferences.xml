@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- ここで設定画面の項目を設定します。 -->
+
+    <SwitchPreferenceCompat
+        android:icon="@drawable/ic_baseline_notifications_48"
+        app:key="notifications"
+        app:title="@string/notifications" />
+    <Preference
+        android:icon="@drawable/ic_baseline_local_atm_48"
+        app:key="budget"
+        app:title="@string/budget" />
+    <Preference
+        android:icon="@drawable/ic_baseline_folder_48"
+        app:key="category"
+        app:title="@string/category_config" />
+
+
+
+</PreferenceScreen>
