@@ -14,7 +14,7 @@ class SpendSettings : AppCompatActivity() {
         setTitle("固定支出")
     }
 
-    //メニューアイテムを表示
+    // メニューアイテムを表示
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
 
@@ -24,7 +24,7 @@ class SpendSettings : AppCompatActivity() {
         return true
     }
 
-    //一つ前の画面に戻るボタンを表示
+    // 一つ前の画面に戻るボタンを表示
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
