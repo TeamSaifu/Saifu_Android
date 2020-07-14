@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.budget.SpendSettings"></activity>
+        <activity android:name=".NotificationActivity"></activity>
         <activity android:name=".DataInputActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

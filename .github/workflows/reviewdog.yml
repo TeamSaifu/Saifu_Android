@@ -2,7 +2,7 @@ name: reviewdog
 on: [pull_request]
 jobs:
   misspell:
-    name: runner / misspell
+    name: ミススペルをチェック
     runs-on: ubuntu-latest
     steps:
       - name: Check out code.
@@ -13,7 +13,7 @@ jobs:
           github_token: ${{ secrets.github_token }}
           locale: "US"
   ktlint:
-    name: Check Code Quality
+    name: コードの品質をチェック
     runs-on: ubuntu-latest
 
     steps:
@@ -25,3 +25,4 @@ jobs:
         uses: ScaCap/action-ktlint@master
         with:
           github_token: ${{ secrets.github_token }}
+          fail_on_error: false
