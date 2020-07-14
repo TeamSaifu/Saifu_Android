@@ -30,4 +30,6 @@
     <string name="search">検索</string>
     <string name="graph">グラフ</string>
     <string name="Report">レポート</string>
+    <string name="message_kari">今月はいい感じです。</string>
+    <string name="delnotification">通知を全て消去</string>
 </resources>
