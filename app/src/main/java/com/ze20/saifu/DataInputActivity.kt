@@ -13,9 +13,9 @@ import java.util.*
 
 class DataInputActivity : AppCompatActivity() {
 
-    var sign = false                                      //プラス・マイナス
-    var UserSetDate: java.util.Date = java.util.Date()    //設定された日付・初期値は今日
-    var BusyFlag = false                                  //ローディング中はいろいろ動かなくするためのフラグ
+    var sign = false // プラス・マイナス
+    var UserSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
+    var BusyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,6 @@ class DataInputActivity : AppCompatActivity() {
         }
         money_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -50,8 +49,6 @@ class DataInputActivity : AppCompatActivity() {
             // カレンダーを表示する
             showDatePicker()
         }
-
-
     }
 
     // メニュー作成時
@@ -109,7 +106,7 @@ class DataInputActivity : AppCompatActivity() {
                 SimpleDateFormat("MM").format(UserSetDate).toInt(),
                 SimpleDateFormat("dd").format(UserSetDate).toInt()
             )
-            //表示します
+            // 表示します
             datePickerDialog.show()
 
             BusyFlag = false
@@ -136,6 +133,5 @@ class DataInputActivity : AppCompatActivity() {
     }
 
     fun setdayquick(num: Int) {
-
     }
 }
