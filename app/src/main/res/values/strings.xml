@@ -17,7 +17,7 @@
     <string name="budget">予算入力</string>
     <string name="category_config">カテゴリ設定</string>
     <string name="category_select">カテゴリを選択...</string>
-    <string name="day_kari">2020/07/10(今日)</string>
+    <string name="day_kari">2020/7/10</string>
     <string name="yen_kari">1000</string>
     <string name="Currency">¥</string>
     <string name="minus">－</string>
@@ -53,6 +53,9 @@
     <string name="tateyoko">縦横切替</string>
     <string name="nedan_kari">￥1,000</string>
     <string name="kari">仮</string>
+    <string name="Today_Parentheses">(今日)</string>
+    <string name="prev_day">(%1$d日前)</string>
+    <string name="next_day">(%1$d日後)</string>
     <string name="name">名称</string>
     <string name="value">値段</string>
     <string name="add_url">URLを追加 ＋</string>
