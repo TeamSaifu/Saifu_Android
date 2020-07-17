@@ -109,7 +109,7 @@ class DataInputActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    //ここから各ボタンごとの処理
+    // ここから各ボタンごとの処理
 
     fun plusminus() {
         // プラスマイナスを切り替えて表示も切り替える
