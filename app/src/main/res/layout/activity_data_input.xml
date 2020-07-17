@@ -168,17 +168,6 @@
                         android:textSize="20sp" />
 
                     <Button
-                        android:id="@+id/p7d"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2sp"
-                        android:layout_marginRight="2sp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_button"
-                        android:text="@string/plus7"
-                        android:textSize="20sp" />
-
-                    <Button
                         android:id="@+id/p1d"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -187,6 +176,17 @@
                         android:layout_weight="1"
                         android:background="@drawable/custom_button"
                         android:text="@string/plus1"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/p7d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginRight="2sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_button"
+                        android:text="@string/plus7"
                         android:textSize="20sp" />
 
                 </LinearLayout>

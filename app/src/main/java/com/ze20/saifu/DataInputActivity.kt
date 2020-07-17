@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DataInputActivity : AppCompatActivity() {
-
+    var date = java.util.Date() // 今日の日付を格納
     var sign = false // プラス・マイナス
     var UserSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
     var BusyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
@@ -49,6 +49,21 @@ class DataInputActivity : AppCompatActivity() {
             // カレンダーを表示する
             showDatePicker()
         }
+        m7d.setOnClickListener() {
+            setdayquick(-7)
+        }
+        m1d.setOnClickListener() {
+            setdayquick(-1)
+        }
+        today.setOnClickListener() {
+            setdayquick(0)
+        }
+        p1d.setOnClickListener() {
+            setdayquick(1)
+        }
+        p7d.setOnClickListener() {
+            setdayquick(7)
+        }
     }
 
     // メニュー作成時
@@ -78,8 +93,6 @@ class DataInputActivity : AppCompatActivity() {
         // カレンダーを表示する
         if (BusyFlag == false) {
             BusyFlag = true
-            // 今日の日付を格納
-            var date = java.util.Date()
 
             val datePickerDialog = DatePickerDialog(
                 this,
@@ -133,5 +146,27 @@ class DataInputActivity : AppCompatActivity() {
     }
 
     fun setdayquick(num: Int) {
+        if (num != 0) {
+            var calendar: Calendar = Calendar.getInstance()
+            calendar.setTime(UserSetDate)
+            calendar.add(Calendar.DAY_OF_MONTH, num)
+            UserSetDate = calendar.getTime()
+        } else {
+            UserSetDate = date
+        }
+        // UserSetDateを表示しておく
+        day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
+        val sdFormat =
+            SimpleDateFormat("yyyy/MM/dd")
+        // 日付の差を計算する
+        val datediff = dateDiff(sdFormat.format(UserSetDate), sdFormat.format(date))
+        // 差に応じて表示を変更する
+        if (datediff == 0) {
+            day_text2.text = getString(R.string.Today_Parentheses)
+        } else if (datediff > 0) {
+            day_text2.text = getString(R.string.prev_day, datediff)
+        } else {
+            day_text2.text = getString(R.string.next_day, (datediff * -1))
+        }
     }
 }
