@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
 import java.text.ParseException
@@ -44,6 +45,10 @@ class DataInputActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // 自動で入力幅を広げる
                 emsauto()
+                pertimes.text = (getString(
+                    R.string.pertimes,
+                    Math.max(edittoInt(money_text) ?: 0, 0) / Math.max(edittoInt(edittimes) ?: 1, 1)
+                ))
             }
         })
         day_text.setOnClickListener() {
@@ -69,7 +74,26 @@ class DataInputActivity : AppCompatActivity() {
         // スイッチの状態に応じて split_option を表示
         split_switch.setOnCheckedChangeListener { _, isChecked ->
             split_option.visibility = if (isChecked) View.VISIBLE else View.GONE
+            pertimes.text = (getString(
+                R.string.pertimes,
+                Math.max(edittoInt(money_text) ?: 0, 0) / Math.max(edittoInt(edittimes) ?: 1, 1)
+            ))
         }
+        edittimes.addTextChangedListener(object : TextWatcher {
+            // 回数を変更した時計算をやり直す
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                pertimes.text = (getString(
+                    R.string.pertimes,
+                    Math.max(edittoInt(money_text) ?: 0, 0) / Math.max(edittoInt(edittimes) ?: 1, 1)
+                ))
+            }
+        })
     }
 
     // メニュー適応
@@ -104,16 +128,23 @@ class DataInputActivity : AppCompatActivity() {
         // カレンダーを表示する
         if (BusyFlag == false) {
             BusyFlag = true
-
+            // DatePickerDialogでカレンダー式の選択画面を作れる
             val datePickerDialog = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener() { view, year, month, dayOfMonth ->
                     date = java.util.Date()
-                    // 表示テキストを作成
-                    day_text.text = "${year}/${month}/${dayOfMonth}"
                     // UserSetDate に選択された日付を格納
                     UserSetDate =
-                        SimpleDateFormat("yyyy/M/d").parse("${year}/${month}/${dayOfMonth}")
+                        SimpleDateFormat("yyyy/M/d").parse(
+                            getString(
+                                R.string.dateformat,
+                                year,
+                                month,
+                                dayOfMonth
+                            )
+                        )
+                    // 表示テキストを作成
+                    day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
                     val sdFormat =
                         SimpleDateFormat("yyyy/MM/dd")
                     // 日付の差を計算する
@@ -170,7 +201,7 @@ class DataInputActivity : AppCompatActivity() {
             // 0 の場合、今日と同じにする
             UserSetDate = date
         }
-        // UserSetDateを表示しておく
+        // UserSetDateを表示する
         day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
         val sdFormat =
             SimpleDateFormat("yyyy/MM/dd")
@@ -184,5 +215,11 @@ class DataInputActivity : AppCompatActivity() {
         } else {
             day_text2.text = getString(R.string.next_day, (datediff * -1))
         }
+    }
+
+    fun edittoInt(edittext: EditText): Int? {
+        // edittext を 数値に変換 空文字列ならNullを返す
+        if (edittext.length() == 0) return null
+        return edittext.text.toString().toIntOrNull()
     }
 }
