@@ -314,33 +314,46 @@
                     android:id="@+id/split_option"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/edittimes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5sp"
+                        android:layout_marginLeft="10sp"
+                        android:layout_marginRight="10sp"
                         android:layout_weight="1"
-                        android:ems="10"
+                        android:background="#00000000"
+                        android:ems="5"
                         android:enabled="false"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:text="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/times"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="@string/times" />
+                        android:text="@string/times"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/pertimes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginRight="10sp"
                         android:layout_weight="2"
                         android:text="@string/pertimes_kari"
                         android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 

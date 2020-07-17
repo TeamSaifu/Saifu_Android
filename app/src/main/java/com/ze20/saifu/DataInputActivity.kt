@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
 
 class DataInputActivity : AppCompatActivity() {
     var date = java.util.Date() // 今日の日付を格納
@@ -49,6 +50,7 @@ class DataInputActivity : AppCompatActivity() {
             // カレンダーを表示する
             showDatePicker()
         }
+        // QuickDaySet ボタンを使用したときの処理
         m7d.setOnClickListener() {
             setdayquick(-7)
         }
@@ -64,19 +66,26 @@ class DataInputActivity : AppCompatActivity() {
         p7d.setOnClickListener() {
             setdayquick(7)
         }
+        // スイッチの状態に応じて split_option を表示
+        split_switch.setOnCheckedChangeListener { _, isChecked ->
+            split_option.visibility = if (isChecked) View.VISIBLE else View.GONE
+        }
     }
 
-    // メニュー作成時
+    // メニュー適応
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_apply, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    // 戻るボタンを押したときの処理
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
     }
+
+    //ここから各ボタンごとの処理
 
     fun plusminus() {
         // プラスマイナスを切り替えて表示も切り替える
@@ -86,6 +95,8 @@ class DataInputActivity : AppCompatActivity() {
 
     fun emsauto() {
         // 文字列の幅を適切にする
+        // 0 ~ 2 : 1em / 3 ~ 4 : 2em / 5 ~ 6 : 3em / 7 ~ 8 : 4em
+        // 1em につき数字2文字の幅を確保します
         money_text.setEms(Math.max((money_text.length() + 1) / 2, 1))
     }
 
@@ -97,6 +108,7 @@ class DataInputActivity : AppCompatActivity() {
             val datePickerDialog = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener() { view, year, month, dayOfMonth ->
+                    date = java.util.Date()
                     // 表示テキストを作成
                     day_text.text = "${year}/${month}/${dayOfMonth}"
                     // UserSetDate に選択された日付を格納
@@ -128,8 +140,8 @@ class DataInputActivity : AppCompatActivity() {
 
     fun dateDiff(dateFromStrig: String?, dateToString: String?): Int {
         val sdf = SimpleDateFormat("yyyy/MM/dd")
-        var dateTo: Date? = null
-        var dateFrom: Date? = null
+        var dateTo: java.util.Date? = null
+        var dateFrom: java.util.Date? = null
         // Date型に変換
         try {
             dateFrom = sdf.parse(dateFromStrig)
@@ -146,12 +158,16 @@ class DataInputActivity : AppCompatActivity() {
     }
 
     fun setdayquick(num: Int) {
+        date = java.util.Date()
         if (num != 0) {
+            // 一度 calendar に変換して .add を使用する
             var calendar: Calendar = Calendar.getInstance()
             calendar.setTime(UserSetDate)
             calendar.add(Calendar.DAY_OF_MONTH, num)
+            // Date型に戻す
             UserSetDate = calendar.getTime()
         } else {
+            // 0 の場合、今日と同じにする
             UserSetDate = date
         }
         // UserSetDateを表示しておく
