@@ -5,9 +5,9 @@ jobs:
     name: ミススペルをチェック
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code.
+      - name: コードをチェックアウト
         uses: actions/checkout@v1
-      - name: misspell
+      - name: misspellでミススペルをチェック
         uses: reviewdog/action-misspell@v1
         with:
           github_token: ${{ secrets.github_token }}
@@ -17,12 +17,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repo
+      - name: レポジトリをクローン
         uses: actions/checkout@master
         with:
           fetch-depth: 1
-      - name: ktlint
+      - name: ktlintでコードの品質をチェック
         uses: ScaCap/action-ktlint@master
         with:
           github_token: ${{ secrets.github_token }}
           fail_on_error: false
+          Android: true

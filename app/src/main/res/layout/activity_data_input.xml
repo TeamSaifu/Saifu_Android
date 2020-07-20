@@ -27,41 +27,55 @@
             android:paddingBottom="0sp">
 
             <LinearLayout
-                android:id="@+id/yen_input"
+                android:id="@+id/waku"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
                 android:background="@drawable/waku"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="40sp"
-                android:paddingBottom="40sp"
-                android:textAlignment="center">
+                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/plus_minus"
-                    android:layout_width="65sp"
-                    android:layout_height="65sp"
-                    android:background="@drawable/ic_baseline_fiber_manual_record_24"
-                    android:text="@string/minus"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/yen_text"
+                <LinearLayout
+                    android:id="@+id/yen_input"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Currency"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="54sp" />
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="40sp"
+                    android:paddingBottom="40sp"
+                    android:textAlignment="center">
 
-                <TextView
-                    android:id="@+id/money_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/yen_kari"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="54sp" />
+                    <Button
+                        android:id="@+id/plus_minus"
+                        android:layout_width="65sp"
+                        android:layout_height="65sp"
+                        android:background="@drawable/ic_baseline_fiber_manual_record_24"
+                        android:text="@string/minus"
+                        android:textSize="30sp" />
 
+                    <TextView
+                        android:id="@+id/yen_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Currency"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="54sp" />
+
+                    <EditText
+                        android:id="@+id/money_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:ems="2"
+                        android:inputType="number"
+                        android:maxEms="4"
+                        android:maxLength="8"
+                        android:minEms="2"
+                        android:text="1000"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="54sp" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -71,18 +85,42 @@
                 android:background="@drawable/waku"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/day_text"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8sp"
-                    android:layout_marginBottom="8sp"
                     android:layout_weight="1"
-                    android:paddingTop="3sp"
-                    android:text="@string/day_kari"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="36sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8sp"
+                        android:layout_marginBottom="8sp"
+                        android:layout_weight="1"
+                        android:paddingTop="3sp"
+                        android:text="@string/day_kari"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/day_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8sp"
+                        android:layout_marginBottom="8sp"
+                        android:layout_weight="1"
+                        android:paddingTop="3sp"
+                        android:text="@string/Today_Parentheses"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/quickday"
@@ -130,17 +168,6 @@
                         android:textSize="20sp" />
 
                     <Button
-                        android:id="@+id/p7d"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2sp"
-                        android:layout_marginRight="2sp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_button"
-                        android:text="@string/plus7"
-                        android:textSize="20sp" />
-
-                    <Button
                         android:id="@+id/p1d"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -149,6 +176,17 @@
                         android:layout_weight="1"
                         android:background="@drawable/custom_button"
                         android:text="@string/plus1"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/p7d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginRight="2sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_button"
+                        android:text="@string/plus7"
                         android:textSize="20sp" />
 
                 </LinearLayout>
@@ -194,12 +232,12 @@
                     android:id="@+id/frequentcategory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-
                     android:layout_marginLeft="10sp"
+
                     android:layout_marginTop="10sp"
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <Button
@@ -276,33 +314,47 @@
                     android:id="@+id/split_option"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/edittimes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5sp"
+                        android:layout_marginLeft="10sp"
+                        android:layout_marginRight="10sp"
                         android:layout_weight="1"
-                        android:ems="10"
-                        android:enabled="false"
-                        android:inputType="number" />
+                        android:background="#00000000"
+                        android:ems="5"
+                        android:enabled="true"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:text="1"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/times"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="@string/times" />
+                        android:text="@string/times"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/pertimes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginRight="10sp"
                         android:layout_weight="2"
                         android:text="@string/pertimes_kari"
                         android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
