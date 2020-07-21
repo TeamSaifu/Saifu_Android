@@ -9,4 +9,6 @@
     <color name="whiteColor">#FFF</color>
     <color name="blackColor">#000</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorlightgreen">#90ee90</color>
+    <color name="usuigreen">#beedbe</color>
 </resources>
