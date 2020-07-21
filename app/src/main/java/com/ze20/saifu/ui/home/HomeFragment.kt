@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.ze20.saifu.DataInputActivity
 import com.ze20.saifu.R
-import com.ze20.saifu.ReportActivity
 
 class HomeFragment : Fragment() {
 
@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
         buttonshow.setOnClickListener {
             //表示テスト用ボタン
             //DataInputActivityの部分を表示したい名前に変更してね
-            startActivity(Intent(getActivity(), ReportActivity::class.java))
+            startActivity(Intent(getActivity(), DataInputActivity::class.java))
         }
         //メイン画面作るときにこの行は消してもらって構いません。
         return root
