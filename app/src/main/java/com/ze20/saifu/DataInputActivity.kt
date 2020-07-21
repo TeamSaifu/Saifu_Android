@@ -1,11 +1,13 @@
 package com.ze20.saifu
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
@@ -23,9 +25,15 @@ class DataInputActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_input)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setTitle(R.string.title_data_input)
 
         // UserSetDateを表示しておく
         day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
+
+        MainLayout.setOnClickListener {
+            // 画面のどこかおしたらキーボードを消す
+            hideKeyboard()
+        }
 
         plus_minus.setOnClickListener { view ->
             // プラスマイナス切り替え
@@ -94,6 +102,10 @@ class DataInputActivity : AppCompatActivity() {
                 ))
             }
         })
+        memo_add.setOnClickListener() {
+            memo_add.visibility = View.GONE
+            memo_edit.visibility = View.VISIBLE
+        }
     }
 
     // メニュー適応
@@ -134,29 +146,22 @@ class DataInputActivity : AppCompatActivity() {
                 DatePickerDialog.OnDateSetListener() { view, year, month, dayOfMonth ->
                     date = java.util.Date()
                     // UserSetDate に選択された日付を格納
-                    UserSetDate =
-                        SimpleDateFormat("yyyy/M/d").parse(
-                            getString(
-                                R.string.dateformat,
-                                year,
-                                month,
-                                dayOfMonth
-                            )
+                    UserSetDate = SimpleDateFormat("yyyy/M/d").parse(
+                        getString(
+                            R.string.dateformat,
+                            year,
+                            month,
+                            dayOfMonth
                         )
+                    )
+                    //フォーマットを作成
+                    val sdFormat = SimpleDateFormat("yyyy/MM/dd")
                     // 表示テキストを作成
-                    day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
-                    val sdFormat =
-                        SimpleDateFormat("yyyy/MM/dd")
+                    day_text.setText(sdFormat.format(UserSetDate))
                     // 日付の差を計算する
                     val datediff = dateDiff(sdFormat.format(UserSetDate), sdFormat.format(date))
                     // 差に応じて表示を変更する
-                    if (datediff == 0) {
-                        day_text2.text = R.string.Today_Parentheses.toString()
-                    } else if (datediff > 0) {
-                        day_text2.text = getString(R.string.prev_day, datediff)
-                    } else {
-                        day_text2.text = getString(R.string.next_day, (datediff * -1))
-                    }
+                    datediff_textshow(datediff)
                 }, // Dateピッカーの初期値にUserSetDateを設定
                 SimpleDateFormat("yyyy").format(UserSetDate).toInt(),
                 SimpleDateFormat("MM").format(UserSetDate).toInt(),
@@ -190,16 +195,20 @@ class DataInputActivity : AppCompatActivity() {
 
     fun setdayquick(num: Int) {
         date = java.util.Date()
-        if (num != 0) {
-            // 一度 calendar に変換して .add を使用する
-            var calendar: Calendar = Calendar.getInstance()
-            calendar.setTime(UserSetDate)
-            calendar.add(Calendar.DAY_OF_MONTH, num)
-            // Date型に戻す
-            UserSetDate = calendar.getTime()
-        } else {
+        when (num) {
+
             // 0 の場合、今日と同じにする
-            UserSetDate = date
+            0 -> UserSetDate = date
+
+            else -> {
+                // 一度 calendar型 に変換して .add を使用する
+                var calendar: Calendar = Calendar.getInstance()
+                calendar.setTime(UserSetDate)
+                calendar.add(Calendar.DAY_OF_MONTH, num)
+                // Date型に戻す
+                UserSetDate = calendar.getTime()
+            }
+
         }
         // UserSetDateを表示する
         day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
@@ -208,18 +217,29 @@ class DataInputActivity : AppCompatActivity() {
         // 日付の差を計算する
         val datediff = dateDiff(sdFormat.format(UserSetDate), sdFormat.format(date))
         // 差に応じて表示を変更する
-        if (datediff == 0) {
-            day_text2.text = getString(R.string.Today_Parentheses)
-        } else if (datediff > 0) {
-            day_text2.text = getString(R.string.prev_day, datediff)
-        } else {
-            day_text2.text = getString(R.string.next_day, (datediff * -1))
-        }
+        datediff_textshow(datediff)
     }
 
     fun edittoInt(edittext: EditText): Int? {
         // edittext を 数値に変換 空文字列ならNullを返す
-        if (edittext.length() == 0) return null
         return edittext.text.toString().toIntOrNull()
+    }
+
+    fun datediff_textshow(datediff: Int) {
+        // 差に応じて表示を変更するやつ
+        when {
+            (datediff == 0) -> day_text2.text = getString(R.string.Today_Parentheses)
+            (datediff > 0) -> day_text2.text = getString(R.string.prev_day, datediff)
+            (datediff < 0) -> day_text2.text = getString(R.string.next_day, (datediff * -1))
+        }
+    }
+
+    fun hideKeyboard() {
+        //キーボードを探してあれば消します
+        val view = this@DataInputActivity.currentFocus
+        view.let {
+            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(view!!.windowToken, 0)
+        }
     }
 }

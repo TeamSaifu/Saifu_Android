@@ -6,6 +6,7 @@
     <string name="title_log">記録</string>
     <string name="title_setting">設定</string>
     <string name="title_new">新規登録</string>
+    <string name="title_data_input">データ入力</string>
     <string name="yosan">予算</string>
     <string name="syunyu">⊕総収入</string>
     <string name="sisyutu">⊖総支出</string>
@@ -62,4 +63,6 @@
     <string name="value">値段</string>
     <string name="add_url">URLを追加 ＋</string>
     <string name="add_picture">画像を追加 ＋</string>
+    <string name="memo">メモ</string>
+    <string name="one">1</string>
 </resources>

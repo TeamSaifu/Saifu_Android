@@ -7,6 +7,7 @@
     tools:context=".DataInputActivity">
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,8 +48,8 @@
 
                     <Button
                         android:id="@+id/plus_minus"
-                        android:layout_width="65sp"
-                        android:layout_height="65sp"
+                        android:layout_width="68sp"
+                        android:layout_height="68sp"
                         android:background="@drawable/ic_baseline_fiber_manual_record_24"
                         android:text="@string/minus"
                         android:textSize="30sp" />
@@ -66,14 +67,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00000000"
-                        android:ems="2"
+                        android:ems="1"
                         android:inputType="number"
                         android:maxEms="4"
                         android:maxLength="8"
-                        android:minEms="2"
-                        android:text="1000"
+                        android:minEms="1"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="54sp" />
+                        android:textSize="54sp">
+
+                        <requestFocus />
+                    </EditText>
 
                 </LinearLayout>
             </LinearLayout>
@@ -127,8 +130,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8sp"
-                    android:layout_marginRight="8sp"
                     android:layout_marginTop="8sp"
+                    android:layout_marginRight="8sp"
                     android:layout_marginBottom="8sp"
                     android:layout_weight="1"
                     android:orientation="horizontal"
@@ -221,7 +224,7 @@
                     android:layout_marginLeft="10sp"
                     android:layout_marginTop="5sp"
                     android:layout_marginRight="10sp"
-                    android:layout_marginBottom="5sp"
+                    android:layout_marginBottom="0sp"
                     android:layout_weight="1"
                     android:paddingTop="3sp"
                     android:text="@string/frequent_category"
@@ -234,7 +237,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
 
-                    android:layout_marginTop="10sp"
+                    android:layout_marginTop="5sp"
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
@@ -308,7 +311,7 @@
                     android:layout_marginBottom="10sp"
                     android:text="@string/split"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="28sp" />
+                    android:textSize="25sp" />
 
                 <LinearLayout
                     android:id="@+id/split_option"
@@ -329,7 +332,7 @@
                         android:enabled="true"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:text="1"
+                        android:text="@string/one"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="30sp" />
@@ -365,7 +368,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/waku"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/memo_add"
@@ -379,6 +382,19 @@
                     android:background="@drawable/custom_button"
                     android:text="@string/memo_add"
                     android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/memo_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10sp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/memo"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="24sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
