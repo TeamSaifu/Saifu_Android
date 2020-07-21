@@ -9,4 +9,7 @@
     <color name="whiteColor">#FFF</color>
     <color name="blackColor">#000</color>
     <color name="colorBlack">#000000</color>
+    <color name="material_blue">#64b5f6</color>
+    <color name="material_green">#81c784</color>
+    <color name="material_yellow">#fff176</color>
 </resources>

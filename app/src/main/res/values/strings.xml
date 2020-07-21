@@ -62,4 +62,19 @@
     <string name="value">値段</string>
     <string name="add_url">URLを追加 ＋</string>
     <string name="add_picture">画像を追加 ＋</string>
+    <string name="period_kari">11月23日～1月23日までのレポートです</string>
+    <string name="income_kari">・収入</string>
+    <string name="spending_kari">・支出</string>
+    <string name="profit_kari">・収益</string>
+    <string name="category1_kari">・食費</string>
+    <string name="category2_kari">・被服費</string>
+    <string name="category3_kari">・娯楽費</string>
+    <string name="category1_yen_kari">a円</string>
+    <string name="category2_yen_kari">b円</string>
+    <string name="category3_yen_kari">c円</string>
+    <string name="income_yen_kari">x円</string>
+    <string name="spending_yen_kari">y円</string>
+    <string name="profit_yen_kari">z円</string>
+    <string name="category_kari">カテゴリ別支出</string>
+    <string name="report_hyouzi_kari">＊過去のレポートを表示</string>
 </resources>
