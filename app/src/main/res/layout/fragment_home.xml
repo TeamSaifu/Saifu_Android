@@ -56,7 +56,7 @@
 
             <!--スワイプで切り替える部分-->
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/pager"
+                android:id="@+id/aiueo700"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </androidx.viewpager.widget.ViewPager>
