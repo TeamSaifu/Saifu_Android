@@ -151,7 +151,7 @@ class DataInputActivity : AppCompatActivity() {
                     val datediff = dateDiff(sdFormat.format(UserSetDate), sdFormat.format(date))
                     // 差に応じて表示を変更する
                     if (datediff == 0) {
-                        day_text2.text = R.string.Today_Parentheses.toString()
+                        day_text2.text = R.string.today_parentheses.toString()
                     } else if (datediff > 0) {
                         day_text2.text = getString(R.string.prev_day, datediff)
                     } else {
@@ -209,7 +209,7 @@ class DataInputActivity : AppCompatActivity() {
         val datediff = dateDiff(sdFormat.format(UserSetDate), sdFormat.format(date))
         // 差に応じて表示を変更する
         if (datediff == 0) {
-            day_text2.text = getString(R.string.Today_Parentheses)
+            day_text2.text = getString(R.string.today_parentheses)
         } else if (datediff > 0) {
             day_text2.text = getString(R.string.prev_day, datediff)
         } else {

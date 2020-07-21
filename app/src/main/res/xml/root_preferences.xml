@@ -10,7 +10,7 @@
     <Preference
         android:icon="@drawable/ic_baseline_local_atm_48"
         app:key="budget"
-        app:title="@string/budget" />
+        app:title="@string/budget_input" />
     <Preference
         android:icon="@drawable/ic_baseline_folder_48"
         app:key="category"
