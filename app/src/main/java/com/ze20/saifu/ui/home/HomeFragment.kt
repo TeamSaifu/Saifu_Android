@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.ze20.saifu.R
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
@@ -25,10 +25,13 @@ class HomeFragment : Fragment() {
             sub_fragment2()
         )
 
+
+        val pager =
+            root.findViewById(R.id.pager) as ViewPager
         /// adapterのインスタンス生成
-        val adapter:PagerAdapter = SubFragmentAdapter(childFragmentManager, fragmentList)
+        val adapter: PagerAdapter = SubFragmentAdapter(childFragmentManager, fragmentList)
         /// adapterをセット
-        aiueo700.adapter = adapter
+        pager.adapter = adapter
         return root
     }
 }
