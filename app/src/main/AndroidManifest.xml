@@ -15,9 +15,7 @@
         <activity android:name=".NotificationActivity" />
         <activity android:name=".ui.budget.IncomeSettings" />
         <activity android:name=".ui.budget.SpendSettings" />
-        <activity
-            android:name=".DataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".DataInputActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,5 +25,8 @@
         </activity>
         <activity android:name=".ui.budget.BudgetActivity" />
     </application>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
 </manifest>

@@ -19,7 +19,6 @@ import android.database.sqlite.SQLiteOpenHelper
 //
 //  ここをみてね
 
-
 private class SQLiteDB(context: Context, databaseName:String, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, databaseName, factory, version) {
 
     //データベース作成
