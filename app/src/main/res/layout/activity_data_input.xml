@@ -58,7 +58,7 @@
                         android:id="@+id/yen_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Currency"
+                        android:text="@string/currency"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="54sp" />
 
@@ -118,7 +118,7 @@
                         android:layout_marginBottom="8sp"
                         android:layout_weight="1"
                         android:paddingTop="3sp"
-                        android:text="@string/Today_Parentheses"
+                        android:text="@string/today_parentheses"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="36sp"
                         android:textStyle="bold" />
