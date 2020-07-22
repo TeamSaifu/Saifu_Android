@@ -6,6 +6,7 @@
     <string name="title_log">記録</string>
     <string name="title_setting">設定</string>
     <string name="title_new">新規登録</string>
+    <string name="title_data_input">データ入力</string>
     <string name="total_budget">予算</string>
     <string name="total_income">⊕総収入</string>
     <string name="total_spend">⊖総支出</string>

@@ -30,8 +30,8 @@ class DataInputActivity : AppCompatActivity() {
     var UserSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
     var BusyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
 
-    val fileintent = Intent(Intent.ACTION_OPEN_DOCUMENT) //ファイルの選択
-    val cameraintent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) //カメラ撮影
+    val fileintent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
+    val cameraintent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE: Int = 1
@@ -217,11 +217,11 @@ class DataInputActivity : AppCompatActivity() {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "image/*"
             }
-            startActivityForResult(fileintent, READ_REQUEST_CODE);
+            startActivityForResult(fileintent, READ_REQUEST_CODE)
         }
         picture_photo.setOnClickListener() {
             // 写真を撮影する画面を表示
-            startActivityForResult(cameraintent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(cameraintent, REQUEST_IMAGE_CAPTURE)
         }
         picture_delete.setOnClickListener() {
             deletepicture()
@@ -261,7 +261,7 @@ class DataInputActivity : AppCompatActivity() {
                             dayOfMonth
                         )
                     )
-                    //フォーマットを作成
+                    // フォーマットを作成
                     val sdFormat = SimpleDateFormat("yyyy/MM/dd")
                     // 表示テキストを作成
                     day_text.setText(sdFormat.format(UserSetDate))
@@ -315,7 +315,6 @@ class DataInputActivity : AppCompatActivity() {
                 // Date型に戻す
                 UserSetDate = calendar.getTime()
             }
-
         }
         // UserSetDateを表示する
         day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
@@ -335,14 +334,14 @@ class DataInputActivity : AppCompatActivity() {
     fun datediff_textshow(datediff: Int) {
         // 差に応じて表示を変更するやつ
         when {
-            (datediff == 0) -> day_text2.text = getString(R.string.Today_Parentheses)
+            (datediff == 0) -> day_text2.text = getString(R.string.today_parentheses)
             (datediff > 0) -> day_text2.text = getString(R.string.prev_day, datediff)
             (datediff < 0) -> day_text2.text = getString(R.string.next_day, (datediff * -1))
         }
     }
 
     fun hideKeyboard() {
-        //キーボードを探してあれば消します
+        // キーボードを探してあれば消します
         val view = this@DataInputActivity.currentFocus
         view.let {
             val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
