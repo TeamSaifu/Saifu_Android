@@ -2,13 +2,21 @@ package com.ze20.saifu
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
 import java.text.ParseException
@@ -16,10 +24,19 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class DataInputActivity : AppCompatActivity() {
+
     var date = java.util.Date() // 今日の日付を格納
     var sign = false // プラス・マイナス
     var UserSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
     var BusyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
+
+    val fileintent = Intent(Intent.ACTION_OPEN_DOCUMENT) //ファイルの選択
+    val cameraintent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) //カメラ撮影
+
+    companion object {
+        private const val REQUEST_IMAGE_CAPTURE: Int = 1
+        private const val READ_REQUEST_CODE: Int = 42
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +46,93 @@ class DataInputActivity : AppCompatActivity() {
 
         // UserSetDateを表示しておく
         day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
+        checkintent()
+        setListeners()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // メニューボタンをセットする
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_apply, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        // 戻るボタンを押したときの処理
+        finish()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+
+        // 写真を撮ったり選んだりしたあとの処理です
+
+        if (resultCode != RESULT_OK) {
+            return
+        }
+        when (requestCode) {
+            REQUEST_IMAGE_CAPTURE -> {
+                val bitmap: Bitmap
+                val imageView: ImageView = findViewById<ImageView>(R.id.photo_imageView)
+
+                resultData?.getExtras().also {
+                    bitmap = resultData?.getExtras()?.get("data") as Bitmap
+                    bitmap.also {
+                        imageView.setImageBitmap(bitmap)
+                    }
+                }
+                showpicture()
+            }
+            READ_REQUEST_CODE -> {
+                try {
+                    resultData?.data?.also { uri ->
+                        val inputStream = contentResolver?.openInputStream(uri)
+                        val image = BitmapFactory.decodeStream(inputStream)
+                        val imageView = findViewById<ImageView>(R.id.photo_imageView)
+                        imageView.setImageBitmap(image)
+                        showpicture()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    protected fun checkintent() {
+
+        // 画像ギャラリーがあるかどうか確認
+
+        val activities: List<ResolveInfo> = packageManager.queryIntentActivities(
+            intent,
+            PackageManager.MATCH_ALL
+        )
+        val isIntentSafe: Boolean = activities.isNotEmpty()
+
+        when (isIntentSafe) {
+            // なければボタンが消滅
+            false -> picture_add.visibility = View.GONE
+            true -> picture_add.visibility = View.VISIBLE
+        }
+
+        // カメラアプリがあるかどうか確認
+        val cameraactivities: List<ResolveInfo> = packageManager.queryIntentActivities(
+            cameraintent,
+            PackageManager.MATCH_ALL
+        )
+        val iscameraIntentSafe: Boolean = cameraactivities.isNotEmpty()
+
+        when (iscameraIntentSafe) {
+            // なければボタンが消滅
+            false -> picture_photo.visibility = View.GONE
+            true -> picture_photo.visibility = View.VISIBLE
+        }
+    }
+
+    protected fun setListeners() {
+
+        // クリック時とかのリスナーをセットするとこ
 
         MainLayout.setOnClickListener {
             // 画面のどこかおしたらキーボードを消す
@@ -103,22 +207,25 @@ class DataInputActivity : AppCompatActivity() {
             }
         })
         memo_add.setOnClickListener() {
+            // メモ欄を表示して追加のボタンを消す
             memo_add.visibility = View.GONE
             memo_edit.visibility = View.VISIBLE
         }
-    }
-
-    // メニュー適応
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu_apply, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    // 戻るボタンを押したときの処理
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
+        picture_add.setOnClickListener() {
+            // ファイルを追加するときの画面を表示
+            fileintent.apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "image/*"
+            }
+            startActivityForResult(fileintent, READ_REQUEST_CODE);
+        }
+        picture_photo.setOnClickListener() {
+            // 写真を撮影する画面を表示
+            startActivityForResult(cameraintent, REQUEST_IMAGE_CAPTURE);
+        }
+        picture_delete.setOnClickListener() {
+            deletepicture()
+        }
     }
 
     // ここから各ボタンごとの処理
@@ -241,5 +348,18 @@ class DataInputActivity : AppCompatActivity() {
             val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view!!.windowToken, 0)
         }
+    }
+
+    fun showpicture() {
+        picture_add.visibility = View.GONE
+        picture_photo.visibility = View.GONE
+        picture_delete.visibility = View.VISIBLE
+        photo_imageView.visibility = View.VISIBLE
+    }
+
+    fun deletepicture() {
+        checkintent()
+        picture_delete.visibility = View.GONE
+        photo_imageView.visibility = View.GONE
     }
 }

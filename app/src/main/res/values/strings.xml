@@ -32,6 +32,7 @@
     <string name="apply">登録</string>
     <string name="memo_add">メモを追加...</string>
     <string name="picture_add">画像を追加...</string>
+    <string name="picture_delete">画像を削除</string>
     <string name="shortcut_add">この入力をショートカットに登録</string>
     <string name="dateformat">%1$d/%2$d/%3$d</string>
     <string name="times">回</string>

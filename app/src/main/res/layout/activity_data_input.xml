@@ -392,6 +392,7 @@
                     android:ems="10"
                     android:hint="@string/memo"
                     android:inputType="textPersonName"
+                    android:singleLine="false"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="24sp"
                     android:visibility="gone" />
@@ -401,22 +402,66 @@
                 android:id="@+id/picture_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:background="@drawable/waku"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/picture_add"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginTop="10sp"
+                    android:layout_marginLeft="8sp"
                     android:layout_marginRight="10sp"
-                    android:layout_marginBottom="10sp"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_button"
-                    android:text="@string/picture_add"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/picture_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginRight="2sp"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_button"
+                        android:text="@string/picture_add"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/picture_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginRight="2sp"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="5"
+                        android:background="@drawable/custom_button"
+                        android:foreground="@drawable/ic_baseline_photo_camera_36"
+                        android:foregroundGravity="center"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/picture_delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginRight="2sp"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/custom_button"
+                        android:text="@string/picture_delete"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/photo_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_margin="8sp"
+                    android:visibility="gone"
+                    tools:srcCompat="@tools:sample/avatars" />
+
             </LinearLayout>
 
             <LinearLayout
