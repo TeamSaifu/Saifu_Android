@@ -22,7 +22,8 @@ class HomeFragment : Fragment() {
 
         val fragmentList = arrayListOf<Fragment>(
             sub_fragment1(),
-            sub_fragment2()
+            sub_fragment2(),
+            sub_fragment3()
         )
 
 

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.home.sub_fragment1"></activity>
+        <activity android:name=".ui.home.sub_fragment3"></activity>
+        <activity android:name=".ui.home.sub_fragment1" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".ui.budget.IncomeSettings" />

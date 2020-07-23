@@ -61,6 +61,8 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
             android:layout_marginBottom="@dimen/bottom_nav_size"></androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 
