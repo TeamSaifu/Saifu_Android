@@ -1,6 +1,5 @@
 package com.ze20.saifu.ui.home
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.ze20.saifu.R
 
-
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
@@ -21,19 +19,19 @@ class HomeFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        //スワイプできるフラグメント一覧
+        // スワイプできるフラグメント一覧
         val fragmentList = arrayListOf<Fragment>(
             sub_fragment1(),
             sub_fragment2(),
             sub_fragment3()
         )
 
-        //レイアウト呼び出し
+        // レイアウト呼び出し
         val pager =
             root.findViewById(R.id.pager) as ViewPager
 
-        //レイアウト呼び出し
-        val tablayout=root.findViewById(R.id.tablayout) as TabLayout
+        // レイアウト呼び出し
+        val tablayout = root.findViewById(R.id.tablayout) as TabLayout
 
         // adapterのインスタンス生成
         val adapter: PagerAdapter = SubFragmentAdapter(childFragmentManager, fragmentList)
@@ -41,8 +39,8 @@ class HomeFragment : Fragment() {
         // adapterをセット
         pager.adapter = adapter
 
-        //tablayoutを表示
-        tablayout.setupWithViewPager(pager,true)
+        // tablayoutを表示
+        tablayout.setupWithViewPager(pager , true)
         return root
     }
 }

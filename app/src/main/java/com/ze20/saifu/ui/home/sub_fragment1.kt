@@ -15,5 +15,4 @@ class sub_fragment1 : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_sub_fragment1, container, false)
     }
-
 }

@@ -20,5 +20,4 @@ class SubFragmentAdapter(fm: FragmentManager, private val fragmentList: List<Fra
             // ※ ページングする画面の数を設定
             return fragmentList.size
         }
-
     }
