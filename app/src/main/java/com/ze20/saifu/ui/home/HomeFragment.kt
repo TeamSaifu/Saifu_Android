@@ -21,21 +21,27 @@ class HomeFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
+        //スワイプできるフラグメント一覧
         val fragmentList = arrayListOf<Fragment>(
             sub_fragment1(),
             sub_fragment2(),
             sub_fragment3()
         )
 
-
+        //レイアウト呼び出し
         val pager =
             root.findViewById(R.id.pager) as ViewPager
 
+        //レイアウト呼び出し
         val tablayout=root.findViewById(R.id.tablayout) as TabLayout
-        /// adapterのインスタンス生成
+
+        // adapterのインスタンス生成
         val adapter: PagerAdapter = SubFragmentAdapter(childFragmentManager, fragmentList)
-        /// adapterをセット
+
+        // adapterをセット
         pager.adapter = adapter
+
+        //tablayoutを表示
         tablayout.setupWithViewPager(pager,true)
         return root
     }
