@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
@@ -48,12 +49,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="16dp" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginBottom="@dimen/bottom_nav_size"
         android:orientation="vertical">
 
         <!--スワイプで切り替える部分-->
@@ -61,10 +64,16 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:layout_marginBottom="@dimen/bottom_nav_size"></androidx.viewpager.widget.ViewPager>
+            android:layout_weight="1"></androidx.viewpager.widget.ViewPager>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="12"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp">
+        </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
-
-
 </LinearLayout>

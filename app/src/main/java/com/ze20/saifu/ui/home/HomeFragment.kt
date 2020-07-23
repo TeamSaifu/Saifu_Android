@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.ze20.saifu.R
 
 
@@ -29,10 +30,13 @@ class HomeFragment : Fragment() {
 
         val pager =
             root.findViewById(R.id.pager) as ViewPager
+
+        val tablayout=root.findViewById(R.id.tablayout) as TabLayout
         /// adapterのインスタンス生成
         val adapter: PagerAdapter = SubFragmentAdapter(childFragmentManager, fragmentList)
         /// adapterをセット
         pager.adapter = adapter
+        tablayout.setupWithViewPager(pager,true)
         return root
     }
 }
