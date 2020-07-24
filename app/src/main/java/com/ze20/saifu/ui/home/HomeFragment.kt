@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
         pager.adapter = adapter
 
         // tablayoutを表示
-        tablayout.setupWithViewPager(pager , true)
+        tablayout.setupWithViewPager(pager, true)
         return root
     }
 }
