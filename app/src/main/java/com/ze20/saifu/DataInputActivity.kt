@@ -263,8 +263,7 @@ open class DataInputActivity : AppCompatActivity() {
                     date = java.util.Date()
                     // UserSetDate に選択された日付を格納
                     userSetDate = SimpleDateFormat(
-                        "yyyy/M/d",
-                        Locale.JAPANESE
+                        "yyyy/M/d", Locale.JAPANESE
                     ).parse(getString(R.string.dateformat, year, month, dayOfMonth))!!
                     // フォーマットを作成
                     val sdFormat = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
