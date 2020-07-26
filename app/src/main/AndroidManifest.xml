@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ReportActivity"></activity>
+        <activity android:name=".AddWishActivity" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".ui.budget.IncomeSettings" />
@@ -21,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.budget.BudgetActivity" />
     </application>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
 </manifest>
