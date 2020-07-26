@@ -12,29 +12,29 @@ class CalendarActivity : AppCompatActivity() {
     // https://qiita.com/Sab_swiftlin/items/0993c489e7ef1c0f969d
     // これをみよ
 
-    var tateyoko_switch = false
+    private var tateYokoSwitch = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
-        setTitle(R.string.calendar_title_kari)
+        title = getString(R.string.calendar_title_kari)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // カレンダーアタプターでカレンダーを作る
 
-        val mCalendarAdapter: CalendarAdapter = CalendarAdapter(this)
+        val mCalendarAdapter = CalendarAdapter(this)
 
         prevButton.setOnClickListener {
             mCalendarAdapter.prevMonth()
-            setTitle(mCalendarAdapter.getTitle())
+            title = mCalendarAdapter.getTitle()
         }
         nextButton.setOnClickListener {
             mCalendarAdapter.nextMonth()
-            setTitle(mCalendarAdapter.getTitle())
+            title = mCalendarAdapter.getTitle()
         }
 
-        calendarGridView?.setAdapter(mCalendarAdapter)
-        setTitle(mCalendarAdapter.getTitle())
+        calendarGridView?.adapter = mCalendarAdapter
+        title = mCalendarAdapter.getTitle()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -45,7 +45,7 @@ class CalendarActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // アプリ終了時に画面を縦固定に設定。
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
     // メニュー作成時
@@ -57,13 +57,13 @@ class CalendarActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // 押すたびに縦画面固定と横画面固定が切り替わる
-        if (item.getItemId() == R.id.navigation_yoko_tate) {
-            if (tateyoko_switch) {
-                tateyoko_switch = false
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        if (item.itemId == R.id.navigation_yoko_tate) {
+            if (tateYokoSwitch) {
+                tateYokoSwitch = false
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             } else {
-                tateyoko_switch = true
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+                tateYokoSwitch = true
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             }
         }
         return true

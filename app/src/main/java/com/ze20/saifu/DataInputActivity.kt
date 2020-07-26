@@ -43,7 +43,7 @@ open class DataInputActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_input)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setTitle(R.string.title_data_input)
+        title = getString(R.string.title_data_input)
 
         // UserSetDateを表示しておく
         day_text.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
