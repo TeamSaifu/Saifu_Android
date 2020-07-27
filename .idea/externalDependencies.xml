@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="Gitflow" />
+    <plugin id="cn.yiiguxing.plugin.translate" />
+    <plugin id="com.androhi.androiddrawableviewer" />
+    <plugin id="com.dubreuia" />
+    <plugin id="com.github.shiraji.emoji" />
+    <plugin id="com.github.shiraji.findpullrequest" />
+    <plugin id="de.netnexus.camelcaseplugin" />
+    <plugin id="izhangzhihao.rainbow.brackets" />
+    <plugin id="net.vektah.codeglance" />
+  </component>
+</project>
