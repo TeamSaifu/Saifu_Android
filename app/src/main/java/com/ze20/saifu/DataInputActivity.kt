@@ -1,17 +1,21 @@
 package com.ze20.saifu
 
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -19,6 +23,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
+import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -46,7 +51,7 @@ open class DataInputActivity : AppCompatActivity() {
         title = getString(R.string.title_data_input)
 
         // UserSetDateを表示しておく
-        day_text.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
+        dayText.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
         checkIntent()
         setListeners()
     }
@@ -75,7 +80,7 @@ open class DataInputActivity : AppCompatActivity() {
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> {
                 val bitmap: Bitmap
-                val imageView: ImageView = findViewById(R.id.photo_imageView)
+                val imageView: ImageView = findViewById(R.id.photoImageView)
 
                 resultData?.extras.also {
                     bitmap = resultData?.extras?.get("data") as Bitmap
@@ -90,7 +95,7 @@ open class DataInputActivity : AppCompatActivity() {
                     resultData?.data?.also { uri ->
                         val inputStream = contentResolver?.openInputStream(uri)
                         val image = BitmapFactory.decodeStream(inputStream)
-                        val imageView = findViewById<ImageView>(R.id.photo_imageView)
+                        val imageView = findViewById<ImageView>(R.id.photoImageView)
                         imageView.setImageBitmap(image)
                         showPicture()
                     }
@@ -98,6 +103,49 @@ open class DataInputActivity : AppCompatActivity() {
                     Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        // 登録ボタンを押した時の処理です
+
+        try {
+            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
+            val database = dbHelper.writableDatabase // 書き込み可能
+
+            // log表
+            // inputDate primary key,payDate,name,price,category,splitCount,picture
+
+            val inputDate = java.util.Date()
+            // Bitmapに画像があれば取得 なければNull
+            val bmp: Bitmap? = (photoImageView.drawable as BitmapDrawable?)?.bitmap
+            // INSERTするのに必要なデータをvalueにまとめる
+            val values = ContentValues()
+            values.run {
+                put(
+                    "inputDate",
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.JAPANESE).format(inputDate)
+                )
+                put(
+                    "payDate",
+                    SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.JAPANESE).format(userSetDate)
+                )
+                put("name", memoEdit.text.toString())
+                put("price", editToInt(moneyEdit))
+                put("category", 0) // TODO:カテゴリー送信処理
+                put("splitCount", editToInt(editTimes))
+                // bmpがnullでなければ、ByteArray型にbmpを変換する
+                bmp?.let { put("picture", getBinaryFromBitmap(it)) }
+            }
+            // DBに登録する できなければエラーを返す
+            database.insertOrThrow("log", null, values)
+            finish() // 登録できたら画面を閉じる
+            return true
+        } catch (exception: Exception) {
+            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+            Log.e("insertData", exception.toString()) // エラーをログに出力
+            return false
         }
     }
 
@@ -112,8 +160,8 @@ open class DataInputActivity : AppCompatActivity() {
 
         when (activities.isNotEmpty()) {
             // なければボタンが消滅
-            false -> picture_add.visibility = View.GONE
-            true -> picture_add.visibility = View.VISIBLE
+            false -> pictureAdd.visibility = View.GONE
+            true -> pictureAdd.visibility = View.VISIBLE
         }
 
         // カメラアプリがあるかどうか確認
@@ -125,8 +173,8 @@ open class DataInputActivity : AppCompatActivity() {
 
         when (cameraActivities.isNotEmpty()) {
             // なければボタンが消滅
-            false -> picture_photo.visibility = View.GONE
-            true -> picture_photo.visibility = View.VISIBLE
+            false -> picturePhoto.visibility = View.GONE
+            true -> picturePhoto.visibility = View.VISIBLE
         }
     }
 
@@ -139,15 +187,23 @@ open class DataInputActivity : AppCompatActivity() {
             hideKeyboard()
         }
 
-        plus_minus.setOnClickListener {
+        plusMinusButton.setOnClickListener {
             // プラスマイナス切り替え
             plusMinus()
         }
-        money_text.setOnClickListener {
+        moneyEdit.setOnClickListener {
             // 選択位置を末尾にする
-            money_text.setSelection(money_text.length())
+            moneyEdit.setSelection(moneyEdit.length())
         }
-        money_text.addTextChangedListener(object : TextWatcher {
+        editTimes.setOnClickListener {
+            // 選択位置を末尾にする
+            editTimes.setSelection(editTimes.length())
+        }
+        memoEdit.setOnClickListener {
+            // 選択位置を末尾にする
+            memoEdit.setSelection(memoEdit.length())
+        }
+        moneyEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
 
@@ -160,7 +216,7 @@ open class DataInputActivity : AppCompatActivity() {
                 perTimesCalculation()
             }
         })
-        day_text.setOnClickListener {
+        dayText.setOnClickListener {
             // カレンダーを表示する
             showDatePicker()
         }
@@ -181,11 +237,12 @@ open class DataInputActivity : AppCompatActivity() {
             setDayQuick(7)
         }
         // スイッチの状態に応じて split_option を表示
-        split_switch.setOnCheckedChangeListener { _, isChecked ->
-            split_option.visibility = if (isChecked) View.VISIBLE else View.GONE
+        splitSwitch.setOnCheckedChangeListener { _, isChecked ->
+            splitOption.visibility = if (isChecked) View.VISIBLE else View.GONE
+            editTimes.setText(getString(R.string.one))
             perTimesCalculation()
         }
-        edittimes.addTextChangedListener(object : TextWatcher {
+        editTimes.addTextChangedListener(object : TextWatcher {
             // 回数を変更した時計算をやり直す
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -197,12 +254,12 @@ open class DataInputActivity : AppCompatActivity() {
                 perTimesCalculation()
             }
         })
-        memo_add.setOnClickListener {
+        memoAddButton.setOnClickListener {
             // メモ欄を表示して追加のボタンを消す
-            memo_add.visibility = View.GONE
-            memo_edit.visibility = View.VISIBLE
+            memoAddButton.visibility = View.GONE
+            memoEdit.visibility = View.VISIBLE
         }
-        picture_add.setOnClickListener {
+        pictureAdd.setOnClickListener {
             // ファイルを追加するときの画面を表示
             fileIntent.apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
@@ -210,11 +267,11 @@ open class DataInputActivity : AppCompatActivity() {
             }
             startActivityForResult(fileIntent, READ_REQUEST_CODE)
         }
-        picture_photo.setOnClickListener {
+        picturePhoto.setOnClickListener {
             // 写真を撮影する画面を表示
             startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
         }
-        picture_delete.setOnClickListener {
+        pictureDelete.setOnClickListener {
             deletePicture()
         }
     }
@@ -224,7 +281,7 @@ open class DataInputActivity : AppCompatActivity() {
     private fun plusMinus() {
         // プラスマイナスを切り替えて表示も切り替える
         sign = !sign
-        plus_minus.setText(if (sign) R.string.plus else R.string.minus)
+        plusMinusButton.setText(if (sign) R.string.plus else R.string.minus)
     }
 
     fun emsAutoSet() {
@@ -237,7 +294,7 @@ open class DataInputActivity : AppCompatActivity() {
         // AtLeastで最低値 Inで範囲 coerceAtMostで最大値を指定できるみたい。
         // 詳しくは https://pouhon.net/kotlin-coerce/3967/ 便利だね
 
-        money_text.setEms(((money_text.length() + 1) / 2).coerceAtLeast(1))
+        moneyEdit.setEms(((moneyEdit.length() + 1) / 2).coerceAtLeast(1))
     }
 
     private fun perTimesCalculation() {
@@ -245,9 +302,9 @@ open class DataInputActivity : AppCompatActivity() {
         // なんちゃら 円／回 って表示を計算して更新します
         // emsAutoSet関数で説明しているのと同じのを使ってます
 
-        pertimes.text = (getString(
+        perTimes.text = (getString(
             R.string.pertimes,
-            (editToInt(money_text) ?: 0).coerceAtLeast(0) / (editToInt(edittimes)
+            (editToInt(moneyEdit) ?: 0).coerceAtLeast(0) / (editToInt(editTimes)
                 ?: 1).coerceAtLeast(1)
         ))
     }
@@ -268,7 +325,7 @@ open class DataInputActivity : AppCompatActivity() {
                     // フォーマットを作成
                     val sdFormat = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
                     // 表示テキストを作成
-                    day_text.text = sdFormat.format(userSetDate)
+                    dayText.text = sdFormat.format(userSetDate)
                     // 日付の差を計算する
                     val dateDiff = dateDiff(sdFormat.format(userSetDate), sdFormat.format(date))
                     // 差に応じて表示を変更する
@@ -317,7 +374,7 @@ open class DataInputActivity : AppCompatActivity() {
             }
         }
         // UserSetDateを表示する
-        day_text.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
+        dayText.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
         val sdFormat =
             SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
         // 日付の差を計算する
@@ -334,9 +391,9 @@ open class DataInputActivity : AppCompatActivity() {
     private fun diffShow(dateDiff: Int) {
         // 差に応じて表示を変更するやつ
         when {
-            (dateDiff == 0) -> day_text2.text = getString(R.string.today_parentheses)
-            (dateDiff > 0) -> day_text2.text = getString(R.string.prev_day, dateDiff)
-            (dateDiff < 0) -> day_text2.text = getString(R.string.next_day, (dateDiff * -1))
+            (dateDiff == 0) -> dayDiff.text = getString(R.string.today_parentheses)
+            (dateDiff > 0) -> dayDiff.text = getString(R.string.prev_day, dateDiff)
+            (dateDiff < 0) -> dayDiff.text = getString(R.string.next_day, (dateDiff * -1))
         }
     }
 
@@ -350,15 +407,24 @@ open class DataInputActivity : AppCompatActivity() {
     }
 
     private fun showPicture() {
-        picture_add.visibility = View.GONE
-        picture_photo.visibility = View.GONE
-        picture_delete.visibility = View.VISIBLE
-        photo_imageView.visibility = View.VISIBLE
+        // 追加したピクチャーを出して、追加ボタンを削除ボタンに差し替えます
+        pictureAdd.visibility = View.GONE
+        picturePhoto.visibility = View.GONE
+        pictureDelete.visibility = View.VISIBLE
+        photoImageView.visibility = View.VISIBLE
     }
 
     private fun deletePicture() {
+        // 追加したピクチャーを消して、削除ボタンを追加ボタンに差し替えます
         checkIntent()
-        picture_delete.visibility = View.GONE
-        photo_imageView.visibility = View.GONE
+        pictureDelete.visibility = View.GONE
+        photoImageView.visibility = View.GONE
+    }
+
+    private fun getBinaryFromBitmap(bitmap: Bitmap): ByteArray {
+        // 画像をByteArray型に変換するやつです
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        return byteArrayOutputStream.toByteArray()
     }
 }

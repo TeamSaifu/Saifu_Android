@@ -7,7 +7,7 @@
     tools:context=".DataInputActivity">
 
     <ScrollView
-        android:id="@+id/scroll_view"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/yen_input"
+                    android:id="@+id/yenInput"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -47,7 +47,7 @@
                     android:textAlignment="center">
 
                     <Button
-                        android:id="@+id/plus_minus"
+                        android:id="@+id/plusMinusButton"
                         android:layout_width="68sp"
                         android:layout_height="68sp"
                         android:background="@drawable/ic_baseline_fiber_manual_record_24"
@@ -55,7 +55,7 @@
                         android:textSize="30sp" />
 
                     <TextView
-                        android:id="@+id/yen_text"
+                        android:id="@+id/yenText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/currency"
@@ -63,7 +63,7 @@
                         android:textSize="54sp" />
 
                     <EditText
-                        android:id="@+id/money_text"
+                        android:id="@+id/moneyEdit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#00000000"
@@ -82,13 +82,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/day_input"
+                android:id="@+id/dayInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/waku"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/DayShow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -96,7 +97,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/day_text"
+                        android:id="@+id/dayText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -110,7 +111,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/day_text2"
+                        android:id="@+id/dayDiff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -126,7 +127,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/quickday"
+                    android:id="@+id/DayQuick"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8sp"
@@ -197,14 +198,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/category_input"
+                android:id="@+id/categoryInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/waku"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/category_button"
+                    android:id="@+id/categoryButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
@@ -217,7 +218,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/frequentcate_text"
+                    android:id="@+id/frequentcateText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -232,7 +233,7 @@
                     android:textSize="24sp" />
 
                 <LinearLayout
-                    android:id="@+id/frequentcategory"
+                    android:id="@+id/frequentCategory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
@@ -244,7 +245,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/frequentcate_button1"
+                        android:id="@+id/frequentcateButton1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2sp"
@@ -256,7 +257,7 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/frequentcate_button2"
+                        android:id="@+id/frequentcateButton2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2sp"
@@ -268,7 +269,7 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/frequentcate_button3"
+                        android:id="@+id/frequentcateButton3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2sp"
@@ -280,7 +281,7 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/frequentcate_button4"
+                        android:id="@+id/frequentcateButton4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2sp"
@@ -295,14 +296,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/split_input"
+                android:id="@+id/splitInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/waku"
                 android:orientation="vertical">
 
                 <Switch
-                    android:id="@+id/split_switch"
+                    android:id="@+id/splitSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10sp"
@@ -314,14 +315,14 @@
                     android:textSize="25sp" />
 
                 <LinearLayout
-                    android:id="@+id/split_option"
+                    android:id="@+id/splitOption"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:visibility="gone">
 
                     <EditText
-                        android:id="@+id/edittimes"
+                        android:id="@+id/editTimes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10sp"
@@ -348,7 +349,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/pertimes"
+                        android:id="@+id/perTimes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -364,14 +365,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/memo_input"
+                android:id="@+id/memoInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/waku"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/memo_add"
+                    android:id="@+id/memoAddButton"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginLeft="10sp"
@@ -384,7 +385,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/memo_edit"
+                    android:id="@+id/memoEdit"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_margin="10sp"
@@ -399,7 +400,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/picture_input"
+                android:id="@+id/pictureInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/waku"
@@ -413,7 +414,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/picture_add"
+                        android:id="@+id/pictureAdd"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2sp"
@@ -426,7 +427,7 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/picture_photo"
+                        android:id="@+id/picturePhoto"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2sp"
@@ -440,7 +441,7 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/picture_delete"
+                        android:id="@+id/pictureDelete"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="2sp"
@@ -455,7 +456,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/photo_imageView"
+                    android:id="@+id/photoImageView"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
                     android:layout_margin="8sp"
@@ -465,7 +466,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/shortcut_input"
+                android:id="@+id/shortcutInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -473,7 +474,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/shortcut_add"
+                    android:id="@+id/shortcutAdd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
