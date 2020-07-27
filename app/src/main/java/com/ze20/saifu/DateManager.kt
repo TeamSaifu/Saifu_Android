@@ -5,8 +5,8 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class DateManager {
-    var mCalendar: Calendar
+open class DateManager {
+    var mCalendar: Calendar = Calendar.getInstance()
     val days: List<Date>
         get() {
             // 現在の状態を保持
@@ -32,15 +32,11 @@ class DateManager {
         }
 
     // 当月かどうか確認
-    fun isCurrentMonth(date: Date?): Boolean {
+    fun isCurrentMonth(date: Date): Boolean {
         val format =
             SimpleDateFormat("yyyy年MM月", Locale.US)
         val currentMonth = format.format(mCalendar.time)
-        return if (currentMonth == format.format(date)) {
-            true
-        } else {
-            false
-        }
+        return currentMonth == format.format(date)
     }
 
     // 週数を取得
@@ -49,7 +45,7 @@ class DateManager {
     }
 
     // 曜日を取得
-    fun getDayOfWeek(date: Date?): Int {
+    fun getDayOfWeek(date: Date): Int {
         val calendar = Calendar.getInstance()
         calendar.time = date
         return calendar[Calendar.DAY_OF_WEEK]
@@ -63,9 +59,5 @@ class DateManager {
     // 前月へ
     fun prevMonth() {
         mCalendar.add(Calendar.MONTH, -1)
-    }
-
-    init {
-        mCalendar = Calendar.getInstance()
     }
 }

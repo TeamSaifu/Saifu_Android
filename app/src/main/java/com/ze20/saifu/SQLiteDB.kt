@@ -24,16 +24,16 @@ private class SQLiteDB(context: Context, databaseName:String, factory: SQLiteDat
     //データベース作成
 
     override fun onCreate(database: SQLiteDatabase?) {
-        database?.execSQL("create table if not exists log (inputdate primary key,paydate,name,price,category,splitcount,picture)");
-        database?.execSQL("create table if not exists category (id primary key,name,picture)");
-        database?.execSQL("create table if not exists tuchi (id primary key,content,picture)");
-        database?.execSQL("create table if not exists kotei (id primary key,name,type,price)");
-        database?.execSQL("create table if not exists shortcut (id primary key,name,price)");
-        database?.execSQL("create table if not exists hosii (id primary key,name,price,url,picture)");
+        database?.execSQL("create table if not exists log (inputDate primary key,payDate,name,price,category,splitCount,picture)")
+        database?.execSQL("create table if not exists category (id primary key,name,picture)")
+        database?.execSQL("create table if not exists notification (id primary key,content,picture)")
+        database?.execSQL("create table if not exists budget (id primary key,name,type,price)")
+        database?.execSQL("create table if not exists shortcut (id primary key,name,price)")
+        database?.execSQL("create table if not exists wish (id primary key,name,price,url,picture)")
     }
 
     override fun onUpgrade(database: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        if (oldVersion < newVersion) {
-        }
+        // if (oldVersion < newVersion) {
+        // }
     }
 }

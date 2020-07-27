@@ -11,9 +11,8 @@ import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.collections.ArrayList
 
-class CalendarAdapter(private val context: Context) : BaseAdapter() {
+open class CalendarAdapter(context: Context) : BaseAdapter() {
     private var dateArray: List<Date> = ArrayList()
     private val mContext: Context = context
     private var mDateManager: DateManager = DateManager()
@@ -39,10 +38,10 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
             convertViewm = mLayoutInflater.inflate(R.layout.calendar_cell, null)
             holder = ViewHolder()
             holder.dateText = convertViewm!!.findViewById(R.id.dateText)
-            convertViewm!!.tag = holder
+            convertViewm.tag = holder
         } else {
 
-            holder = convertViewm!!.tag as ViewHolder
+            holder = convertViewm.tag as ViewHolder
         }
 
         //
@@ -60,20 +59,19 @@ class CalendarAdapter(private val context: Context) : BaseAdapter() {
 
         // 当月以外のセルをグレーアウト
         if (mDateManager.isCurrentMonth(dateArray[position])) {
-            convertViewm!!.setBackgroundColor(Color.WHITE)
+            convertViewm.setBackgroundColor(Color.WHITE)
         } else {
-            convertViewm!!.setBackgroundColor(Color.LTGRAY)
+            convertViewm.setBackgroundColor(Color.LTGRAY)
         }
 
         // 日曜日を赤、土曜日を青に
-        val colorId: Int
-        colorId = when (mDateManager.getDayOfWeek(dateArray[position])) {
+        val colorId: Int = when (mDateManager.getDayOfWeek(dateArray[position])) {
             1 -> Color.RED
             7 -> Color.BLUE
             else -> Color.BLACK
         }
         holder.dateText!!.setTextColor(colorId)
-        return convertViewm!!
+        return convertViewm
     }
 
     override fun getItemId(position: Int): Long {

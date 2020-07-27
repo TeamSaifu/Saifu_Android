@@ -22,16 +22,17 @@ import kotlinx.android.synthetic.main.activity_data_input.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
-class DataInputActivity : AppCompatActivity() {
+open class DataInputActivity : AppCompatActivity() {
 
-    var date = java.util.Date() // 今日の日付を格納
-    var sign = false // プラス・マイナス
-    var UserSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
-    var BusyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
+    private var date = java.util.Date() // 今日の日付を格納
+    private var sign = false // プラス・マイナス
+    private var userSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
+    private var busyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
 
-    val fileintent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
-    val cameraintent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
+    private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
+    private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE: Int = 1
@@ -42,11 +43,11 @@ class DataInputActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_input)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setTitle(R.string.title_data_input)
+        title = getString(R.string.title_data_input)
 
         // UserSetDateを表示しておく
-        day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
-        checkintent()
+        day_text.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
+        checkIntent()
         setListeners()
     }
 
@@ -74,15 +75,15 @@ class DataInputActivity : AppCompatActivity() {
         when (requestCode) {
             REQUEST_IMAGE_CAPTURE -> {
                 val bitmap: Bitmap
-                val imageView: ImageView = findViewById<ImageView>(R.id.photo_imageView)
+                val imageView: ImageView = findViewById(R.id.photo_imageView)
 
-                resultData?.getExtras().also {
-                    bitmap = resultData?.getExtras()?.get("data") as Bitmap
+                resultData?.extras.also {
+                    bitmap = resultData?.extras?.get("data") as Bitmap
                     bitmap.also {
                         imageView.setImageBitmap(bitmap)
                     }
                 }
-                showpicture()
+                showPicture()
             }
             READ_REQUEST_CODE -> {
                 try {
@@ -91,7 +92,7 @@ class DataInputActivity : AppCompatActivity() {
                         val image = BitmapFactory.decodeStream(inputStream)
                         val imageView = findViewById<ImageView>(R.id.photo_imageView)
                         imageView.setImageBitmap(image)
-                        showpicture()
+                        showPicture()
                     }
                 } catch (e: Exception) {
                     Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
@@ -100,7 +101,7 @@ class DataInputActivity : AppCompatActivity() {
         }
     }
 
-    protected fun checkintent() {
+    private fun checkIntent() {
 
         // 画像ギャラリーがあるかどうか確認
 
@@ -108,29 +109,28 @@ class DataInputActivity : AppCompatActivity() {
             intent,
             PackageManager.MATCH_ALL
         )
-        val isIntentSafe: Boolean = activities.isNotEmpty()
 
-        when (isIntentSafe) {
+        when (activities.isNotEmpty()) {
             // なければボタンが消滅
             false -> picture_add.visibility = View.GONE
             true -> picture_add.visibility = View.VISIBLE
         }
 
         // カメラアプリがあるかどうか確認
-        val cameraactivities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            cameraintent,
+
+        val cameraActivities: List<ResolveInfo> = packageManager.queryIntentActivities(
+            cameraIntent,
             PackageManager.MATCH_ALL
         )
-        val iscameraIntentSafe: Boolean = cameraactivities.isNotEmpty()
 
-        when (iscameraIntentSafe) {
+        when (cameraActivities.isNotEmpty()) {
             // なければボタンが消滅
             false -> picture_photo.visibility = View.GONE
             true -> picture_photo.visibility = View.VISIBLE
         }
     }
 
-    protected fun setListeners() {
+    private fun setListeners() {
 
         // クリック時とかのリスナーをセットするとこ
 
@@ -139,11 +139,11 @@ class DataInputActivity : AppCompatActivity() {
             hideKeyboard()
         }
 
-        plus_minus.setOnClickListener { view ->
+        plus_minus.setOnClickListener {
             // プラスマイナス切り替え
-            plusminus()
+            plusMinus()
         }
-        money_text.setOnClickListener() {
+        money_text.setOnClickListener {
             // 選択位置を末尾にする
             money_text.setSelection(money_text.length())
         }
@@ -156,40 +156,34 @@ class DataInputActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // 自動で入力幅を広げる
-                emsauto()
-                pertimes.text = (getString(
-                    R.string.pertimes,
-                    Math.max(edittoInt(money_text) ?: 0, 0) / Math.max(edittoInt(edittimes) ?: 1, 1)
-                ))
+                emsAutoSet()
+                perTimesCalculation()
             }
         })
-        day_text.setOnClickListener() {
+        day_text.setOnClickListener {
             // カレンダーを表示する
             showDatePicker()
         }
         // QuickDaySet ボタンを使用したときの処理
-        m7d.setOnClickListener() {
-            setdayquick(-7)
+        m7d.setOnClickListener {
+            setDayQuick(-7)
         }
-        m1d.setOnClickListener() {
-            setdayquick(-1)
+        m1d.setOnClickListener {
+            setDayQuick(-1)
         }
-        today.setOnClickListener() {
-            setdayquick(0)
+        today.setOnClickListener {
+            setDayQuick(0)
         }
-        p1d.setOnClickListener() {
-            setdayquick(1)
+        p1d.setOnClickListener {
+            setDayQuick(1)
         }
-        p7d.setOnClickListener() {
-            setdayquick(7)
+        p7d.setOnClickListener {
+            setDayQuick(7)
         }
         // スイッチの状態に応じて split_option を表示
         split_switch.setOnCheckedChangeListener { _, isChecked ->
             split_option.visibility = if (isChecked) View.VISIBLE else View.GONE
-            pertimes.text = (getString(
-                R.string.pertimes,
-                Math.max(edittoInt(money_text) ?: 0, 0) / Math.max(edittoInt(edittimes) ?: 1, 1)
-            ))
+            perTimesCalculation()
         }
         edittimes.addTextChangedListener(object : TextWatcher {
             // 回数を変更した時計算をやり直す
@@ -200,164 +194,170 @@ class DataInputActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                pertimes.text = (getString(
-                    R.string.pertimes,
-                    Math.max(edittoInt(money_text) ?: 0, 0) / Math.max(edittoInt(edittimes) ?: 1, 1)
-                ))
+                perTimesCalculation()
             }
         })
-        memo_add.setOnClickListener() {
+        memo_add.setOnClickListener {
             // メモ欄を表示して追加のボタンを消す
             memo_add.visibility = View.GONE
             memo_edit.visibility = View.VISIBLE
         }
-        picture_add.setOnClickListener() {
+        picture_add.setOnClickListener {
             // ファイルを追加するときの画面を表示
-            fileintent.apply {
+            fileIntent.apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "image/*"
             }
-            startActivityForResult(fileintent, READ_REQUEST_CODE)
+            startActivityForResult(fileIntent, READ_REQUEST_CODE)
         }
-        picture_photo.setOnClickListener() {
+        picture_photo.setOnClickListener {
             // 写真を撮影する画面を表示
-            startActivityForResult(cameraintent, REQUEST_IMAGE_CAPTURE)
+            startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
         }
-        picture_delete.setOnClickListener() {
-            deletepicture()
+        picture_delete.setOnClickListener {
+            deletePicture()
         }
     }
 
     // ここから各ボタンごとの処理
 
-    fun plusminus() {
+    private fun plusMinus() {
         // プラスマイナスを切り替えて表示も切り替える
         sign = !sign
         plus_minus.setText(if (sign) R.string.plus else R.string.minus)
     }
 
-    fun emsauto() {
+    fun emsAutoSet() {
         // 文字列の幅を適切にする
         // 0 ~ 2 : 1em / 3 ~ 4 : 2em / 5 ~ 6 : 3em / 7 ~ 8 : 4em
         // 1em につき数字2文字の幅を確保します
-        money_text.setEms(Math.max((money_text.length() + 1) / 2, 1))
+
+        // maxとかminとかでめちゃくちゃしなくても
+        // Kotlinでは coerceなんちゃらで結果の範囲を指定できるみたいです。
+        // AtLeastで最低値 Inで範囲 coerceAtMostで最大値を指定できるみたい。
+        // 詳しくは https://pouhon.net/kotlin-coerce/3967/ 便利だね
+
+        money_text.setEms(((money_text.length() + 1) / 2).coerceAtLeast(1))
     }
 
-    fun showDatePicker() {
+    private fun perTimesCalculation() {
+
+        // なんちゃら 円／回 って表示を計算して更新します
+        // emsAutoSet関数で説明しているのと同じのを使ってます
+
+        pertimes.text = (getString(
+            R.string.pertimes,
+            (editToInt(money_text) ?: 0).coerceAtLeast(0) / (editToInt(edittimes)
+                ?: 1).coerceAtLeast(1)
+        ))
+    }
+
+    private fun showDatePicker() {
         // カレンダーを表示する
-        if (BusyFlag == false) {
-            BusyFlag = true
+        if (!busyFlag) {
+            busyFlag = true
             // DatePickerDialogでカレンダー式の選択画面を作れる
             val datePickerDialog = DatePickerDialog(
                 this,
-                DatePickerDialog.OnDateSetListener() { view, year, month, dayOfMonth ->
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     date = java.util.Date()
                     // UserSetDate に選択された日付を格納
-                    UserSetDate = SimpleDateFormat("yyyy/M/d").parse(
-                        getString(
-                            R.string.dateformat,
-                            year,
-                            month,
-                            dayOfMonth
-                        )
-                    )
+                    userSetDate = SimpleDateFormat(
+                        "yyyy/M/d", Locale.JAPANESE
+                    ).parse(getString(R.string.dateformat, year, month, dayOfMonth))!!
                     // フォーマットを作成
-                    val sdFormat = SimpleDateFormat("yyyy/MM/dd")
+                    val sdFormat = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
                     // 表示テキストを作成
-                    day_text.setText(sdFormat.format(UserSetDate))
+                    day_text.text = sdFormat.format(userSetDate)
                     // 日付の差を計算する
-                    val datediff = dateDiff(sdFormat.format(UserSetDate), sdFormat.format(date))
+                    val dateDiff = dateDiff(sdFormat.format(userSetDate), sdFormat.format(date))
                     // 差に応じて表示を変更する
-                    datediff_textshow(datediff)
+                    diffShow(dateDiff)
                 }, // Dateピッカーの初期値にUserSetDateを設定
-                SimpleDateFormat("yyyy").format(UserSetDate).toInt(),
-                SimpleDateFormat("MM").format(UserSetDate).toInt(),
-                SimpleDateFormat("dd").format(UserSetDate).toInt()
+                SimpleDateFormat("yyyy", Locale.JAPANESE).format(userSetDate).toInt(),
+                SimpleDateFormat("MM", Locale.JAPANESE).format(userSetDate).toInt(),
+                SimpleDateFormat("dd", Locale.JAPANESE).format(userSetDate).toInt()
             )
             // 表示します
             datePickerDialog.show()
 
-            BusyFlag = false
+            busyFlag = false
         }
     }
 
-    fun dateDiff(dateFromStrig: String?, dateToString: String?): Int {
-        val sdf = SimpleDateFormat("yyyy/MM/dd")
-        var dateTo: java.util.Date? = null
-        var dateFrom: java.util.Date? = null
+    private fun dateDiff(dateFromString: String, dateToString: String): Int {
+        val sdf = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
         // Date型に変換
-        try {
-            dateFrom = sdf.parse(dateFromStrig)
-            dateTo = sdf.parse(dateToString)
+        return try {
+            val dateFrom = sdf.parse(dateFromString)
+            val dateTo = sdf.parse(dateToString)
+            // 差分の日数を計算する
+            val dayDiff = (dateTo!!.time - dateFrom!!.time) / (1000 * 60 * 60 * 24)
+            dayDiff.toInt()
         } catch (e: ParseException) {
             e.printStackTrace()
+            0
         }
-
-        // 差分の日数を計算する
-        val dateTimeTo = dateTo!!.time
-        val dateTimeFrom = dateFrom!!.time
-        val dayDiff = (dateTimeTo - dateTimeFrom) / (1000 * 60 * 60 * 24)
-        return dayDiff.toInt()
     }
 
-    fun setdayquick(num: Int) {
+    private fun setDayQuick(num: Int) {
         date = java.util.Date()
         when (num) {
 
             // 0 の場合、今日と同じにする
-            0 -> UserSetDate = date
+            0 -> userSetDate = date
 
             else -> {
                 // 一度 calendar型 に変換して .add を使用する
-                var calendar: Calendar = Calendar.getInstance()
-                calendar.setTime(UserSetDate)
+                val calendar: Calendar = Calendar.getInstance()
+                calendar.time = userSetDate
                 calendar.add(Calendar.DAY_OF_MONTH, num)
                 // Date型に戻す
-                UserSetDate = calendar.getTime()
+                userSetDate = calendar.time
             }
         }
         // UserSetDateを表示する
-        day_text.setText(SimpleDateFormat("yyyy/MM/dd").format(UserSetDate))
+        day_text.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
         val sdFormat =
-            SimpleDateFormat("yyyy/MM/dd")
+            SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
         // 日付の差を計算する
-        val datediff = dateDiff(sdFormat.format(UserSetDate), sdFormat.format(date))
+        val dateDiff = dateDiff(sdFormat.format(userSetDate), sdFormat.format(date))
         // 差に応じて表示を変更する
-        datediff_textshow(datediff)
+        diffShow(dateDiff)
     }
 
-    fun edittoInt(edittext: EditText): Int? {
-        // edittext を 数値に変換 空文字列ならNullを返す
-        return edittext.text.toString().toIntOrNull()
+    private fun editToInt(editText: EditText): Int? {
+        // editText を 数値に変換 空文字列ならNullを返す
+        return editText.text.toString().toIntOrNull()
     }
 
-    fun datediff_textshow(datediff: Int) {
+    private fun diffShow(dateDiff: Int) {
         // 差に応じて表示を変更するやつ
         when {
-            (datediff == 0) -> day_text2.text = getString(R.string.today_parentheses)
-            (datediff > 0) -> day_text2.text = getString(R.string.prev_day, datediff)
-            (datediff < 0) -> day_text2.text = getString(R.string.next_day, (datediff * -1))
+            (dateDiff == 0) -> day_text2.text = getString(R.string.today_parentheses)
+            (dateDiff > 0) -> day_text2.text = getString(R.string.prev_day, dateDiff)
+            (dateDiff < 0) -> day_text2.text = getString(R.string.next_day, (dateDiff * -1))
         }
     }
 
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         // キーボードを探してあれば消します
         val view = this@DataInputActivity.currentFocus
-        view.let {
+        view.also {
             val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view!!.windowToken, 0)
         }
     }
 
-    fun showpicture() {
+    private fun showPicture() {
         picture_add.visibility = View.GONE
         picture_photo.visibility = View.GONE
         picture_delete.visibility = View.VISIBLE
         photo_imageView.visibility = View.VISIBLE
     }
 
-    fun deletepicture() {
-        checkintent()
+    private fun deletePicture() {
+        checkIntent()
         picture_delete.visibility = View.GONE
         photo_imageView.visibility = View.GONE
     }
