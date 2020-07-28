@@ -1,12 +1,15 @@
 package com.ze20.saifu.ui.want
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.ze20.saifu.AddWishActivity
 import com.ze20.saifu.R
 
 class WantFragment : Fragment() {
@@ -28,5 +31,10 @@ class WantFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_wishlist, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        startActivity(Intent(activity, AddWishActivity::class.java))
+        return true
     }
 }
