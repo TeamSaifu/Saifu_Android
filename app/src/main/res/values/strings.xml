@@ -61,7 +61,7 @@
     <string name="prev_day">(%1$d日前)</string>
     <string name="next_day">(%1$d日後)</string>
     <string name="name">名称</string>
-    <string name="value">値段</string>
+    <string name="price">金額</string>
     <string name="add_url">URLを追加 ＋</string>
     <string name="add_picture">画像を追加 ＋</string>
     <string name="memo">メモ</string>
@@ -81,4 +81,5 @@
     <string name="profit_yen_kari">z円</string>
     <string name="category_kari">カテゴリ別支出</string>
     <string name="report_hyouzi_kari">＊過去のレポートを表示</string>
+    <string name="url">URL</string>
 </resources>
