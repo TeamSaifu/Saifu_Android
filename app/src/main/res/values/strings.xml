@@ -81,4 +81,6 @@
     <string name="profit_yen_kari">z円</string>
     <string name="category_kari">カテゴリ別支出</string>
     <string name="report_hyouzi_kari">＊過去のレポートを表示</string>
+    <string name="channel_description">cdtest</string>
+    <string name="channel_name">cdname</string>
 </resources>
