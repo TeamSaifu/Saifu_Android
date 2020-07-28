@@ -2,7 +2,6 @@ package com.ze20.saifu
 
 import android.app.DatePickerDialog
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -17,13 +16,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
-import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -38,6 +34,7 @@ open class DataInputActivity : AppCompatActivity() {
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
+    private val cFunc = ConvenientFunction()
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE: Int = 1
@@ -132,11 +129,11 @@ open class DataInputActivity : AppCompatActivity() {
                     SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.JAPANESE).format(userSetDate)
                 )
                 put("name", memoEdit.text.toString())
-                put("price", editToInt(moneyEdit))
+                put("price", cFunc.editToInt(moneyEdit))
                 put("category", 0) // TODO:カテゴリー送信処理
-                put("splitCount", editToInt(editTimes))
+                put("splitCount", cFunc.editToInt(editTimes))
                 // bmpがnullでなければ、ByteArray型にbmpを変換する
-                bmp?.let { put("picture", getBinaryFromBitmap(it)) }
+                bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
             }
             // DBに登録する できなければエラーを返す
             database.insertOrThrow("log", null, values)
@@ -184,7 +181,7 @@ open class DataInputActivity : AppCompatActivity() {
 
         MainLayout.setOnClickListener {
             // 画面のどこかおしたらキーボードを消す
-            hideKeyboard()
+            cFunc.hideKeyboard(this, this@DataInputActivity.currentFocus)
         }
 
         plusMinusButton.setOnClickListener {
@@ -304,7 +301,7 @@ open class DataInputActivity : AppCompatActivity() {
 
         perTimes.text = (getString(
             R.string.pertimes,
-            (editToInt(moneyEdit) ?: 0).coerceAtLeast(0) / (editToInt(editTimes)
+            (cFunc.editToInt(moneyEdit) ?: 0).coerceAtLeast(0) / (cFunc.editToInt(editTimes)
                 ?: 1).coerceAtLeast(1)
         ))
     }
@@ -383,11 +380,6 @@ open class DataInputActivity : AppCompatActivity() {
         diffShow(dateDiff)
     }
 
-    private fun editToInt(editText: EditText): Int? {
-        // editText を 数値に変換 空文字列ならNullを返す
-        return editText.text.toString().toIntOrNull()
-    }
-
     private fun diffShow(dateDiff: Int) {
         // 差に応じて表示を変更するやつ
         when {
@@ -397,14 +389,6 @@ open class DataInputActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideKeyboard() {
-        // キーボードを探してあれば消します
-        val view = this@DataInputActivity.currentFocus
-        view.also {
-            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.hideSoftInputFromWindow(view!!.windowToken, 0)
-        }
-    }
 
     private fun showPicture() {
         // 追加したピクチャーを出して、追加ボタンを削除ボタンに差し替えます
@@ -419,12 +403,5 @@ open class DataInputActivity : AppCompatActivity() {
         checkIntent()
         pictureDelete.visibility = View.GONE
         photoImageView.visibility = View.GONE
-    }
-
-    private fun getBinaryFromBitmap(bitmap: Bitmap): ByteArray {
-        // 画像をByteArray型に変換するやつです
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        return byteArrayOutputStream.toByteArray()
     }
 }
