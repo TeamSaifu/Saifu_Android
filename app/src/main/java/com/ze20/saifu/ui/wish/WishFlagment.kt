@@ -1,4 +1,4 @@
-package com.ze20.saifu.ui.want
+package com.ze20.saifu.ui.wish
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,14 +12,14 @@ import androidx.fragment.app.Fragment
 import com.ze20.saifu.AddWishActivity
 import com.ze20.saifu.R
 
-class WantFragment : Fragment() {
+class WishFlagment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_want, container, false)
+        val root = inflater.inflate(R.layout.fragment_wish, container, false)
         return root
     }
 
