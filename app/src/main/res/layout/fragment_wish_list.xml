@@ -14,6 +14,13 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/idText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/simpleLayout"
             android:layout_width="match_parent"
@@ -57,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
+                app:srcCompat="@drawable/ic_baseline_arrow_downward_24" />
 
         </LinearLayout>
 
@@ -69,7 +76,7 @@
         android:layout_height="300sp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/itemImage"
@@ -77,7 +84,15 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:padding="5sp" />
+
+        <TextView
+            android:id="@+id/urlText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/buttonLayout"
@@ -101,11 +116,11 @@
                 app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
 
             <ImageView
-                android:id="@+id/shareButton"
+                android:id="@+id/deleteButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_baseline_share_24" />
+                app:srcCompat="@drawable/ic_baseline_delete_24" />
 
         </LinearLayout>
     </LinearLayout>
