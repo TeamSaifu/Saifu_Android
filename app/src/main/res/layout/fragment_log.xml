@@ -3,18 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:tag="log_fragment"
     tools:context=".ui.log.logFragment">
 
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/dayText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/blackColor"
+                android:textSize="20dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/categoryNameText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/blackColor"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/priceText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:textColor="@color/blackColor"
+                android:textSize="20dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/horizon_line" />
+    </LinearLayout>
 </LinearLayout>

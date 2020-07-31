@@ -11,23 +11,28 @@ import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
 import kotlinx.android.synthetic.main.fragment_log.view.*
 
+lateinit var root: View
+
 class logFragment : Fragment() {
 
     private val dbName: String = "SaifuDB"
     private val tableName: String = "log"
     private val dbVersion: Int = 1
-    private val arraypayDate: ArrayList<String> = arrayListOf()
-    private val arrayName: ArrayList<String> = arrayListOf()
-    private val arrayPrice: ArrayList<Int> = arrayListOf()
-    private val arrayCategory: ArrayList<String> = arrayListOf()
-    private val arraySplitCount: ArrayList<Int> = arrayListOf()
+    private var arrayListlayout: ArrayList<View> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_log, container, false)
+        root = View.inflate(context, R.layout.fragment_log, null)
+
+        logShow()
+
+        return root
+    }
+
+    private fun logShow() {
         try {
 
             // DBにアクセス
@@ -35,30 +40,36 @@ class logFragment : Fragment() {
             val database = SQLiteDB.readableDatabase
 
             // SQL文を構成
-            val sql = "select * from " + tableName
-
+            val sql =
+                "select *,strftime('%Y/%m/%d', payDate) as day from " + tableName + " order by 1 desc;"
             val cursor = database.rawQuery(sql, null)
-            println(cursor.count)
+
+            // log表
+            // inputDate primary key,payDate,name,price,category,splitCount,picture,sign
+
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
-                    arraypayDate.add(cursor.getString(0))
-                    arrayName.add(cursor.getString(1))
-                    arrayPrice.add(cursor.getInt(3))
+                    arrayListlayout.add(View.inflate(context, R.layout.fragment_log, null))
+                    root.linearlayout.addView(arrayListlayout[arrayListlayout.size - 1].apply {
+                        dayText.text = cursor.getString(7) + "   "
+                        if (cursor.getString(4) == "0") {
+
+                            categoryNameText.text = ""
+                        }
+                        priceText.text = "¥" + cursor.getInt(3).toString()
+                    })
                     cursor.moveToNext()
                 }
-
-                root.text1.setText(arraypayDate.toString())
-                root.text2.setText(arrayPrice.toString())
             }
-            cursor.close()
         } catch (e: Exception) {
             println(e)
         }
-        return root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override
+
+    fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity?.setTitle((R.menu.search_view))
         setHasOptionsMenu(true)
