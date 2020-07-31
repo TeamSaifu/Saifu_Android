@@ -29,7 +29,7 @@ class SQLiteDB(
     //データベース作成
 
     override fun onCreate(database: SQLiteDatabase?) {
-        database?.execSQL("create table if not exists log (inputDate primary key,payDate,name,price,category,splitCount,picture)")
+        database?.execSQL("create table if not exists log (inputDate primary key,payDate,name,price,category,splitCount,picture,sign)")
         database?.execSQL("create table if not exists category (id INTEGER primary key AUTOINCREMENT,name,picture)")
         database?.execSQL("create table if not exists notification (id INTEGER primary key AUTOINCREMENT,content,picture)")
         database?.execSQL("create table if not exists budget (id INTEGER primary key AUTOINCREMENT,name,type,price)")

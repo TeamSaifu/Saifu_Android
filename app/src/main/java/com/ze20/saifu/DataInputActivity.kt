@@ -139,6 +139,7 @@ open class DataInputActivity : AppCompatActivity() {
                         put("splitCount", cFunc.editToInt(editTimes))
                         // bmpがnullでなければ、ByteArray型にbmpを変換する
                         bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
+                        put("sign", if (sign) 1 else 0)
                     }
                     // DBに登録する できなければエラーを返す
                     database.insertOrThrow("log", null, values)
