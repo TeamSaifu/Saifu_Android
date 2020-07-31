@@ -44,6 +44,9 @@ class WishFragment : Fragment() {
     }
 
     private fun databaseCheck() {
+
+        // データベースをチェックしてレイアウトを作成する
+
         try {
 
             val dbHelper = SQLiteDB(requireContext(), "SaifuDB", null, 1)
@@ -59,22 +62,29 @@ class WishFragment : Fragment() {
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
+                    // arrayListlayoutに新たなレイアウトを作成
                     arrayListlayout.add(View.inflate(context, R.layout.fragment_wish_list, null))
+                    // 各種処理をしたあとにビューにレイアウトを追加する
                     root.linearLayout.addView(arrayListlayout[arrayListlayout.size - 1].apply {
+                        // データベースの内容を作ったレイアウトに流し込む
                         idText.text = cursor.getInt(0).toString()
                         nameText.text = cursor.getString(1)
                         priceText.text =
                             getString(R.string.currency) + ("%,d".format(cursor.getInt(2)))
                         urlText.text = cursor.getString(3)
+                        // URLが5文字以下ならURLボタンを消す
                         webButton.visibility =
                             if (urlText.length() < 5) View.INVISIBLE else View.VISIBLE
                         val blob: ByteArray? = cursor.getBlob(4)
+                        // 画像ファイルがあれば復元
                         blob?.let {
                             val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                             itemImage.setImageBitmap(bitmap)
                         }
+                        // クリックリスナーなどをセット
                         setListener(this)
                     })
+                    //次の項目へ
                     cursor.moveToNext()
                 }
             }
@@ -84,7 +94,11 @@ class WishFragment : Fragment() {
     }
 
     private fun setListener(view: View) {
+
+        // リスナーをセットします
+
         view.showHideButton.setOnClickListener {
+            // infoLayout の表示を切り替えてアイコンを変更する
             view.infoLayout.visibility =
                 if (view.infoLayout.visibility == View.GONE) {
                     view.showHideButton.setImageResource(R.drawable.ic_baseline_arrow_upward_24)
@@ -95,6 +109,7 @@ class WishFragment : Fragment() {
                 }
         }
         view.webButton.setOnClickListener {
+            // webを表示するボタン
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(view.urlText.text.toString())))
             } catch (exception: Exception) {
@@ -103,12 +118,16 @@ class WishFragment : Fragment() {
             }
         }
         view.deleteButton.setOnClickListener {
+            // 項目を削除するボタン
             deleteData(view.idText.text.toString())
             reload()
         }
     }
 
     fun reload() {
+
+        // 表示を更新するメソッドです
+
         val inflater =
             activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         root = inflater.inflate(R.layout.fragment_wish, null)
@@ -131,6 +150,7 @@ class WishFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            // plusボタンが押されたとき
             R.id.plusButton -> {
                 startActivity(Intent(activity, AddWishActivity::class.java))
                 reload()
@@ -140,6 +160,7 @@ class WishFragment : Fragment() {
     }
 
     private fun deleteData(whereId: String) {
+        // その名の通りデータを消します
         try {
             val dbHelper = SQLiteDB(requireContext(), "SaifuDB", null, 1)
             val database = dbHelper.writableDatabase

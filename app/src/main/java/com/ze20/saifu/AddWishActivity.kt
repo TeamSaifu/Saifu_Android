@@ -126,6 +126,8 @@ class AddWishActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            // 戻るボタンならこっちになる
             else -> {
                 finish()
             }
