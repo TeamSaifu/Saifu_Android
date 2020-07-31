@@ -23,7 +23,7 @@ class AddWishActivity : AppCompatActivity() {
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
     private val cFunc = ConvenientFunction()
-
+    var busyFlag: Boolean = false
     companion object {
         private const val REQUEST_IMAGE_CAPTURE: Int = 1
         private const val READ_REQUEST_CODE: Int = 42
@@ -90,34 +90,47 @@ class AddWishActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        // 登録ボタンを押した時の処理です
+        when (item.itemId) {
 
-        try {
-            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
-            val database = dbHelper.writableDatabase // 書き込み可能
+            // 登録ボタンを押した時の処理です
 
-            // wish表
-            // id primary key,name,price,url,picture
+            R.id.applyButton -> {
+                if (!busyFlag) {
+                    busyFlag = true
+                    try {
+                        val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
+                        val database = dbHelper.writableDatabase // 書き込み可能
 
-            // Bitmapに画像があれば取得 なければNull
-            val bmp: Bitmap? = (photoImageView.drawable as BitmapDrawable?)?.bitmap
-            // INSERTするのに必要なデータをvalueにまとめる
-            val values = ContentValues()
-            values.run {
-                put("name", nameEdit.text.toString())
-                put("price", cFunc.editToInt(priceEdit))
-                put("url", urlEdit.text.toString())
-                bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
+                        // wish表
+                        // id primary key,name,price,url,picture
+
+                        // Bitmapに画像があれば取得 なければNull
+                        val bmp: Bitmap? = (photoImageView.drawable as BitmapDrawable?)?.bitmap
+                        // INSERTするのに必要なデータをvalueにまとめる
+                        val values = ContentValues()
+                        values.run {
+                            put("name", nameEdit.text.toString())
+                            put("price", cFunc.editToInt(priceEdit))
+                            put("url", urlEdit.text.toString())
+                            bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
+                        }
+                        // DBに登録する できなければエラーを返す
+                        database.insertOrThrow("wish", null, values)
+                        finish() // 登録できたら画面を閉じる
+                        return true
+                    } catch (exception: Exception) {
+                        Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+                        Log.e("insertData", exception.toString()) // エラーをログに出力
+                        busyFlag = false
+                        return false
+                    }
+                }
             }
-            // DBに登録する できなければエラーを返す
-            database.insertOrThrow("wish", null, values)
-            finish() // 登録できたら画面を閉じる
-            return true
-        } catch (exception: Exception) {
-            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
-            Log.e("insertData", exception.toString()) // エラーをログに出力
-            return false
+            else -> {
+                finish()
+            }
         }
+        return true
     }
 
     private fun checkIntent() {
