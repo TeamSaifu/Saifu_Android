@@ -3,6 +3,7 @@ package com.ze20.saifu.ui.wish
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ze20.saifu.AddWishActivity
 import com.ze20.saifu.R
@@ -64,12 +66,14 @@ class WishFragment : Fragment() {
                         priceText.text =
                             getString(R.string.currency) + ("%,d".format(cursor.getInt(2)))
                         urlText.text = cursor.getString(3)
+                        webButton.visibility =
+                            if (urlText.length() < 5) View.INVISIBLE else View.VISIBLE
                         val blob: ByteArray? = cursor.getBlob(4)
                         blob?.let {
                             val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                             itemImage.setImageBitmap(bitmap)
                         }
-                        setListenter(this)
+                        setListener(this)
                     })
                     cursor.moveToNext()
                 }
@@ -79,16 +83,24 @@ class WishFragment : Fragment() {
         }
     }
 
-    private fun setListenter(view: View) {
+    private fun setListener(view: View) {
         view.showHideButton.setOnClickListener {
             view.infoLayout.visibility =
-                if (view.infoLayout.visibility == View.VISIBLE) {
-                    view.showHideButton.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
-                    View.GONE
-                } else {
+                if (view.infoLayout.visibility == View.GONE) {
                     view.showHideButton.setImageResource(R.drawable.ic_baseline_arrow_upward_24)
                     View.VISIBLE
+                } else {
+                    view.showHideButton.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
+                    View.GONE
                 }
+        }
+        view.webButton.setOnClickListener {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(view.urlText.text.toString())))
+            } catch (exception: Exception) {
+                Toast.makeText(activity, "URLが不正です。", Toast.LENGTH_LONG).show()
+                Log.e("webAccess", exception.toString());
+            }
         }
         view.deleteButton.setOnClickListener {
             deleteData(view.idText.text.toString())
