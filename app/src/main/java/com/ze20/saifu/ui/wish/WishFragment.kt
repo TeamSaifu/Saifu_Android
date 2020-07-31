@@ -38,7 +38,7 @@ class WishFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //reload()
+        reload()
     }
 
     private fun databaseCheck() {
@@ -96,17 +96,10 @@ class WishFragment : Fragment() {
         }
     }
 
-    private fun reload() {
-        val fragment = WishFragment()
+    fun reload() {
         val inflater =
             activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         root = inflater.inflate(R.layout.fragment_wish, null)
-        /*val fragmentManager = activity?.supportFragmentManager
-        fragmentManager?.let {
-            val fragmentTransaction = it.beginTransaction()
-            fragmentTransaction.replace(R.id.nav_view, fragment)
-            fragmentTransaction.commit()
-        }*/
         databaseCheck()
         (getView() as ViewGroup?)?.let {
             it.removeAllViews()
@@ -125,8 +118,12 @@ class WishFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        startActivity(Intent(activity, AddWishActivity::class.java))
-        reload()
+        when (item.itemId) {
+            R.id.plusButton -> {
+                startActivity(Intent(activity, AddWishActivity::class.java))
+                reload()
+            }
+        }
         return true
     }
 
