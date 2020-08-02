@@ -130,7 +130,6 @@ class WishFragment : Fragment() {
             picture?.let { intent.putExtra("picture", it) }
             startActivity(intent)
             reload()
-            // wishF.deleteData(id)
         }
     }
 
