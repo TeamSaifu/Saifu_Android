@@ -116,11 +116,11 @@
                 app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
 
             <ImageView
-                android:id="@+id/deleteButton"
+                android:id="@+id/editButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_baseline_delete_24" />
+                app:srcCompat="@drawable/ic_edit_24dp" />
 
         </LinearLayout>
     </LinearLayout>
