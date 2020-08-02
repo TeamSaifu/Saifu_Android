@@ -148,7 +148,7 @@ class WishFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.setTitle((R.menu.menu_wishlist))
+        activity?.setTitle(R.menu.menu_wishlist)
         setHasOptionsMenu(true)
     }
 
