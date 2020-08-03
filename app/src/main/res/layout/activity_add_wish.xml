@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddWishActivity">
 
     <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
+            android:id="@+id/nameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50sp"
@@ -20,7 +25,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/category3text"
+                android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -30,17 +35,18 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/nameEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textColor="@color/colorPrimaryDark"
-                android:autofillHints="" />
+                android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/priceLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50sp"
@@ -50,28 +56,29 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/reporthyouzitext"
+                android:id="@+id/priceText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="@string/value"
+                android:text="@string/price"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editTextNumber"
+                android:id="@+id/priceEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
-                android:textColor="@color/colorPrimaryDark"
-                android:autofillHints="" />
+                android:textColor="@color/colorPrimaryDark" />
+
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/urlAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50sp"
@@ -81,16 +88,114 @@
             android:text="@string/add_url"
             android:textSize="22sp" />
 
-        <Button
-            android:id="@+id/button2"
+        <LinearLayout
+            android:id="@+id/urlLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginTop="0sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginBottom="50sp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/urlText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/url"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/urlEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <ImageView
+                android:id="@+id/pasteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_baseline_filter_frames_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pictureLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50sp"
             android:layout_marginRight="50sp"
-            android:layout_marginBottom="50sp"
-            android:background="@drawable/custom_button"
-            android:text="@string/add_picture"
-            android:textSize="22sp" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pictureAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button"
+                android:text="@string/add_picture"
+                android:textSize="22sp" />
+
+            <Button
+                android:id="@+id/picturePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2sp"
+                android:layout_marginRight="2sp"
+                android:layout_weight="5"
+                android:background="@drawable/custom_button"
+                android:foreground="@drawable/ic_baseline_photo_camera_36"
+                android:foregroundGravity="center"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/pictureDelete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button"
+                android:text="@string/picture_delete"
+                android:textSize="22sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/photoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="10sp"
+            android:visibility="visible"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/deleteItemButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="50sp"
+                android:layout_marginLeft="50sp"
+                android:layout_marginRight="50sp"
+                android:layout_marginBottom="50sp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_danger"
+                android:text="@string/delete_item"
+                android:textSize="22sp"
+                android:visibility="gone" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

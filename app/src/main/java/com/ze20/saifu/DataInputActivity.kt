@@ -2,7 +2,7 @@ package com.ze20.saifu
 
 import android.app.DatePickerDialog
 import android.content.ContentValues
-import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -17,13 +17,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
-import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -38,6 +35,7 @@ open class DataInputActivity : AppCompatActivity() {
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
+    private val cFunc = ConvenientFunction()
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE: Int = 1
@@ -109,44 +107,31 @@ open class DataInputActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         // 登録ボタンを押した時の処理です
-
-        try {
-            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
-            val database = dbHelper.writableDatabase // 書き込み可能
-
-            // log表
-            // inputDate primary key,payDate,name,price,category,splitCount,picture
-
-            val inputDate = java.util.Date()
-            // Bitmapに画像があれば取得 なければNull
-            val bmp: Bitmap? = (photoImageView.drawable as BitmapDrawable?)?.bitmap
-            // INSERTするのに必要なデータをvalueにまとめる
-            val values = ContentValues()
-            values.run {
-                put(
-                    "inputDate",
-                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.JAPANESE).format(inputDate)
-                )
-                put(
-                    "payDate",
-                    SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.JAPANESE).format(userSetDate)
-                )
-                put("name", memoEdit.text.toString())
-                put("price", editToInt(moneyEdit))
-                put("category", 0) // TODO:カテゴリー送信処理
-                put("splitCount", editToInt(editTimes))
-                // bmpがnullでなければ、ByteArray型にbmpを変換する
-                bmp?.let { put("picture", getBinaryFromBitmap(it)) }
+        when (item.itemId) {
+            R.id.applyButton -> {
+                if (moneyEdit.text.length == 0 || cFunc.editToInt(moneyEdit) == 0) {
+                    val alartDialogFragment = okCancelDialogFragment()
+                    alartDialogFragment.run {
+                        title = "注意"
+                        message = "入力金額が0です。本当に登録してよろしいですか？"
+                        onOkClickListener = DialogInterface.OnClickListener { dialog, which ->
+                            databaseInsert()
+                        }
+                        cancelText = "キャンセル"
+                        onCancelClickListener = DialogInterface.OnClickListener { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        show(supportFragmentManager, null)
+                    }
+                } else {
+                    return databaseInsert()
+                }
             }
-            // DBに登録する できなければエラーを返す
-            database.insertOrThrow("log", null, values)
-            finish() // 登録できたら画面を閉じる
-            return true
-        } catch (exception: Exception) {
-            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
-            Log.e("insertData", exception.toString()) // エラーをログに出力
-            return false
+            else -> {
+                finish()
+            }
         }
+        return true
     }
 
     private fun checkIntent() {
@@ -184,7 +169,7 @@ open class DataInputActivity : AppCompatActivity() {
 
         MainLayout.setOnClickListener {
             // 画面のどこかおしたらキーボードを消す
-            hideKeyboard()
+            cFunc.hideKeyboard(this, this@DataInputActivity.currentFocus)
         }
 
         plusMinusButton.setOnClickListener {
@@ -276,7 +261,7 @@ open class DataInputActivity : AppCompatActivity() {
         }
     }
 
-    // ここから各ボタンごとの処理
+// ここから各ボタンごとの処理
 
     private fun plusMinus() {
         // プラスマイナスを切り替えて表示も切り替える
@@ -302,11 +287,11 @@ open class DataInputActivity : AppCompatActivity() {
         // なんちゃら 円／回 って表示を計算して更新します
         // emsAutoSet関数で説明しているのと同じのを使ってます
 
-        perTimes.text = (getString(
+        perTimes.text = getString(
             R.string.pertimes,
-            (editToInt(moneyEdit) ?: 0).coerceAtLeast(0) / (editToInt(editTimes)
+            (cFunc.editToInt(moneyEdit) ?: 0).coerceAtLeast(0) / (cFunc.editToInt(editTimes)
                 ?: 1).coerceAtLeast(1)
-        ))
+        )
     }
 
     private fun showDatePicker() {
@@ -383,26 +368,12 @@ open class DataInputActivity : AppCompatActivity() {
         diffShow(dateDiff)
     }
 
-    private fun editToInt(editText: EditText): Int? {
-        // editText を 数値に変換 空文字列ならNullを返す
-        return editText.text.toString().toIntOrNull()
-    }
-
     private fun diffShow(dateDiff: Int) {
         // 差に応じて表示を変更するやつ
         when {
-            (dateDiff == 0) -> dayDiff.text = getString(R.string.today_parentheses)
-            (dateDiff > 0) -> dayDiff.text = getString(R.string.prev_day, dateDiff)
-            (dateDiff < 0) -> dayDiff.text = getString(R.string.next_day, (dateDiff * -1))
-        }
-    }
-
-    private fun hideKeyboard() {
-        // キーボードを探してあれば消します
-        val view = this@DataInputActivity.currentFocus
-        view.also {
-            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.hideSoftInputFromWindow(view!!.windowToken, 0)
+            dateDiff == 0 -> dayDiff.text = getString(R.string.today_parentheses)
+            dateDiff > 0 -> dayDiff.text = getString(R.string.prev_day, dateDiff)
+            dateDiff < 0 -> dayDiff.text = getString(R.string.next_day, dateDiff * -1)
         }
     }
 
@@ -421,10 +392,51 @@ open class DataInputActivity : AppCompatActivity() {
         photoImageView.visibility = View.GONE
     }
 
-    private fun getBinaryFromBitmap(bitmap: Bitmap): ByteArray {
-        // 画像をByteArray型に変換するやつです
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        return byteArrayOutputStream.toByteArray()
+    private fun databaseInsert(): Boolean {
+
+        // DBに登録するときに呼び出されます
+
+        try {
+            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
+            val database = dbHelper.writableDatabase // 書き込み可能
+
+            // log表
+            // inputDate primary key,payDate,name,price,category,splitCount,picture
+
+            val inputDate = java.util.Date()
+            // Bitmapに画像があれば取得 なければNull
+            val bmp: Bitmap? = (photoImageView.drawable as BitmapDrawable?)?.bitmap
+            // INSERTするのに必要なデータをvalueにまとめる
+            val values = ContentValues()
+            values.run {
+                put(
+                    "inputDate",
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.JAPANESE).format(
+                        inputDate
+                    )
+                )
+                put(
+                    "payDate",
+                    SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.JAPANESE).format(
+                        userSetDate
+                    )
+                )
+                put("name", memoEdit.text.toString())
+                put("price", cFunc.editToInt(moneyEdit))
+                put("category", 0)
+                put("splitCount", cFunc.editToInt(editTimes))
+                // bmpがnullでなければ、ByteArray型にbmpを変換する
+                bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
+                put("sign", if (sign) 1 else 0)
+            }
+            // DBに登録する できなければエラーを返す
+            database.insertOrThrow("log", null, values)
+            finish() // 登録できたら画面を閉じる
+            return true
+        } catch (exception: Exception) {
+            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+            Log.e("insertData", exception.toString()) // エラーをログに出力
+            return false
+        }
     }
 }

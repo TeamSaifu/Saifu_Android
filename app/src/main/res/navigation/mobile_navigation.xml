@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_want"
-        android:name="com.ze20.saifu.ui.want.WantFragment"
+        android:id="@+id/navigation_wish"
+        android:name="com.ze20.saifu.ui.wish.WishFragment"
         android:label="@string/title_want"
-        tools:layout="@layout/fragment_want" />
+        tools:layout="@layout/fragment_wish" />
 
     <fragment
         android:id="@+id/navigation_log"

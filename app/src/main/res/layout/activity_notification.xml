@@ -13,7 +13,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+        </LinearLayout>
     </ScrollView>
 
     <LinearLayout
@@ -22,6 +24,13 @@
         android:orientation="vertical">
         <!-- これはサンプルです。
              実際の実装時にはRecyclerViewを使用する予定です。（右スワイプで通知を消せる機能を追加するため。） -->
+
+        <Button
+            android:id="@+id/tsuchiButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="通知送信" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,6 +54,7 @@
                 android:layout_weight="4"
                 android:text="@string/message_kari"
                 android:textSize="28sp" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
