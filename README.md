@@ -1,4 +1,4 @@
-# Saifu-Android
+![Saifu](https://repository-images.githubusercontent.com/269261483/d3417000-d581-11ea-9fd6-de7d78c33daf)
 
 ![Android CI](https://github.com/tak-st/Saifu-Android/workflows/Android%20CI/badge.svg)
 ![reviewdog](https://github.com/tak-st/Saifu-Android/workflows/reviewdog/badge.svg)
@@ -12,18 +12,19 @@
 ![watch](https://img.shields.io/github/watchers/tak-st/Saifu-Android)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/tak-st/Saifu-Android)
-![Motivation](https://img.shields.io/badge/Motivation-100.0%25-007ec6.svg)
+![motivation](https://img.shields.io/badge/motivation-100.0%25-007ec6.svg)
 ![codeSize](https://img.shields.io/github/languages/code-size/tak-st/Saifu-Android)
 ![repoSize](https://img.shields.io/github/repo-size/tak-st/Saifu-Android)
 ![GitHub](https://img.shields.io/github/license/tak-st/Saifu-Android)
 
-2020年のE展に向けてAndroid用に個人用のお小遣い管理アプリを製作しています。
+
+**2020年のE展に向けてAndroid用に個人用のお小遣い管理アプリを製作しています。**
 
 
-ズボラな人でも手軽に入力できるように、必要タップ数をなるべく少なくするのがコンセプトです。
+**ズボラな人でも手軽に入力できるように、必要タップ数をなるべく少なくするのがコンセプトです。**
 
 
-こんな機能を付ける予定です
+**こんな機能を付ける予定です**
 * お金の使用履歴（使ったものやカテゴリなど）を一覧表示する事ができます。
 * 固定費用や収入金額を入力し、今月残りどれだけお小遣いが使えるかを表示させます。
 * 残り金額表示を1ヶ月分の残り金額かその日の残り金額にするかを変更できます。
