@@ -3,50 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:tag="log_fragment"
     tools:context=".ui.log.logFragment">
 
-    <LinearLayout
-        android:id="@+id/linearlayout"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/bottom_nav_size">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/dayText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/blackColor"
-                android:textSize="20dp"
-                android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/categoryNameText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/blackColor"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/priceText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right"
-                android:textColor="@color/blackColor"
-                android:textSize="20dp"
-                android:layout_weight="1" />
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/horizon_line" />
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

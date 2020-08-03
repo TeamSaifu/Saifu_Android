@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
 import kotlinx.android.synthetic.main.fragment_log.view.*
+import kotlinx.android.synthetic.main.fragment_log_list.view.*
 
 lateinit var root: View
 
@@ -34,30 +35,33 @@ class logFragment : Fragment() {
 
     private fun logShow() {
         try {
-
             // DBにアクセス
             val SQLiteDB = SQLiteDB(requireContext(), dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
             // SQL文を構成
             val sql =
-                "select *,strftime('%Y/%m/%d', payDate) as day from " + tableName + " order by 1 desc;"
+                "select *,strftime('%Y/%m/%d', payDate) from " + tableName + " order by 1 desc;"
             val cursor = database.rawQuery(sql, null)
 
             // log表
-            // inputDate primary key,payDate,name,price,category,splitCount,picture,sign
-
+            // inputDate primary key,payDate,name,price,category,splitCount,picture
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
-                    arrayListlayout.add(View.inflate(context, R.layout.fragment_log, null))
-                    root.linearlayout.addView(arrayListlayout[arrayListlayout.size - 1].apply {
-                        dayText.text = cursor.getString(7) + "   "
-                        if (cursor.getString(4) == "0") {
+                    arrayListlayout.add(View.inflate(context, R.layout.fragment_log_list, null))
+                    root.linearLayout.addView(arrayListlayout[arrayListlayout.size - 1].apply {
 
+                        dayText.text = cursor.getString(7) + "   "
+
+                        // カテゴリが設定されていなければ非表示
+                        if (cursor.getString(4) == "0") {
                             categoryNameText.text = ""
+                        } else {
+                            categoryNameText.text = cursor.getString(4)
                         }
-                        priceText.text = "¥" + cursor.getInt(3).toString()
+
+                        priceText.text = "¥" + cursor.getInt(3).toString() + " "
                     })
                     cursor.moveToNext()
                 }
@@ -67,9 +71,7 @@ class logFragment : Fragment() {
         }
     }
 
-    override
-
-    fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity?.setTitle((R.menu.search_view))
         setHasOptionsMenu(true)
