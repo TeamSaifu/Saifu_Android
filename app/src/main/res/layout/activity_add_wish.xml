@@ -173,8 +173,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
-            android:layout_weight="1"
+            android:layout_margin="10sp"
+            android:visibility="visible"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/deleteItemButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="50sp"
+                android:layout_marginLeft="50sp"
+                android:layout_marginRight="50sp"
+                android:layout_marginBottom="50sp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_danger"
+                android:text="@string/delete_item"
+                android:textSize="22sp"
+                android:visibility="gone" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

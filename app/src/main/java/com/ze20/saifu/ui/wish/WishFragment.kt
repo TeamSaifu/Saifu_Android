@@ -1,6 +1,5 @@
 package com.ze20.saifu.ui.wish
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -71,7 +70,7 @@ class WishFragment : Fragment() {
                             idText.text = cursor.getInt(0).toString()
                             nameText.text = cursor.getString(1)
                             priceText.text =
-                                getString(R.string.currency) + ("%,d".format(cursor.getInt(2)))
+                                getString(R.string.currencyString, "%,d".format(cursor.getInt(2)))
                             urlText.text = cursor.getString(3)
                             // URLが5文字以下ならURLボタンを消す
                             webButton.visibility =
@@ -83,19 +82,20 @@ class WishFragment : Fragment() {
                                 itemImage.setImageBitmap(bitmap)
                             }
                             // クリックリスナーなどをセット
-                            setListener(this)
+                            setListener(this, cursor.getInt(2), cursor.getBlob(4))
                         }
                     )
                     // 次の項目へ
                     cursor.moveToNext()
                 }
+                cursor.close()
             }
         } catch (exception: Exception) {
             Log.e("selectData", exception.toString())
         }
     }
 
-    private fun setListener(view: View) {
+    private fun setListener(view: View, price: Int, picture: ByteArray?) {
 
         // リスナーをセットします
 
@@ -119,22 +119,27 @@ class WishFragment : Fragment() {
                 Log.e("webAccess", exception.toString())
             }
         }
-        view.deleteButton.setOnClickListener {
-            // 項目を削除するボタン
-            deleteData(view.idText.text.toString())
+        view.editButton.setOnClickListener {
+            // 項目を編集／削除するボタン
+            val intent = Intent(activity, AddWishActivity::class.java)
+            intent.putExtra("mode", "Edit")
+            intent.putExtra("id", view.idText.text.toString())
+            intent.putExtra("name", view.nameText.text.toString())
+            intent.putExtra("price", price)
+            intent.putExtra("url", view.urlText.text.toString())
+            picture?.let { intent.putExtra("picture", it) }
+            startActivity(intent)
             reload()
         }
     }
 
-    fun reload() {
+    private fun reload() {
 
         // 表示を更新するメソッドです
 
-        val inflater =
-            activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        root = inflater.inflate(R.layout.fragment_wish, null)
+        root = View.inflate(context, R.layout.fragment_wish, null)
         databaseCheck()
-        (getView() as ViewGroup?)?.let {
+        (view as ViewGroup?)?.let {
             it.removeAllViews()
             it.addView(root)
         }
@@ -142,7 +147,7 @@ class WishFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.setTitle((R.menu.menu_wishlist))
+        activity?.setTitle(R.menu.menu_wishlist)
         setHasOptionsMenu(true)
     }
 
@@ -159,19 +164,5 @@ class WishFragment : Fragment() {
             }
         }
         return true
-    }
-
-    private fun deleteData(whereId: String) {
-        // その名の通りデータを消します
-        try {
-            val dbHelper = SQLiteDB(requireContext(), "SaifuDB", null, 1)
-            val database = dbHelper.writableDatabase
-
-            val whereClauses = "id = ?"
-            val whereArgs = arrayOf(whereId)
-            database.delete("wish", whereClauses, whereArgs)
-        } catch (exception: Exception) {
-            Log.e("deleteData", exception.toString())
-        }
     }
 }
