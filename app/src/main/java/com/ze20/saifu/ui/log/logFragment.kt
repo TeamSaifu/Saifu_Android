@@ -50,19 +50,21 @@ class logFragment : Fragment() {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
                     arrayListlayout.add(View.inflate(context, R.layout.fragment_log_list, null))
-                    root.linearLayout.addView(arrayListlayout[arrayListlayout.size - 1].apply {
+                    root.linearLayout.addView(
+                        arrayListlayout[arrayListlayout.size - 1].apply {
 
-                        dayText.text = cursor.getString(7) + "   "
+                            dayText.text = cursor.getString(7) + "   "
 
-                        // カテゴリが設定されていなければ非表示
-                        if (cursor.getString(4) == "0") {
-                            categoryNameText.text = ""
-                        } else {
-                            categoryNameText.text = cursor.getString(4)
+                            // カテゴリが設定されていなければ非表示
+                            if (cursor.getString(4) == "0") {
+                                categoryNameText.text = ""
+                            } else {
+                                categoryNameText.text = cursor.getString(4)
+                            }
+
+                            priceText.text = "¥" + cursor.getInt(3).toString() + " "
                         }
-
-                        priceText.text = "¥" + cursor.getInt(3).toString() + " "
-                    })
+                    )
                     cursor.moveToNext()
                 }
             }
