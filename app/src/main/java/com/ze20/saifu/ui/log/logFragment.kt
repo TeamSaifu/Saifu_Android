@@ -62,7 +62,7 @@ class logFragment : Fragment() {
                                 categoryNameText.text = cursor.getString(4)
                             }
 
-                            priceText.text = "¥" + cursor.getInt(3).toString() + " "
+                            priceText.text = getString(R.string.currency) + cursor.getInt(3).toString() + " "
                         }
                     )
                     cursor.moveToNext()
