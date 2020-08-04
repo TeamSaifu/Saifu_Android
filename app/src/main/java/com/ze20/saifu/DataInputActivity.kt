@@ -291,6 +291,16 @@ open class DataInputActivity : AppCompatActivity() {
                     showPicture()
                 }
             }
+            "Shortcut" -> {
+                memoEdit.setText(intent.getStringExtra("name"))
+                // メモがあればメモを表示させる
+                if (memoEdit.text.isNotEmpty()) {
+                    memoAddButton.visibility = View.GONE
+                    memoEdit.visibility = View.VISIBLE
+                }
+                moneyEdit.setText(intent.getIntExtra("price", -1).toString())
+                emsAutoSet()
+            }
         }
     }
 
@@ -513,6 +523,7 @@ open class DataInputActivity : AppCompatActivity() {
                 }
                 // DBに登録する できなければエラーを返す
                 database.insertOrThrow("shortcut", null, values)
+                addShortcutflag = true
                 Toast.makeText(this, "追加しました。", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "すでに登録済みです。", Toast.LENGTH_LONG).show()
