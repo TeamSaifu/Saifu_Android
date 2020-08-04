@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.ze20.saifu.NotificationActivity
 import com.ze20.saifu.R
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
@@ -50,7 +51,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        NC_transition.setOnClickListener {
+        notificationButton.setOnClickListener {
             startActivity(Intent(activity, NotificationActivity::class.java))
 
         }

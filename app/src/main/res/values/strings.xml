@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Saifu</string>
     <string name="title_home">ホーム</string>
-    <string name="title_want">欲しい</string>
-    <string name="title_log">記録</string>
+    <string name="title_want">欲しい物リスト</string>
+    <string name="title_log">履歴</string>
     <string name="title_setting">設定</string>
     <string name="title_new">新規登録</string>
     <string name="title_data_input">データ入力</string>
@@ -62,7 +62,7 @@
     <string name="prev_day">(%1$d日前)</string>
     <string name="next_day">(%1$d日後)</string>
     <string name="name">名称</string>
-    <string name="value">値段</string>
+    <string name="price">金額</string>
     <string name="add_url">URLを追加 ＋</string>
     <string name="add_picture">画像を追加 ＋</string>
     <string name="memo">メモ</string>

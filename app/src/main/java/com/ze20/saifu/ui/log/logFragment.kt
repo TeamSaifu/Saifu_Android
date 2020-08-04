@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.ze20.saifu.GraphActivity
 import com.ze20.saifu.R
 import com.ze20.saifu.ReportActivity
 import com.ze20.saifu.SQLiteDB
@@ -65,7 +66,10 @@ class logFragment : Fragment() {
                                 categoryNameText.text = cursor.getString(4)
                             }
 
-                            priceText.text = getString(R.string.currency) + cursor.getInt(3).toString() + " "
+                            priceText.text = getString(
+                                R.string.currencyString,
+                                cursor.getInt(3).toString()
+                            ) + " "
                         }
                     )
                     cursor.moveToNext()
@@ -78,7 +82,7 @@ class logFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.setTitle((R.menu.search_view))
+        activity?.setTitle(R.menu.search_view)
         setHasOptionsMenu(true)
     }
 
@@ -87,11 +91,13 @@ class logFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        //画面遷移
+
         when (item.itemId) {
-            // R.id.graph -> {
-            //     startActivity(Intent(activity, ::class.java))
-            //  }
-            //レポート画面に遷移
+            R.id.graph -> {
+                startActivity(Intent(activity, GraphActivity::class.java))
+            }
             R.id.report -> {
                 startActivity(Intent(activity, ReportActivity::class.java))
             }
