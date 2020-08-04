@@ -91,4 +91,5 @@
     <string name="NC_transition">NC_transition</string>
     <string name="shortcutQuickAdd">ショートカット即時登録</string>
     <string name="shortcutEdit">ショートカット編集</string>
+    <string name="shortcutformat">%1$s\n¥%2$s</string>
 </resources>
