@@ -393,6 +393,7 @@
                     android:ems="10"
                     android:hint="@string/memo"
                     android:inputType="textPersonName"
+                    android:maxLength="12"
                     android:singleLine="false"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="24sp"

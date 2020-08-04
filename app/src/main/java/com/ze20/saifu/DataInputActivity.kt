@@ -31,7 +31,9 @@ open class DataInputActivity : AppCompatActivity() {
     private var date = java.util.Date() // 今日の日付を格納
     private var sign = false // プラス・マイナス
     private var userSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
-    private var busyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
+    private var busyFlag = false // ローディング中はいろいろ動かなくするためのフラグWish
+    private var mode = "New" // 現在のモード
+    private var id: String? = null // 欲しい物リストのID
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
@@ -51,6 +53,7 @@ open class DataInputActivity : AppCompatActivity() {
         // UserSetDateを表示しておく
         dayText.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
         checkIntent()
+        modeCheck()
         setListeners()
     }
 
@@ -114,17 +117,17 @@ open class DataInputActivity : AppCompatActivity() {
                     alartDialogFragment.run {
                         title = "注意"
                         message = "入力金額が0です。本当に登録してよろしいですか？"
-                        onOkClickListener = DialogInterface.OnClickListener { dialog, which ->
-                            databaseInsert()
+                        onOkClickListener = DialogInterface.OnClickListener { _, _ ->
+                            insertDB()
                         }
                         cancelText = "キャンセル"
-                        onCancelClickListener = DialogInterface.OnClickListener { dialog, which ->
+                        onCancelClickListener = DialogInterface.OnClickListener { dialog, _ ->
                             dialog.dismiss()
                         }
                         show(supportFragmentManager, null)
                     }
                 } else {
-                    return databaseInsert()
+                    return insertDB()
                 }
             }
             else -> {
@@ -261,6 +264,32 @@ open class DataInputActivity : AppCompatActivity() {
         }
     }
 
+    private fun modeCheck() {
+
+        // 呼び出されたモードをチェック
+
+        val intent = intent
+        when (intent.getStringExtra("mode")) {
+            "Wish" -> {
+                mode = "Wish"
+                id = intent.getStringExtra("id")
+                memoEdit.setText(intent.getStringExtra("name"))
+                // メモがあればメモを表示させる
+                if (memoEdit.text.isNotEmpty()) {
+                    memoAddButton.visibility = View.GONE
+                    memoEdit.visibility = View.VISIBLE
+                }
+                moneyEdit.setText(intent.getIntExtra("price", -1).toString())
+                emsAutoSet()
+                intent.getByteArrayExtra("picture")?.let {
+                    val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                    photoImageView.setImageBitmap(bitmap)
+                    showPicture()
+                }
+            }
+        }
+    }
+
 // ここから各ボタンごとの処理
 
     private fun plusMinus() {
@@ -392,7 +421,7 @@ open class DataInputActivity : AppCompatActivity() {
         photoImageView.visibility = View.GONE
     }
 
-    private fun databaseInsert(): Boolean {
+    private fun insertDB(): Boolean {
 
         // DBに登録するときに呼び出されます
 
@@ -431,12 +460,29 @@ open class DataInputActivity : AppCompatActivity() {
             }
             // DBに登録する できなければエラーを返す
             database.insertOrThrow("log", null, values)
+            if (mode == "Wish") {
+                // 欲しい物リストから登録した場合、購入したとみなして欲しい物を削除する
+                id?.let { deleteDB(it) }
+            }
             finish() // 登録できたら画面を閉じる
             return true
         } catch (exception: Exception) {
             Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
             Log.e("insertData", exception.toString()) // エラーをログに出力
             return false
+        }
+    }
+
+    fun deleteDB(whereId: String) {
+        try {
+            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
+            val database = dbHelper.writableDatabase
+
+            val whereClauses = "id = ?"
+            val whereArgs = arrayOf(whereId)
+            database.delete("wish", whereClauses, whereArgs)
+        } catch (exception: Exception) {
+            Log.e("deleteData", exception.toString())
         }
     }
 }
