@@ -481,7 +481,7 @@ open class DataInputActivity : AppCompatActivity() {
             finish() // 登録できたら画面を閉じる
             return true
         } catch (exception: Exception) {
-            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
             Log.e("insertData", exception.toString()) // エラーをログに出力
             return false
         }
@@ -511,9 +511,6 @@ open class DataInputActivity : AppCompatActivity() {
                 // shortcut表
                 // id INTEGER primary key,name,price,category
 
-                val inputDate = java.util.Date()
-                // Bitmapに画像があれば取得 なければNull
-                val bmp: Bitmap? = (photoImageView.drawable as BitmapDrawable?)?.bitmap
                 // INSERTするのに必要なデータをvalueにまとめる
                 val values = ContentValues()
                 values.run {
@@ -529,7 +526,7 @@ open class DataInputActivity : AppCompatActivity() {
                 Toast.makeText(this, "すでに登録済みです。", Toast.LENGTH_LONG).show()
             }
         } catch (exception: Exception) {
-            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
             Log.e("insertData", exception.toString()) // エラーをログに出力
         }
     }

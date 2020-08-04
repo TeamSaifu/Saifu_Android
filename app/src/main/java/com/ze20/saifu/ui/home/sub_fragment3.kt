@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
+import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.DataInputActivity
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
@@ -61,13 +64,40 @@ class sub_fragment3 : Fragment() {
                 shortcut[i].tag = i
                 shortcut[i].visibility = View.VISIBLE
                 shortcut[i].setOnClickListener {
-                    val intent = Intent(activity, DataInputActivity::class.java)
-                    val tag = it.tag as Int
-                    intent.putExtra("mode", "Shortcut")
-                    intent.putExtra("name", nameal[tag])
-                    intent.putExtra("price", priceal[tag])
-                    intent.putExtra("category", categoryal[tag])
-                    startActivity(intent)
+                    val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
+                    if (sharedPref.getBoolean("shortCutQuickAdd", false)) {
+                        val tag = it.tag as Int
+                        it.isEnabled = false
+                        if (ConvenientFunction().quickInsert(
+                                context,
+                                priceal[tag],
+                                nameal[tag],
+                                categoryal[tag]
+                            )
+                        ) {
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.recordFinish),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            it.isEnabled = true
+                        } else {
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.recordError),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            it.isEnabled = true
+                        }
+                    } else {
+                        val intent = Intent(activity, DataInputActivity::class.java)
+                        val tag = it.tag as Int
+                        intent.putExtra("mode", "Shortcut")
+                        intent.putExtra("name", nameal[tag])
+                        intent.putExtra("price", priceal[tag])
+                        intent.putExtra("category", categoryal[tag])
+                        startActivity(intent)
+                    }
                 }
                 i++
                 cursor.moveToNext()

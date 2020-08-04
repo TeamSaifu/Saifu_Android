@@ -246,7 +246,7 @@ class AddWishActivity : AppCompatActivity() {
                 finish() // 登録できたら画面を閉じる
                 return true
             } catch (exception: Exception) {
-                Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
                 Log.e("insertData", exception.toString()) // エラーをログに出力
                 busyFlag = false
                 return false
@@ -285,7 +285,7 @@ class AddWishActivity : AppCompatActivity() {
                 finish() // 登録できたら画面を閉じる
                 return true
             } catch (exception: Exception) {
-                Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
                 Log.e("updateData", exception.toString()) // エラーをログに出力
                 busyFlag = false
                 return false
