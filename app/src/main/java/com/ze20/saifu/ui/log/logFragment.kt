@@ -1,13 +1,16 @@
 package com.ze20.saifu.ui.log
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ze20.saifu.R
+import com.ze20.saifu.ReportActivity
 import com.ze20.saifu.SQLiteDB
 import kotlinx.android.synthetic.main.fragment_log.view.*
 import kotlinx.android.synthetic.main.fragment_log_list.view.*
@@ -81,5 +84,18 @@ class logFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_view, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            // R.id.graph -> {
+            //     startActivity(Intent(activity, ::class.java))
+            //  }
+            //レポート画面に遷移
+            R.id.report -> {
+                startActivity(Intent(activity, ReportActivity::class.java))
+            }
+        }
+        return true
     }
 }
