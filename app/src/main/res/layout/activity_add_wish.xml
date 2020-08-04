@@ -42,6 +42,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:maxLength="12"
                 android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
@@ -73,6 +74,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
+                android:maxLength="8"
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
