@@ -8,10 +8,17 @@
         app:key="notifications"
         app:title="@string/notifications" />
     <Preference
+        android:id="@+id/budgetButton"
         android:icon="@drawable/ic_baseline_local_atm_48"
         app:key="budget"
-        app:title="@string/budget_input" />
+        app:title="@string/budget_input">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.ze20.saifu"
+            android:targetClass="com.ze20.saifu.ui.budget.BudgetActivity" />
+    </Preference>
     <Preference
+        android:id="@+id/CategoryButton"
         android:icon="@drawable/ic_baseline_folder_48"
         app:key="category"
         app:title="@string/category_config" />

@@ -2,13 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <item android:title="@string/graph" />
-   <item android:title="@string/report" />
+   <item
+       android:id="@+id/graph"
+       android:title="@string/graph" />
+   <item
+       android:id="@+id/report"
+       android:title="@string/report" />
 
    <item
        android:id="@+id/search_view"
        android:icon="@drawable/ic_baseline_search_24"
        android:title="@string/search"
-       app:showAsAction="always"/>
+       app:showAsAction="always" />
 
 </menu>

@@ -88,4 +88,5 @@
     <string name="add">追加</string>
     <string name="amazonAdd">アマゾンから追加</string>
     <string name="delete_item">項目を削除</string>
+    <string name="NC_transition">NC_transition</string>
 </resources>
