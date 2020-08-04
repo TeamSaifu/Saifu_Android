@@ -92,7 +92,7 @@ class logFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        //画面遷移
+        // 画面遷移
 
         when (item.itemId) {
             R.id.graph -> {

@@ -50,10 +50,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         notificationButton.setOnClickListener {
             startActivity(Intent(activity, NotificationActivity::class.java))
-
         }
     }
 }
