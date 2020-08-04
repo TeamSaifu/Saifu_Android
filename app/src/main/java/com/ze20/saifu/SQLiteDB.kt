@@ -33,7 +33,7 @@ class SQLiteDB(
         database?.execSQL("create table if not exists category (id INTEGER primary key AUTOINCREMENT,name,picture)")
         database?.execSQL("create table if not exists notification (id INTEGER primary key AUTOINCREMENT,content,picture)")
         database?.execSQL("create table if not exists budget (id INTEGER primary key AUTOINCREMENT,name,type,price)")
-        database?.execSQL("create table if not exists shortcut (id INTEGER primary key AUTOINCREMENT,name,price)")
+        database?.execSQL("create table if not exists shortcut (id INTEGER primary key AUTOINCREMENT,name,price,category)")
         database?.execSQL("create table if not exists wish (id INTEGER primary key AUTOINCREMENT,name,price,url,picture)")
     }
 
