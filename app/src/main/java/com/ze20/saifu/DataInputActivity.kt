@@ -4,8 +4,6 @@ import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -51,7 +49,8 @@ open class DataInputActivity : AppCompatActivity() {
 
         // UserSetDateを表示しておく
         dayText.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
-        checkIntent()
+        cFunc.checkIntent(this, intent, pictureAdd)
+        cFunc.checkIntent(this, intent, picturePhoto)
         modeCheck()
         setListeners()
     }
@@ -86,7 +85,7 @@ open class DataInputActivity : AppCompatActivity() {
         // 登録ボタンを押した時の処理です
         when (item.itemId) {
             R.id.applyButton -> {
-                if (moneyEdit.text.length == 0 || cFunc.editToInt(moneyEdit) == 0) {
+                if (moneyEdit.text.isEmpty() || cFunc.editToInt(moneyEdit) == 0) {
                     val alartDialogFragment = okCancelDialogFragment()
                     alartDialogFragment.run {
                         title = "注意"
@@ -109,35 +108,6 @@ open class DataInputActivity : AppCompatActivity() {
             }
         }
         return true
-    }
-
-    private fun checkIntent() {
-
-        // 画像ギャラリーがあるかどうか確認
-
-        val activities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (activities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> pictureAdd.visibility = View.GONE
-            true -> pictureAdd.visibility = View.VISIBLE
-        }
-
-        // カメラアプリがあるかどうか確認
-
-        val cameraActivities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            cameraIntent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (cameraActivities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> picturePhoto.visibility = View.GONE
-            true -> picturePhoto.visibility = View.VISIBLE
-        }
     }
 
     private fun setListeners() {
@@ -390,7 +360,8 @@ open class DataInputActivity : AppCompatActivity() {
 
     private fun deletePicture() {
         // 追加したピクチャーを消して、削除ボタンを追加ボタンに差し替えます
-        checkIntent()
+        cFunc.checkIntent(this, intent, pictureAdd)
+        cFunc.checkIntent(this, intent, picturePhoto)
         pictureDelete.visibility = View.GONE
         photoImageView.visibility = View.GONE
     }

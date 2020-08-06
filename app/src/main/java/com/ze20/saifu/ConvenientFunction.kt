@@ -8,6 +8,8 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -49,6 +51,22 @@ internal class ConvenientFunction {
             val manager =
                 appCompatActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view!!.windowToken, 0)
+        }
+    }
+
+    fun checkIntent(context: Context, intent: Intent, view: View?) {
+
+        // 対応するアプリがあるかどうか確認
+
+        val activities: List<ResolveInfo> = context.packageManager.queryIntentActivities(
+            intent,
+            PackageManager.MATCH_ALL
+        )
+
+        when (activities.isNotEmpty()) {
+            // なければボタンが消滅
+            false -> view?.visibility = View.GONE
+            true -> view?.visibility = View.VISIBLE
         }
     }
 

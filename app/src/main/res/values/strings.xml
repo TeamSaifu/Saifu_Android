@@ -90,4 +90,5 @@
     <string name="delete_item">項目を削除</string>
     <string name="NC_transition">NC_transition</string>
     <string name="Error">エラーが発生しました</string>
+    <string name="DataError">データ登録エラー</string>
 </resources>
