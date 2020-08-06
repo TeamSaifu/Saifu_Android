@@ -62,7 +62,7 @@ class AddWishActivity : AppCompatActivity() {
                 intent.getByteArrayExtra("picture")?.let {
                     val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
                     photoImageView.setImageBitmap(bitmap)
-                    showPicture()
+                    if (it.size != 1) showPicture()
                 }
                 deleteItemButton.visibility = View.VISIBLE
             }
