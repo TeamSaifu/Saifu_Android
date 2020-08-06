@@ -50,7 +50,7 @@ open class DataInputActivity : AppCompatActivity() {
         // UserSetDateを表示しておく
         dayText.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
         cFunc.checkIntent(this, intent, pictureAdd)
-        cFunc.checkIntent(this, intent, picturePhoto)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
         modeCheck()
         setListeners()
     }
@@ -361,7 +361,7 @@ open class DataInputActivity : AppCompatActivity() {
     private fun deletePicture() {
         // 追加したピクチャーを消して、削除ボタンを追加ボタンに差し替えます
         cFunc.checkIntent(this, intent, pictureAdd)
-        cFunc.checkIntent(this, intent, picturePhoto)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
         pictureDelete.visibility = View.GONE
         photoImageView.visibility = View.GONE
     }

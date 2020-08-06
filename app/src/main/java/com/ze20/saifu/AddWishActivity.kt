@@ -38,7 +38,7 @@ class AddWishActivity : AppCompatActivity() {
         setTitle(R.string.title_new)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         cFunc.checkIntent(this, intent, pictureAdd)
-        cFunc.checkIntent(this, intent, picturePhoto)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
         modecheck()
         setListeners()
     }
@@ -163,7 +163,7 @@ class AddWishActivity : AppCompatActivity() {
         // 追加したピクチャーを消して、削除ボタンを追加ボタンに差し替えます
         photoImageView.setImageDrawable(null)
         cFunc.checkIntent(this, intent, pictureAdd)
-        cFunc.checkIntent(this, intent, picturePhoto)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
         pictureDelete.visibility = View.GONE
         photoImageView.visibility = View.GONE
     }
