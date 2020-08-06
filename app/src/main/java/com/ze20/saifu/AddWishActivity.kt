@@ -2,8 +2,6 @@ package com.ze20.saifu
 
 import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -29,6 +27,9 @@ class AddWishActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_IMAGE_CAPTURE: Int = 1
         private const val READ_REQUEST_CODE: Int = 42
+        private const val DB_INSERT: Int = 10
+        private const val DB_UPDATE: Int = 11
+        private const val DB_DELETE: Int = 12
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,8 +102,8 @@ class AddWishActivity : AppCompatActivity() {
 
             R.id.applyButton -> {
                 when (mode) {
-                    "New" -> insertDB()
-                    "Edit" -> updateDB()
+                    "New" -> DBProcess(DB_INSERT)
+                    "Edit" -> DBProcess(DB_UPDATE, id)
                 }
             }
 
@@ -112,35 +113,6 @@ class AddWishActivity : AppCompatActivity() {
             }
         }
         return true
-    }
-
-    private fun checkIntent() {
-
-        // 画像ギャラリーがあるかどうか確認
-
-        val activities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (activities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> pictureAdd.visibility = View.GONE
-            true -> pictureAdd.visibility = View.VISIBLE
-        }
-
-        // カメラアプリがあるかどうか確認
-
-        val cameraActivities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            cameraIntent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (cameraActivities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> picturePhoto.visibility = View.GONE
-            true -> picturePhoto.visibility = View.VISIBLE
-        }
     }
 
     private fun setListeners() {
@@ -173,7 +145,7 @@ class AddWishActivity : AppCompatActivity() {
         }
         deleteItemButton.setOnClickListener {
             id?.let {
-                deleteDB(it)
+                DBProcess(DB_DELETE, it)
                 finish()
             }
         }
@@ -196,45 +168,11 @@ class AddWishActivity : AppCompatActivity() {
         photoImageView.visibility = View.GONE
     }
 
-    private fun insertDB(): Boolean {
+    private fun DBProcess(mode: Int, id: String? = null): Boolean {
 
         if (!busyFlag) {
             busyFlag = true
-            try {
-                val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
-                val database = dbHelper.writableDatabase // 書き込み可能
-
-                // wish表
-                // id primary key,name,price,url,picture
-
-                // Bitmapに画像があれば取得 なければNull
-                val bmp: Bitmap? = (photoImageView.drawable as BitmapDrawable?)?.bitmap
-                // INSERTするのに必要なデータをvalueにまとめる
-                val values = ContentValues()
-                values.run {
-                    put("name", nameEdit.text.toString())
-                    put("price", cFunc.editToInt(priceEdit))
-                    put("url", urlEdit.text.toString())
-                    bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
-                }
-                // DBに登録する できなければエラーを返す
-                database.insertOrThrow("wish", null, values)
-                finish() // 登録できたら画面を閉じる
-                return true
-            } catch (exception: Exception) {
-                Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
-                Log.e("insertData", exception.toString()) // エラーをログに出力
-                busyFlag = false
-                return false
-            }
-        }
-        return true
-    }
-
-    private fun updateDB(): Boolean {
-
-        if (!busyFlag) {
-            busyFlag = true
+            var tag = "GetData"
             try {
                 val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
                 val database = dbHelper.writableDatabase // 書き込み可能
@@ -253,33 +191,41 @@ class AddWishActivity : AppCompatActivity() {
                     bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
                         ?: this.put("picture", "")
                 }
-                // DBを更新する
-                val whereClauses = "id = ?"
-                val whereId = id!!
-                val whereArgs = arrayOf(whereId)
-                database.update("wish", values, whereClauses, whereArgs)
-                finish() // 登録できたら画面を閉じる
-                return true
+                when (mode) {
+                    DB_INSERT -> {
+                        tag = "InsertData"
+                        // DBに登録する できなければエラーを返す
+                        database.insertOrThrow("wish", null, values)
+                        finish() // 登録できたら画面を閉じる
+                        return true
+                    }
+                    DB_UPDATE -> {
+                        tag = "UpdateData"
+                        // DBを更新する
+                        val whereClauses = "id = ?"
+                        val whereId = id!!
+                        val whereArgs = arrayOf(whereId)
+                        database.update("wish", values, whereClauses, whereArgs)
+                        finish() // 登録できたら画面を閉じる
+                        return true
+                    }
+                    DB_DELETE -> {
+                        tag = "DeleteData"
+                        // DBの項目を削除
+                        val whereClauses = "id = ?"
+                        val whereArgs = arrayOf(id!!)
+                        database.delete("wish", whereClauses, whereArgs)
+                        busyFlag = false
+                        finish()
+                        return true
+                    }
+                }
             } catch (exception: Exception) {
-                Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
-                Log.e("updateData", exception.toString()) // エラーをログに出力
-                busyFlag = false
+                Toast.makeText(this, getString(R.string.DataError), Toast.LENGTH_LONG).show()
+                Log.e(tag, exception.toString()) // エラーをログに出力
                 return false
             }
         }
         return true
-    }
-
-    private fun deleteDB(whereId: String) {
-        try {
-            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
-            val database = dbHelper.writableDatabase
-
-            val whereClauses = "id = ?"
-            val whereArgs = arrayOf(whereId)
-            database.delete("wish", whereClauses, whereArgs)
-        } catch (exception: Exception) {
-            Log.e("deleteData", exception.toString())
-        }
     }
 }
