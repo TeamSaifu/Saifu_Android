@@ -1,15 +1,21 @@
 package com.ze20.saifu
 
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ClipboardManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import java.io.ByteArrayOutputStream
@@ -44,6 +50,52 @@ internal class ConvenientFunction {
                 appCompatActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view!!.windowToken, 0)
         }
+    }
+
+    fun photoOrCamera(
+        context: Context,
+        contentResolver: ContentResolver?,
+        requestCode: Int,
+        resultCode: Int,
+        resultData: Intent?,
+        imageView: ImageView
+    ): Boolean {
+
+        // 写真を撮ったり選んだりしたあとの処理です
+
+        if (resultCode != RESULT_OK) {
+            return false
+        }
+        when (requestCode) {
+            1 -> { // REQUEST_IMAGE_CAPTURE
+                val bitmap: Bitmap
+
+                resultData?.extras.also {
+                    bitmap = resultData?.extras?.get("data") as Bitmap
+                    bitmap.also {
+                        imageView.setImageBitmap(bitmap)
+                    }
+                }
+                return true
+            }
+            42 -> { // READ_REQUEST_CODE
+                try {
+                    resultData?.data?.also { uri ->
+                        val inputStream = contentResolver?.openInputStream(uri)
+                        val image = BitmapFactory.decodeStream(inputStream)
+                        imageView.setImageBitmap(image)
+                        return true
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(context, context.getString(R.string.Error), Toast.LENGTH_LONG)
+                        .show()
+                    return false
+                }
+            }
+            else -> {
+            }
+        }
+        return false
     }
 }
 

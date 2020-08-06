@@ -17,7 +17,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
@@ -72,39 +71,14 @@ open class DataInputActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-
-        // 写真を撮ったり選んだりしたあとの処理です
-
-        if (resultCode != RESULT_OK) {
-            return
-        }
-        when (requestCode) {
-            REQUEST_IMAGE_CAPTURE -> {
-                val bitmap: Bitmap
-                val imageView: ImageView = findViewById(R.id.photoImageView)
-
-                resultData?.extras.also {
-                    bitmap = resultData?.extras?.get("data") as Bitmap
-                    bitmap.also {
-                        imageView.setImageBitmap(bitmap)
-                    }
-                }
-                showPicture()
-            }
-            READ_REQUEST_CODE -> {
-                try {
-                    resultData?.data?.also { uri ->
-                        val inputStream = contentResolver?.openInputStream(uri)
-                        val image = BitmapFactory.decodeStream(inputStream)
-                        val imageView = findViewById<ImageView>(R.id.photoImageView)
-                        imageView.setImageBitmap(image)
-                        showPicture()
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+        cFunc.photoOrCamera(
+            this,
+            contentResolver,
+            requestCode,
+            resultCode,
+            resultData,
+            photoImageView
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
