@@ -10,9 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.ze20.saifu.ConvenientFunction
-import com.ze20.saifu.DataInputActivity
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.ui.input.DataInputActivity
 import kotlinx.android.synthetic.main.activity_sub_fragment2.view.*
 
 class sub_fragment2 : Fragment() {

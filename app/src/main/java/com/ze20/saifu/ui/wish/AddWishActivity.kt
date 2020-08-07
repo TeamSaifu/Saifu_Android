@@ -1,4 +1,4 @@
-package com.ze20.saifu
+package com.ze20.saifu.ui.wish
 
 import android.content.ContentValues
 import android.content.Intent
@@ -13,6 +13,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.ze20.saifu.ConvenientFunction
+import com.ze20.saifu.R
+import com.ze20.saifu.SQLiteDB
 import kotlinx.android.synthetic.main.activity_add_wish.*
 
 class AddWishActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.ze20.saifu
+package com.ze20.saifu.ui.calendar
 
 import java.text.SimpleDateFormat
 import java.util.Calendar

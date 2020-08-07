@@ -1,10 +1,11 @@
-package com.ze20.saifu
+package com.ze20.saifu.ui.calendar
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.ze20.saifu.R
 import kotlinx.android.synthetic.main.activity_calendar.*
 
 class CalendarActivity : AppCompatActivity() {

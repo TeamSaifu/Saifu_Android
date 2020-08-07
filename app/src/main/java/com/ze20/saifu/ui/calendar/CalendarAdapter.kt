@@ -1,4 +1,4 @@
-package com.ze20.saifu
+package com.ze20.saifu.ui.calendar
 
 import android.content.Context
 import android.graphics.Color
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.ze20.saifu.R
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
