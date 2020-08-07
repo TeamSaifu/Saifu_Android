@@ -466,9 +466,9 @@ open class DataInputActivity : AppCompatActivity() {
                 // DBに登録する できなければエラーを返す
                 database.insertOrThrow("shortcut", null, values)
                 addShortcutflag = true
-                Toast.makeText(this, "追加しました。", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.completeAdd), Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "すでに登録済みです。", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.duplicationAdd), Toast.LENGTH_LONG).show()
             }
         } catch (exception: Exception) {
             Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
