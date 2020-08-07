@@ -3,16 +3,20 @@ package com.ze20.saifu
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ClipboardManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 internal class ConvenientFunction {
 
@@ -43,6 +47,45 @@ internal class ConvenientFunction {
             val manager =
                 appCompatActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             manager.hideSoftInputFromWindow(view!!.windowToken, 0)
+        }
+    }
+
+    fun quickInsert(context: Context?, price: Int, name: String = "", category: Int = 0): Boolean {
+        try {
+            val dbHelper = SQLiteDB(context!!, "SaifuDB", null, 1)
+            val database = dbHelper.writableDatabase // 書き込み可能
+
+            // log表
+            // inputDate primary key,payDate,name,price,category,splitCount,picture
+
+            val inputDate = java.util.Date()
+            // INSERTするのに必要なデータをvalueにまとめる
+            val values = ContentValues()
+            values.run {
+                put(
+                    "inputDate",
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.JAPANESE).format(
+                        inputDate
+                    )
+                )
+                put(
+                    "payDate",
+                    SimpleDateFormat("yyyy-MM-dd 00:00:00", Locale.JAPANESE).format(
+                        inputDate
+                    )
+                )
+                put("name", name)
+                put("price", price)
+                put("category", category)
+                put("splitCount", 1)
+                put("sign", 0)
+            }
+            // DBに登録する できなければエラーを返す
+            database.insertOrThrow("log", null, values)
+            return true
+        } catch (exception: Exception) {
+            Log.e("insertData", exception.toString()) // エラーをログに出力
+            return false
         }
     }
 }
