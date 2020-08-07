@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.ze20.saifu.NotificationActivity
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
 import kotlinx.android.synthetic.main.fragment_home.*

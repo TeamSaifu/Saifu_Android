@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ze20.saifu.NotificationActivity">
+    tools:context="com.ze20.saifu.ui.home.NotificationActivity">
 
     <ScrollView
         android:layout_width="match_parent"

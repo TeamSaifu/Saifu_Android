@@ -13,15 +13,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GraphActivity"></activity>
-        <activity android:name=".ReportActivity" />
-        <activity android:name=".AddWishActivity" />
-        <activity android:name=".CalendarActivity" />
-        <activity android:name=".NotificationActivity" />
+        <activity android:name=".ui.log.GraphActivity"></activity>
+        <activity android:name=".ui.log.ReportActivity" />
+        <activity android:name=".ui.wish.AddWishActivity" />
+        <activity android:name="com.ze20.saifu.ui.calendar.CalendarActivity" />
+        <activity android:name=".ui.home.NotificationActivity" />
         <activity android:name=".ui.budget.IncomeSettings" />
         <activity android:name=".ui.budget.SpendSettings" />
-        <activity android:name=".DataInputActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.input.DataInputActivity" />
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
