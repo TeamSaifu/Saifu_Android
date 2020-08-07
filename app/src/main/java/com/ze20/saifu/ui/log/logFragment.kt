@@ -1,5 +1,8 @@
 package com.ze20.saifu.ui.log
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,10 +11,12 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.ui.log.Recyclerview.RecyclerViewHolder
 import com.ze20.saifu.ui.log.Recyclerview.RowModel
 import com.ze20.saifu.ui.log.Recyclerview.ViewAdapter
 import kotlinx.android.synthetic.main.fragment_log.*
@@ -25,6 +30,8 @@ class logFragment : Fragment() {
     private val dbVersion: Int = 1
     private var arrayListlayout: ArrayList<View> = arrayListOf()
 
+    val dataList = mutableListOf<RowModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,9 +39,17 @@ class logFragment : Fragment() {
     ): View? {
         root = View.inflate(context, R.layout.fragment_log, null)
 
-        //logShow()
-
         return root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_view, menu)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        activity?.setTitle((R.menu.search_view))
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,9 +61,11 @@ class logFragment : Fragment() {
             object :
                 ViewAdapter.ListListener {
                 override fun onClickRow(tappedView: View, rowModel: RowModel) {
-                    this@logFragment.onClickRow(tappedView, rowModel)
                 }
             })
+
+        val swipeToDismissTouchHelper = getSwipeToDismissTouchHelper(adapter)
+        swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -56,7 +73,6 @@ class logFragment : Fragment() {
     }
 
     private fun createDataList(): List<RowModel> {
-        val dataList = mutableListOf<RowModel>()
         try {
             // DBにアクセス
             val SQLiteDB = SQLiteDB(requireContext(), dbName, null, dbVersion)
@@ -96,74 +112,56 @@ class logFragment : Fragment() {
         return dataList
     }
 
-    // for (i in 0..49) {
-    //     val data: RowModel = RowModel()
-    //         .also {
-    //             it.day = "タイトル" + i + "だよ"
-    //             it.category = "詳細" + i + "個目だよ"
-    //             it.price = "aa" + i + "ss"
-    //         }
-    //     dataList.add(data)
-    // }
-    // return dataList
+    private fun getSwipeToDismissTouchHelper(adapter: RecyclerView.Adapter<RecyclerViewHolder>) =
+        ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.LEFT,
+                ItemTouchHelper.LEFT
+            ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
 
-    fun onClickRow(tappedView: View, rowModel: RowModel) {
-        Snackbar.make(
-            tappedView,
-            "Replace with your own action tapped ${rowModel.price}",
-            Snackbar.LENGTH_LONG
-        )
-            .setAction("Action", null).show()
-    }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                dataList.removeAt(viewHolder.adapterPosition)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+            }
 
-    // private fun logShow() {
-    //     try {
-    //         // DBにアクセス
-    //         val SQLiteDB = SQLiteDB(requireContext(), dbName, null, dbVersion)
-    //         val database = SQLiteDB.readableDatabase
-    //
-    //         // SQL文を構成
-    //         val sql =
-    //             "select *,strftime('%Y/%m/%d', payDate) from " + tableName + " order by 1 desc;"
-    //         val cursor = database.rawQuery(sql, null)
-    //
-    //         // log表
-    //         // inputDate primary key,payDate,name,price,category,splitCount,picture
-    //         if (cursor.count > 0) {
-    //             cursor.moveToFirst()
-    //             while (!cursor.isAfterLast) {
-    //                 arrayListlayout.add(View.inflate(context, R.layout.fragment_log_list, null))
-    //                 root.recycler_list.addView(
-    //                     arrayListlayout[arrayListlayout.size - 1].apply {
-    //
-    //                         dayText.text = cursor.getString(7) + "   "
-    //
-    //                         // カテゴリが設定されていなければ非表示
-    //                         if (cursor.getString(4) == "0") {
-    //                             categoryNameText.text = ""
-    //                         } else {
-    //                             categoryNameText.text = cursor.getString(4)
-    //                         }
-    //
-    //                         priceText.text =
-    //                             getString(R.string.currency) + cursor.getInt(3).toString() + " "
-    //                     }
-    //                 )
-    //                 cursor.moveToNext()
-    //             }
-    //         }
-    //     } catch (e: Exception) {
-    //         println(e)
-    //     }
-    // }
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentActivity: Boolean
+            ) {
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentActivity
+                )
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        activity?.setTitle((R.menu.search_view))
-        setHasOptionsMenu(true)
-    }
+                val itemView = viewHolder.itemView
+                val background = ColorDrawable()
+                background.color = Color.parseColor("#f44336")
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_view, menu)
-    }
+                if (dX < 0)
+                    background.setBounds(
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
+                    )
+                background.draw(c)
+            }
+        })
 }

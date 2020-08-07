@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/waku_black"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,31 +16,27 @@
         <TextView
             android:id="@+id/dayText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="20dp"
-            android:textColor="@color/blackColor" />
+            android:textColor="@color/blackColor"
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/categoryNameText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="20dp"
             android:gravity="center"
-            android:textColor="@color/blackColor" />
+            android:textColor="@color/blackColor"
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/priceText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="20dp"
             android:gravity="right"
-            android:textColor="@color/blackColor" />
+            android:textColor="@color/blackColor"
+            android:textSize="25dp" />
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/horizon_line" />
 </LinearLayout>
