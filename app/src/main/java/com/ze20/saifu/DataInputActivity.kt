@@ -4,8 +4,6 @@ import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -17,7 +15,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_input.*
@@ -53,7 +50,8 @@ open class DataInputActivity : AppCompatActivity() {
 
         // UserSetDateを表示しておく
         dayText.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
-        checkIntent()
+        cFunc.checkIntent(this, intent, pictureAdd)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
         modeCheck()
         setListeners()
     }
@@ -73,39 +71,14 @@ open class DataInputActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-
-        // 写真を撮ったり選んだりしたあとの処理です
-
-        if (resultCode != RESULT_OK) {
-            return
-        }
-        when (requestCode) {
-            REQUEST_IMAGE_CAPTURE -> {
-                val bitmap: Bitmap
-                val imageView: ImageView = findViewById(R.id.photoImageView)
-
-                resultData?.extras.also {
-                    bitmap = resultData?.extras?.get("data") as Bitmap
-                    bitmap.also {
-                        imageView.setImageBitmap(bitmap)
-                    }
-                }
-                showPicture()
-            }
-            READ_REQUEST_CODE -> {
-                try {
-                    resultData?.data?.also { uri ->
-                        val inputStream = contentResolver?.openInputStream(uri)
-                        val image = BitmapFactory.decodeStream(inputStream)
-                        val imageView = findViewById<ImageView>(R.id.photoImageView)
-                        imageView.setImageBitmap(image)
-                        showPicture()
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+        cFunc.photoOrCamera(
+            this,
+            contentResolver,
+            requestCode,
+            resultCode,
+            resultData,
+            photoImageView
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -113,7 +86,7 @@ open class DataInputActivity : AppCompatActivity() {
         // 登録ボタンを押した時の処理です
         when (item.itemId) {
             R.id.applyButton -> {
-                if (moneyEdit.text.length == 0 || cFunc.editToInt(moneyEdit) == 0) {
+                if (moneyEdit.text.isEmpty() || cFunc.editToInt(moneyEdit) == 0) {
                     val alartDialogFragment = okCancelDialogFragment()
                     alartDialogFragment.run {
                         title = "注意"
@@ -136,35 +109,6 @@ open class DataInputActivity : AppCompatActivity() {
             }
         }
         return true
-    }
-
-    private fun checkIntent() {
-
-        // 画像ギャラリーがあるかどうか確認
-
-        val activities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (activities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> pictureAdd.visibility = View.GONE
-            true -> pictureAdd.visibility = View.VISIBLE
-        }
-
-        // カメラアプリがあるかどうか確認
-
-        val cameraActivities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            cameraIntent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (cameraActivities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> picturePhoto.visibility = View.GONE
-            true -> picturePhoto.visibility = View.VISIBLE
-        }
     }
 
     private fun setListeners() {
@@ -430,7 +374,8 @@ open class DataInputActivity : AppCompatActivity() {
 
     private fun deletePicture() {
         // 追加したピクチャーを消して、削除ボタンを追加ボタンに差し替えます
-        checkIntent()
+        cFunc.checkIntent(this, intent, pictureAdd)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
         pictureDelete.visibility = View.GONE
         photoImageView.visibility = View.GONE
     }
@@ -521,9 +466,9 @@ open class DataInputActivity : AppCompatActivity() {
                 // DBに登録する できなければエラーを返す
                 database.insertOrThrow("shortcut", null, values)
                 addShortcutflag = true
-                Toast.makeText(this, "追加しました。", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.completeAdd), Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "すでに登録済みです。", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.duplicationAdd), Toast.LENGTH_LONG).show()
             }
         } catch (exception: Exception) {
             Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
