@@ -221,7 +221,7 @@ class AddWishActivity : AppCompatActivity() {
                     }
                 }
             } catch (exception: Exception) {
-                Toast.makeText(this, getString(R.string.DataError), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
                 Log.e(tag, exception.toString()) // エラーをログに出力
                 return false
             }
