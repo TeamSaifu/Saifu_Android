@@ -1,0 +1,38 @@
+package com.ze20.saifu.ui.log.Recyclerview
+
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.ze20.saifu.R
+
+class ViewAdapter(
+    private val list: List<RowModel>,
+    private val listener: ListListener
+) : RecyclerView.Adapter<RecyclerViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+        Log.d("Adapter", "onCreateViewHolder")
+        val rowView: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_log_list, parent, false)
+        return RecyclerViewHolder(rowView)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+        holder.dayView.text = list[position].day
+        holder.categoryView.text = list[position].category
+        holder.priceView.text = list[position].price
+        holder.itemView.setOnClickListener {
+            listener.onClickRow(it, list[position])
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+    interface ListListener {
+        fun onClickRow(tappedView: View, rowModel: RowModel)
+    }
+}
