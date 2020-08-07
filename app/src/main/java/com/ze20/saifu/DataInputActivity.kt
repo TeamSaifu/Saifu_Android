@@ -28,9 +28,10 @@ open class DataInputActivity : AppCompatActivity() {
     private var date = java.util.Date() // 今日の日付を格納
     private var sign = false // プラス・マイナス
     private var userSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
-    private var busyFlag = false // ローディング中はいろいろ動かなくするためのフラグWish
     private var mode = "New" // 現在のモード
     private var id: String? = null // 欲しい物リストのID
+    private var busyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
+    private var addShortcutflag = false
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
@@ -206,6 +207,9 @@ open class DataInputActivity : AppCompatActivity() {
         pictureDelete.setOnClickListener {
             deletePicture()
         }
+        shortcutAdd.setOnClickListener {
+            addShortcut()
+        }
     }
 
     private fun modeCheck() {
@@ -230,6 +234,16 @@ open class DataInputActivity : AppCompatActivity() {
                     photoImageView.setImageBitmap(bitmap)
                     showPicture()
                 }
+            }
+            "Shortcut" -> {
+                memoEdit.setText(intent.getStringExtra("name"))
+                // メモがあればメモを表示させる
+                if (memoEdit.text.isNotEmpty()) {
+                    memoAddButton.visibility = View.GONE
+                    memoEdit.visibility = View.VISIBLE
+                }
+                moneyEdit.setText(intent.getIntExtra("price", -1).toString())
+                emsAutoSet()
             }
         }
     }
@@ -412,7 +426,7 @@ open class DataInputActivity : AppCompatActivity() {
             finish() // 登録できたら画面を閉じる
             return true
         } catch (exception: Exception) {
-            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
             Log.e("insertData", exception.toString()) // エラーをログに出力
             return false
         }
@@ -428,6 +442,37 @@ open class DataInputActivity : AppCompatActivity() {
             database.delete("wish", whereClauses, whereArgs)
         } catch (exception: Exception) {
             Log.e("deleteData", exception.toString())
+        }
+    }
+
+    private fun addShortcut() {
+        // DBに登録するときに呼び出されます
+
+        try {
+            if (!addShortcutflag) {
+                val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
+                val database = dbHelper.writableDatabase // 書き込み可能
+
+                // shortcut表
+                // id INTEGER primary key,name,price,category
+
+                // INSERTするのに必要なデータをvalueにまとめる
+                val values = ContentValues()
+                values.run {
+                    put("name", memoEdit.text.toString())
+                    put("price", cFunc.editToInt(moneyEdit))
+                    put("category", 0)
+                }
+                // DBに登録する できなければエラーを返す
+                database.insertOrThrow("shortcut", null, values)
+                addShortcutflag = true
+                Toast.makeText(this, "追加しました。", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "すでに登録済みです。", Toast.LENGTH_LONG).show()
+            }
+        } catch (exception: Exception) {
+            Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
+            Log.e("insertData", exception.toString()) // エラーをログに出力
         }
     }
 }

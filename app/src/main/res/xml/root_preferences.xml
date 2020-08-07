@@ -22,7 +22,14 @@
         android:icon="@drawable/ic_baseline_folder_48"
         app:key="category"
         app:title="@string/category_config" />
-
+    <SwitchPreferenceCompat
+        android:icon="@drawable/ic_baseline_double_arrow_48"
+        app:key="shortCutQuickAdd"
+        app:title="@string/shortcutQuickAdd" />
+    <Preference
+        android:icon="@drawable/ic_baseline_edit_48"
+        app:key="shortCutEdit"
+        app:title="@string/shortcutEdit" />
 
 
 </PreferenceScreen>
