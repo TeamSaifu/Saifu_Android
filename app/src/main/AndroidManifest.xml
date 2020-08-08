@@ -16,7 +16,7 @@
         <receiver android:name=".SaifuAddWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="click_action" />
+                <action android:name="CLICK_WIDGET" />
             </intent-filter>
 
             <meta-data
