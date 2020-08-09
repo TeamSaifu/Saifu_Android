@@ -163,7 +163,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:text="@string/minus7"
                         android:textSize="20sp" />
 
@@ -174,7 +174,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:text="@string/minus1"
                         android:textSize="20sp" />
 
@@ -185,7 +185,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:text="@string/Today"
                         android:textSize="20sp" />
 
@@ -196,7 +196,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:text="@string/plus1"
                         android:textSize="20sp" />
 
@@ -207,7 +207,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:text="@string/plus7"
                         android:textSize="20sp" />
 
@@ -231,7 +231,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/input_button"
                     android:text="@string/category_select"
                     android:textSize="20sp" />
 
@@ -271,7 +271,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:textSize="16sp" />
 
                     <Button
@@ -283,7 +283,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:textSize="16sp" />
 
                     <Button
@@ -295,7 +295,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:textSize="16sp" />
 
                     <Button
@@ -307,7 +307,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -398,7 +398,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/input_button"
                     android:text="@string/memo_add"
                     android:textSize="16sp" />
 
@@ -441,7 +441,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:text="@string/picture_add"
                         android:textSize="16sp" />
 
@@ -454,7 +454,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="10sp"
                         android:layout_weight="5"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/input_button"
                         android:foreground="@drawable/ic_baseline_photo_camera_36"
                         android:foregroundGravity="center"
                         android:textSize="16sp" />
@@ -501,7 +501,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/input_button"
                     android:text="@string/shortcut_add"
                     android:textSize="16sp" />
             </LinearLayout>
