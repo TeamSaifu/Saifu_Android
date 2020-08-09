@@ -90,24 +90,7 @@ open class DataInputActivity : AppCompatActivity() {
         // 登録ボタンを押した時の処理です
         when (item.itemId) {
             R.id.applyButton -> {
-                if (moneyEdit.text.isEmpty() || cFunc.editToInt(moneyEdit) == 0) {
-                    val alartDialogFragment =
-                        okCancelDialogFragment()
-                    alartDialogFragment.run {
-                        title = "注意"
-                        message = "入力金額が0です。本当に登録してよろしいですか？"
-                        onOkClickListener = DialogInterface.OnClickListener { _, _ ->
-                            insertDB()
-                        }
-                        cancelText = "キャンセル"
-                        onCancelClickListener = DialogInterface.OnClickListener { dialog, _ ->
-                            dialog.dismiss()
-                        }
-                        show(supportFragmentManager, null)
-                    }
-                } else {
-                    return insertDB()
-                }
+                return apply()
             }
             else -> {
                 finish()
@@ -210,16 +193,16 @@ open class DataInputActivity : AppCompatActivity() {
         }
         picturePhoto.setOnClickListener {
             // 写真を撮影する画面を表示
-            startActivityForResult(
-                cameraIntent,
-                REQUEST_IMAGE_CAPTURE
-            )
+            startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE)
         }
         pictureDelete.setOnClickListener {
             deletePicture()
         }
         shortcutAdd.setOnClickListener {
             addShortcut()
+        }
+        applyButton.setOnClickListener {
+            apply()
         }
     }
 
@@ -391,13 +374,34 @@ open class DataInputActivity : AppCompatActivity() {
         photoImageView.visibility = View.GONE
     }
 
+    private fun apply(): Boolean {
+
+        if (moneyEdit.text.isEmpty() || cFunc.editToInt(moneyEdit) == 0) {
+            val alartDialogFragment = okCancelDialogFragment()
+            alartDialogFragment.run {
+                title = "注意"
+                message = "入力金額が0です。本当に登録してよろしいですか？"
+                onOkClickListener = DialogInterface.OnClickListener { _, _ ->
+                    insertDB()
+                }
+                cancelText = "キャンセル"
+                onCancelClickListener = DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                }
+                show(supportFragmentManager, null)
+            }
+        } else {
+            return insertDB()
+        }
+        return true
+    }
+
     private fun insertDB(): Boolean {
 
         // DBに登録するときに呼び出されます
 
         try {
-            val dbHelper =
-                SQLiteDB(applicationContext, "SaifuDB", null, 1)
+            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
             val database = dbHelper.writableDatabase // 書き込み可能
 
             // log表
