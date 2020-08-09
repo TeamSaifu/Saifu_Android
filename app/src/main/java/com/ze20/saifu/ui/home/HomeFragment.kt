@@ -15,22 +15,33 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
+
+        return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        reload(requireView())
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        notificationButton.setOnClickListener {
+            startActivity(Intent(activity, NotificationActivity::class.java))
+        }
+    }
+
+    private fun reload(view: View) {
         // スワイプできるフラグメント一覧
-        val fragmentList = arrayListOf<Fragment>(
-            sub_fragment1()
-        )
+        val fragmentList = arrayListOf<Fragment>(sub_fragment1())
 
         val SQLiteDB = SQLiteDB(requireContext(), "SaifuDB", null, 1)
         val database = SQLiteDB.readableDatabase
-        val sql =
-            "select * from shortcut order by 1 asc;"
+        val sql = "select * from shortcut order by 1 asc;"
         val cursor = database.rawQuery(sql, null)
         if (cursor.count >= 5) {
             tablayout.visibility = View.VISIBLE
@@ -40,11 +51,10 @@ class HomeFragment : Fragment() {
         cursor.close()
 
         // レイアウト呼び出し
-        val pager =
-            root.findViewById(R.id.pager) as ViewPager
+        val pager = view.findViewById(R.id.pager) as ViewPager
 
         // レイアウト呼び出し
-        val tablayout = root.findViewById(R.id.tablayout) as TabLayout
+        val tablayout = view.findViewById(R.id.tablayout) as TabLayout
 
         // adapterのインスタンス生成
         val adapter: PagerAdapter = SubFragmentAdapter(childFragmentManager, fragmentList)
@@ -54,14 +64,5 @@ class HomeFragment : Fragment() {
 
         // tablayoutを表示
         tablayout.setupWithViewPager(pager, true)
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        notificationButton.setOnClickListener {
-            startActivity(Intent(activity, NotificationActivity::class.java))
-        }
     }
 }

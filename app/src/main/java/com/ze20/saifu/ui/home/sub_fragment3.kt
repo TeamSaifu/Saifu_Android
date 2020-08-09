@@ -18,6 +18,16 @@ import kotlinx.android.synthetic.main.activity_sub_fragment3.view.*
 class sub_fragment3 : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_sub_fragment3, container, false)
+        reload(view)
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        reload(requireView())
+    }
+
+    private fun reload(view: View) {
         val shortcut: ArrayList<Button> =
             arrayListOf(view.shurtcut_button13, view.shurtcut_button14, view.shurtcut_button15, view.shurtcut_button16, view.shurtcut_button17, view.shurtcut_button18, view.shurtcut_button19, view.shurtcut_button20)
         val nameal: ArrayList<String> = arrayListOf()
@@ -33,12 +43,10 @@ class sub_fragment3 : Fragment() {
             cursor.moveToFirst()
             while (!cursor.isAfterLast) {
                 if (cursor.getString(1) == "") {
-                    shortcut[i].text =
-                        getString(R.string.currencyString, "%,d".format(cursor.getInt(2)))
+                    shortcut[i].text = getString(R.string.currencyString, "%,d".format(cursor.getInt(2)))
                     shortcut[i].setTextSize(30.0f)
                 } else {
-                    shortcut[i].text =
-                        getString(R.string.shortcutformat, cursor.getString(1), "%,d".format(cursor.getInt(2)))
+                    shortcut[i].text = getString(R.string.shortcutformat, cursor.getString(1), "%,d".format(cursor.getInt(2)))
                 }
                 nameal.add(cursor.getString(1))
                 priceal.add(cursor.getInt(2))
@@ -72,6 +80,5 @@ class sub_fragment3 : Fragment() {
             }
         }
         cursor.close()
-        return view
     }
 }
