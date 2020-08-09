@@ -248,6 +248,7 @@ open class DataInputActivity : AppCompatActivity() {
         // プラスマイナスを切り替えて表示も切り替える
         sign = !sign
         plusMinusButton.setText(if (sign) R.string.plus else R.string.minus)
+        plusMinusButton.setBackgroundResource(if (sign) R.drawable.ic_baseline_fiber_manual_record_24_orange else R.drawable.ic_baseline_fiber_manual_record_24)
     }
 
     fun emsAutoSet() {
