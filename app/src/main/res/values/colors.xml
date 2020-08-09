@@ -24,4 +24,5 @@
     <color name="divider">#DBDBDB</color>
     <color name="disabled_text">#9B9B9B</color>
     <color name="background">#FAFAFA</color>
+    <color name="colorWhite.focused">#CCCCCC</color>
 </resources>

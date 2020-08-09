@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/input_button"
+            android:background="@drawable/button_ripple"
             android:foreground="@drawable/ic_baseline_edit_128"
             android:foregroundGravity="center"
             android:foregroundTintMode="src_in" />
