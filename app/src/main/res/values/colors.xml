@@ -25,4 +25,5 @@
     <color name="disabled_text">#9B9B9B</color>
     <color name="background">#FAFAFA</color>
     <color name="colorWhite.focused">#CCCCCC</color>
+    <color name="colorGreen.focused">#66BB6A</color>
 </resources>
