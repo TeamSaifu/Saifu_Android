@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.Toast
@@ -42,6 +41,10 @@ class Shortcut4Widget : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
+
+        // 押されたボタンに応じて処理を変更
+        // （意味ないように見えるけど1つにしたらおかしくなったのでこのままに）
+
         when (intent.action) {
             BUTTON1 -> shortcut(context, intent)
             BUTTON2 -> shortcut(context, intent)
@@ -55,14 +58,18 @@ class Shortcut4Widget : AppWidgetProvider() {
         val name = intent.getStringExtra("name")
         val price = intent.getIntExtra("price", 0)
         val category = intent.getIntExtra("category", 0)
-        Log.e("widget", "$name : $price : $category")
+
+        // ショートカット即時がオンがどうかの確認
+
         if (sharedPref.getBoolean("shortCutQuickAdd", false)) {
+            // オンならばquickInsertを起動して即時登録
             if (ConvenientFunction().quickInsert(context, price, name!!, category)) {
                 Toast.makeText(context, context.getString(R.string.recordFinish), Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(context, context.getString(R.string.recordError), Toast.LENGTH_LONG).show()
             }
         } else {
+            // オフならば情報を入力した状態のデータ入力画面を開く
             val dataIntent = Intent(context, DataInputActivity::class.java)
             dataIntent.putExtra("mode", "Shortcut")
             dataIntent.putExtra("price", price)
@@ -85,6 +92,7 @@ class Shortcut4Widget : AppWidgetProvider() {
         val shortcut: ArrayList<Int> =
             arrayListOf(R.id.shurtcut_button1, R.id.shurtcut_button2, R.id.shurtcut_button3, R.id.shurtcut_button4)
         var i = 0
+        // ボタンに情報を設定
         if (cursor.count > 0) {
             cursor.moveToFirst()
             if (cursor.count <= 2) {
@@ -107,6 +115,7 @@ class Shortcut4Widget : AppWidgetProvider() {
             }
         }
         cursor.close()
+        // エラーが出るまでボタンにオンクリックをセットする
         try {
             views.setOnClickPendingIntent(R.id.shurtcut_button1, PendingIntent.getBroadcast(context, appWidgetId, Intent(context, Shortcut4Widget::class.java).apply {
                 action = BUTTON1
@@ -132,10 +141,10 @@ class Shortcut4Widget : AppWidgetProvider() {
                 putExtra("name", name[3])
                 putExtra("category", category[3])
             }, 0))
-        } catch (e: IndexOutOfBoundsException) {
-
+        } catch (expected: IndexOutOfBoundsException) {
+            // IndexOutOfBoundsException エラーが出たら処理を終える
         }
-        // Instruct the widget manager to update the widget
+        // ウィジェットを更新するようにウィジェットマネージャーに指示する
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 }
