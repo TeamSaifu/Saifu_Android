@@ -3,11 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/amazonButton"
-        android:icon="@drawable/amazon_alpha"
-        android:title="@string/amazonAdd"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/plusButton"
         android:icon="@drawable/ic_outline_add_24"
         android:title="@string/add"
