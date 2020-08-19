@@ -23,6 +23,11 @@
         app:key="category"
         app:title="@string/category_config" />
     <SwitchPreferenceCompat
+        android:id="@+id/startInput"
+        android:icon="@drawable/ic_baseline_double_arrow_48"
+        app:key="startInput"
+        app:title="@string/startInput" />
+    <SwitchPreferenceCompat
         android:icon="@drawable/ic_baseline_double_arrow_48"
         app:key="shortCutQuickAdd"
         app:title="@string/shortcutQuickAdd" />
