@@ -38,8 +38,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
-                android:text="Button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -50,8 +49,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
-                android:text="Button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:textSize="20sp"
                 android:visibility="gone" />
         </LinearLayout>
@@ -70,8 +68,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
-                android:text="Button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -82,8 +79,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
-                android:text="Button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:textSize="20sp"
                 android:visibility="gone" />
 

@@ -39,7 +39,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />
@@ -51,7 +51,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />
@@ -71,7 +71,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />
@@ -83,7 +83,7 @@
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shurtcut_button"
+                android:background="@drawable/shortcut_button_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />
