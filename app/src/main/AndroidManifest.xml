@@ -27,6 +27,17 @@
                 android:resource="@xml/shortcut4_widget_info" />
         </receiver>
 
+        <receiver android:name=".SaifuAddWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="CLICK_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/saifu_add_widget_info" />
+        </receiver>
+
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
