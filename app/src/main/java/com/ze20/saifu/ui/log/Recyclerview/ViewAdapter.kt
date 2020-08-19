@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
 
-//ViewHolderを生成しViewModelをセットする
+// ViewHolderを生成しViewModelをセットする
 // 詳しくはココ参照→ https://qiita.com/saiki-ii/items/78ed73134784f3e5db7e
 
 class ViewAdapter(
