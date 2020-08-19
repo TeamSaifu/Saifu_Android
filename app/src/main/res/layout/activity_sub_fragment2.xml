@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,8 +18,10 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/shurtcut_button6"
@@ -28,8 +29,10 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,8 +47,10 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/shurtcut_button8"
@@ -53,8 +58,10 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,8 +76,10 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/shurtcut_button10"
@@ -78,8 +87,10 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,8 +105,10 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/shurtcut_button12"
@@ -103,7 +116,9 @@
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shurtcut_button"
-            android:text="Button" />
+            android:background="@drawable/shortcut_button_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
     </LinearLayout>
 </LinearLayout>

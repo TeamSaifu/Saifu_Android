@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ze20.saifu">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,14 +13,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReportActivity"></activity>
-        <activity android:name=".AddWishActivity" />
-        <activity android:name=".CalendarActivity" />
-        <activity android:name=".NotificationActivity" />
-        <activity android:name=".ui.budget.IncomeSettings" />
-        <activity android:name=".ui.budget.SpendSettings" />
-        <activity android:name=".DataInputActivity" />
-        <activity android:name=".MainActivity">
+        <receiver android:name=".Shortcut4Widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="SHORTCUT_1" />
+                <action android:name="SHORTCUT_2" />
+                <action android:name="SHORTCUT_3" />
+                <action android:name="SHORTCUT_4" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/shortcut4_widget_info" />
+        </receiver>
+
+        <receiver android:name=".SaifuAddWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="CLICK_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/saifu_add_widget_info" />
+        </receiver>
+
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,9 +46,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.budget.BudgetActivity" />
+        <activity android:name=".ui.budget.IncomeSettings" />
+        <activity android:name=".ui.budget.SpendSettings" />
+        <activity android:name=".ui.calendar.CalendarActivity" />
+        <activity android:name=".ui.home.NotificationActivity" />
+        <activity android:name=".ui.log.GraphActivity" />
+        <activity android:name=".ui.log.ReportActivity" />
+        <activity android:name=".ui.wish.AddWishActivity" />
+        <activity android:name=".ui.input.DataInputActivity" />
     </application>
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
 
 </manifest>

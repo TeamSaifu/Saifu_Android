@@ -88,4 +88,17 @@
     <string name="add">追加</string>
     <string name="amazonAdd">アマゾンから追加</string>
     <string name="delete_item">項目を削除</string>
+    <string name="NC_transition">NC_transition</string>
+    <string name="Error">エラーが発生しました</string>
+    <string name="recordError">データ登録エラー</string>
+    <string name="shortcutQuickAdd">ショートカット即時登録</string>
+    <string name="shortcutEdit">ショートカット編集</string>
+    <string name="shortcutformat">%1$s\n¥%2$s</string>
+    <string name="recordFinish">記録完了</string>
+    <string name="completeAdd">追加しました。</string>
+    <string name="duplicationAdd">すでに登録済みです。</string>
+    <string name="startInput">起動時に入力画面に推移</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="needShortcut">このウィジェットの使用には1つ以上のショートカット項目が必要です。\nアプリ内でショートカットを登録してからお使いください。</string>
 </resources>

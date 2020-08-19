@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/grayColor"
     android:orientation="vertical"
-    tools:context="com.ze20.saifu.CalendarActivity">
+    tools:context=".ui.calendar.CalendarActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

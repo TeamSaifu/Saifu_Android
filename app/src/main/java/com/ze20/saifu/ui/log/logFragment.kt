@@ -3,11 +3,13 @@ package com.ze20.saifu.ui.log
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -105,7 +107,6 @@ class logFragment : Fragment() {
                             } else {
                                 it.category = cursor.getString(4)
                             }
-
                             it.price =
                                 getString(R.string.currency) + cursor.getString(3).toString() + " "
                         }
@@ -117,7 +118,6 @@ class logFragment : Fragment() {
         } catch (e: Exception) {
             Log.e("logShow", e.toString())
         }
-
         return dataList
     }
 
@@ -204,5 +204,20 @@ class logFragment : Fragment() {
         } catch (e: Exception) {
             Log.e("logDelete", e.toString())
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        // 画面遷移
+
+        when (item.itemId) {
+            R.id.graph -> {
+                startActivity(Intent(activity, GraphActivity::class.java))
+            }
+            R.id.report -> {
+                startActivity(Intent(activity, ReportActivity::class.java))
+            }
+        }
+        return true
     }
 }

@@ -1,30 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:orientation="vertical"
-    tools:context=".ui.home.sub_fragment1">
+    android:padding="@dimen/widget_margin">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/input_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8sp"
-            android:layout_weight="1"
-            android:background="@drawable/button_ripple"
-            android:foreground="@drawable/ic_baseline_edit_128"
-            android:foregroundGravity="center"
-            android:foregroundTintMode="src_in" />
-
-    </LinearLayout>
+        android:autoText="true"
+        android:background="#FFFFFF"
+        android:foreground="@drawable/waku"
+        android:gravity="center"
+        android:padding="10sp"
+        android:text="@string/needShortcut" />
 
     <LinearLayout
         android:id="@+id/button4Layout"
@@ -32,9 +22,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
+            android:id="@+id/layout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -46,10 +37,10 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/shortcut_button_ripple"
-                android:text="Button"
-                android:textSize="18sp"
-                android:visibility="invisible" />
+                android:textSize="20sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/shurtcut_button2"
@@ -57,13 +48,14 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/shortcut_button_ripple"
-                android:text="Button"
-                android:textSize="18sp"
-                android:visibility="invisible" />
+                android:textSize="20sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -75,10 +67,10 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/shortcut_button_ripple"
-                android:text="Button"
-                android:textSize="18sp"
-                android:visibility="invisible" />
+                android:textSize="20sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/shurtcut_button4"
@@ -86,10 +78,10 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/shortcut_button_ripple"
-                android:text="Button"
-                android:textSize="18sp"
-                android:visibility="invisible" />
+                android:textSize="20sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>

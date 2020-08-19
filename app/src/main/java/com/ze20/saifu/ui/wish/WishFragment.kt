@@ -13,9 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.ze20.saifu.AddWishActivity
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.ui.input.DataInputActivity
 import kotlinx.android.synthetic.main.fragment_wish.view.*
 import kotlinx.android.synthetic.main.fragment_wish_list.view.*
 
@@ -118,6 +118,16 @@ class WishFragment : Fragment() {
                 Toast.makeText(activity, "URLが不正です。", Toast.LENGTH_LONG).show()
                 Log.e("webAccess", exception.toString())
             }
+        }
+        view.shopButton.setOnClickListener {
+            // 購入するボタン
+            val intent = Intent(activity, DataInputActivity::class.java)
+            intent.putExtra("mode", "Wish")
+            intent.putExtra("id", view.idText.text.toString())
+            intent.putExtra("name", view.nameText.text.toString())
+            intent.putExtra("price", price)
+            picture?.let { intent.putExtra("picture", it) }
+            startActivity(intent)
         }
         view.editButton.setOnClickListener {
             // 項目を編集／削除するボタン

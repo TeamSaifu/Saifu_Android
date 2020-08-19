@@ -1,11 +1,9 @@
-package com.ze20.saifu
+package com.ze20.saifu.ui.input
 
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -17,9 +15,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.ze20.saifu.ConvenientFunction
+import com.ze20.saifu.R
+import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.okCancelDialogFragment
 import kotlinx.android.synthetic.main.activity_data_input.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -31,7 +32,10 @@ open class DataInputActivity : AppCompatActivity() {
     private var date = java.util.Date() // 今日の日付を格納
     private var sign = false // プラス・マイナス
     private var userSetDate: java.util.Date = java.util.Date() // 設定された日付・初期値は今日
+    private var mode = "New" // 現在のモード
+    private var id: String? = null // 欲しい物リストのID
     private var busyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
+    private var addShortcutflag = false
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
@@ -50,7 +54,9 @@ open class DataInputActivity : AppCompatActivity() {
 
         // UserSetDateを表示しておく
         dayText.text = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(userSetDate)
-        checkIntent()
+        cFunc.checkIntent(this, intent, pictureAdd)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
+        modeCheck()
         setListeners()
     }
 
@@ -69,39 +75,14 @@ open class DataInputActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-
-        // 写真を撮ったり選んだりしたあとの処理です
-
-        if (resultCode != RESULT_OK) {
-            return
-        }
-        when (requestCode) {
-            REQUEST_IMAGE_CAPTURE -> {
-                val bitmap: Bitmap
-                val imageView: ImageView = findViewById(R.id.photoImageView)
-
-                resultData?.extras.also {
-                    bitmap = resultData?.extras?.get("data") as Bitmap
-                    bitmap.also {
-                        imageView.setImageBitmap(bitmap)
-                    }
-                }
-                showPicture()
-            }
-            READ_REQUEST_CODE -> {
-                try {
-                    resultData?.data?.also { uri ->
-                        val inputStream = contentResolver?.openInputStream(uri)
-                        val image = BitmapFactory.decodeStream(inputStream)
-                        val imageView = findViewById<ImageView>(R.id.photoImageView)
-                        imageView.setImageBitmap(image)
-                        showPicture()
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+        cFunc.photoOrCamera(
+            this,
+            contentResolver,
+            requestCode,
+            resultCode,
+            resultData,
+            photoImageView
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -109,58 +90,13 @@ open class DataInputActivity : AppCompatActivity() {
         // 登録ボタンを押した時の処理です
         when (item.itemId) {
             R.id.applyButton -> {
-                if (moneyEdit.text.length == 0 || cFunc.editToInt(moneyEdit) == 0) {
-                    val alartDialogFragment = okCancelDialogFragment()
-                    alartDialogFragment.run {
-                        title = "注意"
-                        message = "入力金額が0です。本当に登録してよろしいですか？"
-                        onOkClickListener = DialogInterface.OnClickListener { dialog, which ->
-                            databaseInsert()
-                        }
-                        cancelText = "キャンセル"
-                        onCancelClickListener = DialogInterface.OnClickListener { dialog, which ->
-                            dialog.dismiss()
-                        }
-                        show(supportFragmentManager, null)
-                    }
-                } else {
-                    return databaseInsert()
-                }
+                return apply()
             }
             else -> {
                 finish()
             }
         }
         return true
-    }
-
-    private fun checkIntent() {
-
-        // 画像ギャラリーがあるかどうか確認
-
-        val activities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (activities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> pictureAdd.visibility = View.GONE
-            true -> pictureAdd.visibility = View.VISIBLE
-        }
-
-        // カメラアプリがあるかどうか確認
-
-        val cameraActivities: List<ResolveInfo> = packageManager.queryIntentActivities(
-            cameraIntent,
-            PackageManager.MATCH_ALL
-        )
-
-        when (cameraActivities.isNotEmpty()) {
-            // なければボタンが消滅
-            false -> picturePhoto.visibility = View.GONE
-            true -> picturePhoto.visibility = View.VISIBLE
-        }
     }
 
     private fun setListeners() {
@@ -250,7 +186,10 @@ open class DataInputActivity : AppCompatActivity() {
                 addCategory(Intent.CATEGORY_OPENABLE)
                 type = "image/*"
             }
-            startActivityForResult(fileIntent, READ_REQUEST_CODE)
+            startActivityForResult(
+                fileIntent,
+                READ_REQUEST_CODE
+            )
         }
         picturePhoto.setOnClickListener {
             // 写真を撮影する画面を表示
@@ -258,6 +197,48 @@ open class DataInputActivity : AppCompatActivity() {
         }
         pictureDelete.setOnClickListener {
             deletePicture()
+        }
+        shortcutAdd.setOnClickListener {
+            addShortcut()
+        }
+        applyButton.setOnClickListener {
+            apply()
+        }
+    }
+
+    private fun modeCheck() {
+
+        // 呼び出されたモードをチェック
+
+        val intent = intent
+        when (intent.getStringExtra("mode")) {
+            "Wish" -> {
+                mode = "Wish"
+                id = intent.getStringExtra("id")
+                memoEdit.setText(intent.getStringExtra("name"))
+                // メモがあればメモを表示させる
+                if (memoEdit.text.isNotEmpty()) {
+                    memoAddButton.visibility = View.GONE
+                    memoEdit.visibility = View.VISIBLE
+                }
+                moneyEdit.setText(intent.getIntExtra("price", -1).toString())
+                emsAutoSet()
+                intent.getByteArrayExtra("picture")?.let {
+                    val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+                    photoImageView.setImageBitmap(bitmap)
+                    showPicture()
+                }
+            }
+            "Shortcut" -> {
+                memoEdit.setText(intent.getStringExtra("name"))
+                // メモがあればメモを表示させる
+                if (memoEdit.text.isNotEmpty()) {
+                    memoAddButton.visibility = View.GONE
+                    memoEdit.visibility = View.VISIBLE
+                }
+                moneyEdit.setText(intent.getIntExtra("price", -1).toString())
+                emsAutoSet()
+            }
         }
     }
 
@@ -267,6 +248,7 @@ open class DataInputActivity : AppCompatActivity() {
         // プラスマイナスを切り替えて表示も切り替える
         sign = !sign
         plusMinusButton.setText(if (sign) R.string.plus else R.string.minus)
+        plusMinusButton.setBackgroundResource(if (sign) R.drawable.ic_baseline_fiber_manual_record_24_orange else R.drawable.ic_baseline_fiber_manual_record_24)
     }
 
     fun emsAutoSet() {
@@ -387,12 +369,35 @@ open class DataInputActivity : AppCompatActivity() {
 
     private fun deletePicture() {
         // 追加したピクチャーを消して、削除ボタンを追加ボタンに差し替えます
-        checkIntent()
+        cFunc.checkIntent(this, intent, pictureAdd)
+        cFunc.checkIntent(this, cameraIntent, picturePhoto)
         pictureDelete.visibility = View.GONE
         photoImageView.visibility = View.GONE
     }
 
-    private fun databaseInsert(): Boolean {
+    private fun apply(): Boolean {
+
+        if (moneyEdit.text.isEmpty() || cFunc.editToInt(moneyEdit) == 0) {
+            val alartDialogFragment = okCancelDialogFragment()
+            alartDialogFragment.run {
+                title = "注意"
+                message = "入力金額が0です。本当に登録してよろしいですか？"
+                onOkClickListener = DialogInterface.OnClickListener { _, _ ->
+                    insertDB()
+                }
+                cancelText = "キャンセル"
+                onCancelClickListener = DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                }
+                show(supportFragmentManager, null)
+            }
+        } else {
+            return insertDB()
+        }
+        return true
+    }
+
+    private fun insertDB(): Boolean {
 
         // DBに登録するときに呼び出されます
 
@@ -431,12 +436,66 @@ open class DataInputActivity : AppCompatActivity() {
             }
             // DBに登録する できなければエラーを返す
             database.insertOrThrow("log", null, values)
+            if (mode == "Wish") {
+                // 欲しい物リストから登録した場合、購入したとみなして欲しい物を削除する
+                id?.let { deleteDB(it) }
+            }
             finish() // 登録できたら画面を閉じる
             return true
         } catch (exception: Exception) {
-            Toast.makeText(this, "データ登録エラー", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
             Log.e("insertData", exception.toString()) // エラーをログに出力
             return false
+        }
+    }
+
+    fun deleteDB(whereId: String) {
+        try {
+            val dbHelper =
+                SQLiteDB(applicationContext, "SaifuDB", null, 1)
+            val database = dbHelper.writableDatabase
+
+            val whereClauses = "id = ?"
+            val whereArgs = arrayOf(whereId)
+            database.delete("wish", whereClauses, whereArgs)
+        } catch (exception: Exception) {
+            Log.e("deleteData", exception.toString())
+        }
+    }
+
+    private fun addShortcut() {
+        // DBに登録するときに呼び出されます
+
+        try {
+            if (!addShortcutflag) {
+                val dbHelper = SQLiteDB(
+                    applicationContext,
+                    "SaifuDB",
+                    null,
+                    1
+                )
+                val database = dbHelper.writableDatabase // 書き込み可能
+
+                // shortcut表
+                // id INTEGER primary key,name,price,category
+
+                // INSERTするのに必要なデータをvalueにまとめる
+                val values = ContentValues()
+                values.run {
+                    put("name", memoEdit.text.toString())
+                    put("price", cFunc.editToInt(moneyEdit))
+                    put("category", 0)
+                }
+                // DBに登録する できなければエラーを返す
+                database.insertOrThrow("shortcut", null, values)
+                addShortcutflag = true
+                Toast.makeText(this, getString(R.string.completeAdd), Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, getString(R.string.duplicationAdd), Toast.LENGTH_LONG).show()
+            }
+        } catch (exception: Exception) {
+            Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
+            Log.e("insertData", exception.toString()) // エラーをログに出力
         }
     }
 }
