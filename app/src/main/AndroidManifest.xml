@@ -13,6 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".Shortcut4Widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="SHORTCUT_1" />
+                <action android:name="SHORTCUT_2" />
+                <action android:name="SHORTCUT_3" />
+                <action android:name="SHORTCUT_4" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/shortcut4_widget_info" />
+        </receiver>
+
         <receiver android:name=".SaifuAddWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
