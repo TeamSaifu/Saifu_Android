@@ -10,7 +10,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_setting)
-        //設定のシステムを読み込みます
+        // 設定のシステムを読み込みます
         supportFragmentManager
             .beginTransaction()
             .replace(

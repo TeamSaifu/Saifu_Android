@@ -4,9 +4,9 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-//-----------------------------------------------
+// -----------------------------------------------
 //  データベースクラス
-//-----------------------------------------------
+// -----------------------------------------------
 //
 //  読み取り専用で呼び出す場合
 //  val database = SQLiteDB.readableDatabase
@@ -26,7 +26,7 @@ class SQLiteDB(
     version: Int
 ) : SQLiteOpenHelper(context, databaseName, factory, version) {
 
-    //データベース作成
+    // データベース作成
 
     override fun onCreate(database: SQLiteDatabase?) {
         database?.execSQL("create table if not exists log (inputDate primary key,payDate,name,price,category,splitCount,picture,sign)")
