@@ -97,4 +97,5 @@
     <string name="recordFinish">記録完了</string>
     <string name="completeAdd">追加しました。</string>
     <string name="duplicationAdd">すでに登録済みです。</string>
+    <string name="add_widget">Add widget</string>
 </resources>
