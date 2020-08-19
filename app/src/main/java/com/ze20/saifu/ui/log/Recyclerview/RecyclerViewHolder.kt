@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
 
 class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    // アイテムのViewを生成し保持する
+    val inputDateView: TextView = itemView.findViewById(R.id.logId)
     val dayView: TextView = itemView.findViewById(R.id.dayText)
     val categoryView: TextView = itemView.findViewById(R.id.categoryNameText)
     val priceView: TextView = itemView.findViewById(R.id.priceText)

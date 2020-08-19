@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="log_fragment"
+    android:layout_marginBottom="@dimen/bottom_nav_size"
     tools:context=".ui.log.logFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 </LinearLayout>
