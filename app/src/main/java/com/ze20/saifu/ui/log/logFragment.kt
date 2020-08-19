@@ -98,7 +98,6 @@ class logFragment : Fragment() {
 
                     val data: RowModel = RowModel()
                         .also {
-                            it.id = cursor.getString(0)
                             it.day = cursor.getString(8) + " "
 
                             if (cursor.getString(4) == "0") {

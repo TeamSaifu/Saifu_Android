@@ -26,7 +26,6 @@ class ViewAdapter(
 
     // positionをlistのindexとしてRecyclerViewHolderに値をセットする
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.inputDateView.text = list[position].id
         holder.dayView.text = list[position].day
         holder.categoryView.text = list[position].category
         holder.priceView.text = list[position].price
