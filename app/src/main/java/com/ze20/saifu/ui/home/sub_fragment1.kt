@@ -22,6 +22,15 @@ class sub_fragment1 : Fragment() {
         view.input_button.setOnClickListener {
             startActivity(Intent(activity, DataInputActivity::class.java))
         }
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        reload(requireView())
+    }
+
+    private fun reload(view: View) {
         val shortcut: ArrayList<Button> =
             arrayListOf(view.shurtcut_button1, view.shurtcut_button2, view.shurtcut_button3, view.shurtcut_button4)
         val nameal: ArrayList<String> = arrayListOf()
@@ -78,7 +87,5 @@ class sub_fragment1 : Fragment() {
             view.button4Layout.visibility = View.GONE
         }
         cursor.close()
-
-        return view
     }
 }
