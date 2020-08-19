@@ -17,7 +17,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/blackColor"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/dayText"

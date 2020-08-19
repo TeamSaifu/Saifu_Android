@@ -115,7 +115,6 @@ class logFragment : Fragment() {
                     cursor.moveToNext()
                 }
             }
-            Log.d("aaaa", deleteList.toString())
         } catch (e: Exception) {
             Log.e("logShow", e.toString())
         }
