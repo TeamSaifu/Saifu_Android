@@ -1,4 +1,4 @@
-package com.ze20.saifu.ui.log.Recyclerview
+package com.ze20.saifu.ui.setting.RecyclerView
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
+import com.ze20.saifu.ui.Recyclerview.ShortcutRowModel
 
 // ViewHolderを生成しViewModelをセットする
 // 詳しくはココ参照→ https://qiita.com/saiki-ii/items/78ed73134784f3e5db7e
 
-class ViewAdapter(
+class ShortcutViewAdapter(
 
-    private val list: List<LogRowModel>,
+    private val list: List<ShortcutRowModel>,
     private val listener: ListListener
 ) : RecyclerView.Adapter<RecyclerViewHolder>() {
 
@@ -20,15 +21,21 @@ class ViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         Log.d("Adapter", "onCreateViewHolder")
         val rowView: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.fragment_log_list, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.activity_edit_shortcut_list, parent, false)
         return RecyclerViewHolder(rowView)
     }
 
     // positionをlistのindexとしてRecyclerViewHolderに値をセットする
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        holder.dayView.text = list[position].day
-        holder.categoryView.text = list[position].category
-        holder.priceView.text = list[position].price
+        if (list[position].name == "" || list[position].name == " " || list[position].name.isEmpty()) {
+            holder.mainView.text = list[position].price
+            holder.subView.visibility = View.GONE
+        } else {
+            holder.mainView.text = list[position].name
+            holder.subView.text = list[position].price
+        }
+        // holder.categoryView.text = list[position].category
         holder.itemView.setOnClickListener {
             listener.onClickRow(it, list[position])
         }
@@ -40,6 +47,6 @@ class ViewAdapter(
 
     // インターフェイースの生成
     interface ListListener {
-        fun onClickRow(tappedView: View, rowModel: LogRowModel)
+        fun onClickRow(tappedView: View, rowModel: ShortcutRowModel)
     }
 }

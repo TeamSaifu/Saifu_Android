@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.ui.Recyclerview.ShortcutRowModel
-import com.ze20.saifu.ui.setting.Recyclerview.RecyclerViewHolder
-import com.ze20.saifu.ui.setting.Recyclerview.ShortcutViewAdapter
+import com.ze20.saifu.ui.setting.RecyclerView.RecyclerViewHolder
+import com.ze20.saifu.ui.setting.RecyclerView.ShortcutViewAdapter
 import kotlinx.android.synthetic.main.fragment_log.*
 
 class EditShortcutActivity : AppCompatActivity() {

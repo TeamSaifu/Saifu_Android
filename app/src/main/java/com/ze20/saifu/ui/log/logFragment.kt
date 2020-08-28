@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
-import com.ze20.saifu.ui.log.Recyclerview.LogRowModel
-import com.ze20.saifu.ui.log.Recyclerview.RecyclerViewHolder
-import com.ze20.saifu.ui.log.Recyclerview.ViewAdapter
+import com.ze20.saifu.ui.log.RecyclerView.LogRowModel
+import com.ze20.saifu.ui.log.RecyclerView.RecyclerViewHolder
+import com.ze20.saifu.ui.log.RecyclerView.ViewAdapter
 import kotlinx.android.synthetic.main.fragment_log.*
 
 lateinit var root: View

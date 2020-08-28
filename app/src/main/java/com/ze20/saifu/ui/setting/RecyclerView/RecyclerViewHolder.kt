@@ -1,4 +1,4 @@
-package com.ze20.saifu.ui.setting.Recyclerview
+package com.ze20.saifu.ui.setting.RecyclerView
 
 import android.view.View
 import android.widget.TextView
