@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ze20.saifu.NotificationActivity">
+    tools:context="com.ze20.saifu.ui.home.NotificationActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/waku"
+            android:background="@drawable/border_primary"
             android:orientation="horizontal"
             android:paddingTop="20sp"
             android:paddingBottom="20sp">

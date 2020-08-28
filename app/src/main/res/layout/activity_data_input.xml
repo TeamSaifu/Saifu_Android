@@ -3,14 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DataInputActivity">
+    android:layout_height="wrap_content"
+    tools:context=".ui.input.DataInputActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/applyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/Black"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_baseline_check_48" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -31,7 +49,7 @@
                 android:id="@+id/waku"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/waku"
+                android:background="@drawable/border_primary"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -85,13 +103,13 @@
                 android:id="@+id/dayInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/waku"
+                android:background="@drawable/border_primary"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/DayShow"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="horizontal">
@@ -145,7 +163,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:text="@string/minus7"
                         android:textSize="20sp" />
 
@@ -156,7 +174,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:text="@string/minus1"
                         android:textSize="20sp" />
 
@@ -167,7 +185,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:text="@string/Today"
                         android:textSize="20sp" />
 
@@ -178,7 +196,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:text="@string/plus1"
                         android:textSize="20sp" />
 
@@ -189,7 +207,7 @@
                         android:layout_marginLeft="2sp"
                         android:layout_marginRight="2sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:text="@string/plus7"
                         android:textSize="20sp" />
 
@@ -201,7 +219,7 @@
                 android:id="@+id/categoryInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/waku"
+                android:background="@drawable/border_primary"
                 android:orientation="vertical">
 
                 <Button
@@ -213,7 +231,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="5sp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/button_normal_ripple"
                     android:text="@string/category_select"
                     android:textSize="20sp" />
 
@@ -253,7 +271,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:textSize="16sp" />
 
                     <Button
@@ -265,7 +283,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:textSize="16sp" />
 
                     <Button
@@ -277,7 +295,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:textSize="16sp" />
 
                     <Button
@@ -289,7 +307,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -299,7 +317,7 @@
                 android:id="@+id/splitInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/waku"
+                android:background="@drawable/border_primary"
                 android:orientation="vertical">
 
                 <Switch
@@ -368,7 +386,7 @@
                 android:id="@+id/memoInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/waku"
+                android:background="@drawable/border_primary"
                 android:orientation="vertical">
 
                 <Button
@@ -380,7 +398,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/button_normal_ripple"
                     android:text="@string/memo_add"
                     android:textSize="16sp" />
 
@@ -393,6 +411,7 @@
                     android:ems="10"
                     android:hint="@string/memo"
                     android:inputType="textPersonName"
+                    android:maxLength="12"
                     android:singleLine="false"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="24sp"
@@ -403,7 +422,7 @@
                 android:id="@+id/pictureInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/waku"
+                android:background="@drawable/border_primary"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -422,7 +441,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:text="@string/picture_add"
                         android:textSize="16sp" />
 
@@ -435,7 +454,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="10sp"
                         android:layout_weight="5"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal_ripple"
                         android:foreground="@drawable/ic_baseline_photo_camera_36"
                         android:foregroundGravity="center"
                         android:textSize="16sp" />
@@ -449,7 +468,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/custom_button"
+                        android:background="@drawable/button_normal"
                         android:text="@string/picture_delete"
                         android:textSize="16sp"
                         android:visibility="gone" />
@@ -470,7 +489,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/waku"
+                android:background="@drawable/border_primary"
                 android:orientation="vertical">
 
                 <Button
@@ -482,7 +501,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/button_normal_ripple"
                     android:text="@string/shortcut_add"
                     android:textSize="16sp" />
             </LinearLayout>

@@ -13,9 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.ze20.saifu.AddWishActivity
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
+import com.ze20.saifu.ui.input.DataInputActivity
 import kotlinx.android.synthetic.main.fragment_wish.view.*
 import kotlinx.android.synthetic.main.fragment_wish_list.view.*
 
@@ -48,7 +48,7 @@ class WishFragment : Fragment() {
 
         try {
 
-            val dbHelper = SQLiteDB(requireContext(), "SaifuDB", null, 1)
+            val dbHelper = SQLiteDBClass(requireContext(), "SaifuDB", null, 1)
             val database = dbHelper.readableDatabase
 
             // wish表
@@ -119,9 +119,19 @@ class WishFragment : Fragment() {
                 Log.e("webAccess", exception.toString())
             }
         }
+        view.shopButton.setOnClickListener {
+            // 購入するボタン
+            val intent = Intent(activity, DataInputActivity::class.java)
+            intent.putExtra("mode", "Wish")
+            intent.putExtra("id", view.idText.text.toString())
+            intent.putExtra("name", view.nameText.text.toString())
+            intent.putExtra("price", price)
+            picture?.let { intent.putExtra("picture", it) }
+            startActivity(intent)
+        }
         view.editButton.setOnClickListener {
             // 項目を編集／削除するボタン
-            val intent = Intent(activity, AddWishActivity::class.java)
+            val intent = Intent(activity, WishAddActivity::class.java)
             intent.putExtra("mode", "Edit")
             intent.putExtra("id", view.idText.text.toString())
             intent.putExtra("name", view.nameText.text.toString())
@@ -147,19 +157,19 @@ class WishFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.setTitle(R.menu.menu_wishlist)
+        activity?.setTitle(R.menu.menu_plus)
         setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_wishlist, menu)
+        inflater.inflate(R.menu.menu_plus, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             // plusボタンが押されたとき
             R.id.plusButton -> {
-                startActivity(Intent(activity, AddWishActivity::class.java))
+                startActivity(Intent(activity, WishAddActivity::class.java))
                 reload()
             }
         }

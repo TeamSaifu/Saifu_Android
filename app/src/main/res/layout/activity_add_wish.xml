@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddWishActivity">
+    tools:context=".ui.wish.WishAddActivity">
 
     <LinearLayout
         android:id="@+id/mainLayout"
@@ -42,6 +42,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:maxLength="12"
                 android:textColor="@color/colorPrimaryDark" />
         </LinearLayout>
 
@@ -73,6 +74,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
+                android:maxLength="8"
                 android:textColor="@color/colorPrimaryDark" />
 
         </LinearLayout>
@@ -84,7 +86,7 @@
             android:layout_marginLeft="50sp"
             android:layout_marginRight="50sp"
             android:layout_marginBottom="50sp"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/button_normal_ripple"
             android:text="@string/add_url"
             android:textSize="22sp" />
 
@@ -140,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/custom_button"
+                android:background="@drawable/button_normal_ripple"
                 android:text="@string/add_picture"
                 android:textSize="22sp" />
 
@@ -151,7 +153,7 @@
                 android:layout_marginLeft="2sp"
                 android:layout_marginRight="2sp"
                 android:layout_weight="5"
-                android:background="@drawable/custom_button"
+                android:background="@drawable/button_normal_ripple"
                 android:foreground="@drawable/ic_baseline_photo_camera_36"
                 android:foregroundGravity="center"
                 android:textSize="16sp" />
@@ -161,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/custom_button"
+                android:background="@drawable/button_normal"
                 android:text="@string/picture_delete"
                 android:textSize="22sp"
                 android:visibility="gone" />
@@ -191,7 +193,7 @@
                 android:layout_marginRight="50sp"
                 android:layout_marginBottom="50sp"
                 android:layout_weight="1"
-                android:background="@drawable/custom_button_danger"
+                android:background="@drawable/button_red"
                 android:text="@string/delete_item"
                 android:textSize="22sp"
                 android:visibility="gone" />

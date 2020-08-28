@@ -13,22 +13,48 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.category.categoryList" />
-        <activity android:name=".ReportActivity" />
-        <activity android:name=".AddWishActivity" />
-        <activity android:name=".CalendarActivity" />
-        <activity android:name=".NotificationActivity" />
-        <activity android:name=".ui.budget.IncomeSettings" />
-        <activity android:name=".ui.budget.SpendSettings" />
-        <activity android:name=".DataInputActivity" />
-        <activity android:name=".MainActivity">
+        <receiver android:name=".ShortcutShow4Widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="SHORTCUT_1" />
+                <action android:name="SHORTCUT_2" />
+                <action android:name="SHORTCUT_3" />
+                <action android:name="SHORTCUT_4" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/shortcut4_widget_info" />
+        </receiver>
+
+        <receiver android:name=".DataAddWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="CLICK_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/saifu_add_widget_info" />
+        </receiver>
+
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.category.categoryList" />
         <activity android:name=".ui.budget.BudgetActivity" />
+        <activity android:name=".ui.budget.IncomeActivity" />
+        <activity android:name=".ui.budget.SpendActivity" />
+        <activity android:name=".ui.calendar.CalendarActivity" />
+        <activity android:name=".ui.home.NotificationActivity" />
+        <activity android:name=".ui.log.GraphActivity" />
+        <activity android:name=".ui.log.ReportActivity" />
+        <activity android:name=".ui.wish.WishAddActivity" />
+        <activity android:name=".ui.input.DataInputActivity" />
     </application>
 
 </manifest>

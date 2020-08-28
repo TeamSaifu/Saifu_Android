@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/horizon_line"
     android:orientation="vertical">
 
-
     <LinearLayout
+        android:id="@+id/logList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/dayText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/blackColor"
-            android:textSize="18dp" />
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/categoryNameText"
@@ -25,7 +26,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/blackColor"
-            android:textSize="18dp" />
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/priceText"
@@ -34,12 +35,7 @@
             android:layout_weight="1"
             android:gravity="right"
             android:textColor="@color/blackColor"
-            android:textSize="18dp" />
+            android:textSize="25dp" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/horizon_line" />
 </LinearLayout>
 
