@@ -54,7 +54,7 @@ class logFragment : Fragment() {
     // 検索アイコンを表示
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.setTitle((R.menu.menu_log))
+        activity?.setTitle(R.menu.menu_log)
         setHasOptionsMenu(true)
     }
 
