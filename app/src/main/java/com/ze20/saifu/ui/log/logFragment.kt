@@ -1,9 +1,9 @@
 package com.ze20.saifu.ui.log
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.ui.log.Recyclerview.RecyclerViewHolder
 import com.ze20.saifu.ui.log.Recyclerview.RowModel
 import com.ze20.saifu.ui.log.Recyclerview.ViewAdapter
@@ -48,13 +48,13 @@ class logFragment : Fragment() {
 
     // メニューアイテムを表示
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_view, menu)
+        inflater.inflate(R.menu.menu_log, menu)
     }
 
     // 検索アイコンを表示
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.setTitle((R.menu.search_view))
+        activity?.setTitle(R.menu.menu_log)
         setHasOptionsMenu(true)
     }
 
@@ -83,7 +83,7 @@ class logFragment : Fragment() {
     private fun createDataList(): List<RowModel> {
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDB(requireContext(), dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(requireContext(), dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
             // SQL文を構成
@@ -195,7 +195,7 @@ class logFragment : Fragment() {
 
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDB(requireContext(), dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(requireContext(), dbName, null, dbVersion)
             val database = SQLiteDB.writableDatabase
 
             val whereClauses = "inputDate = ?"

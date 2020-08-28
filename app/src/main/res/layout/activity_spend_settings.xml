@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ze20.saifu.ui.budget.SpendSettings">
+    tools:context="com.ze20.saifu.ui.budget.SpendActivity">
 
     <TextView
         android:id="@+id/item"

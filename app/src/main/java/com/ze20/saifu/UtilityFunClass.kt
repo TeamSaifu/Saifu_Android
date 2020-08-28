@@ -121,7 +121,7 @@ internal class ConvenientFunction {
     }
     fun quickInsert(context: Context?, price: Int, name: String = "", category: Int = 0): Boolean {
         try {
-            val dbHelper = SQLiteDB(context!!, "SaifuDB", null, 1)
+            val dbHelper = SQLiteDBClass(context!!, "SaifuDB", null, 1)
             val database = dbHelper.writableDatabase // 書き込み可能
 
             // log表

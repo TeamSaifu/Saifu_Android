@@ -11,17 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.ui.input.DataInputActivity
-import kotlinx.android.synthetic.main.activity_sub_fragment1.view.*
+import kotlinx.android.synthetic.main.activity_sub_fragment3.view.*
 
-class sub_fragment1 : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.activity_sub_fragment1, container, false)
-        view.input_button.setOnClickListener {
-            startActivity(Intent(activity, DataInputActivity::class.java))
-        }
+class SubFragment3 : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.activity_sub_fragment3, container, false)
+        reload(view)
         return view
     }
 
@@ -32,13 +33,22 @@ class sub_fragment1 : Fragment() {
 
     private fun reload(view: View) {
         val shortcut: ArrayList<Button> =
-            arrayListOf(view.shurtcut_button1, view.shurtcut_button2, view.shurtcut_button3, view.shurtcut_button4)
+            arrayListOf(
+                view.shortcut_button13,
+                view.shortcut_button14,
+                view.shortcut_button15,
+                view.shortcut_button16,
+                view.shortcut_button17,
+                view.shortcut_button18,
+                view.shortcut_button19,
+                view.shortcut_button20
+            )
         val nameal: ArrayList<String> = arrayListOf()
         val priceal: ArrayList<Int> = arrayListOf()
         val categoryal: ArrayList<Int> = arrayListOf()
-        val SQLiteDB = SQLiteDB(requireContext(), "SaifuDB", null, 1)
+        val SQLiteDB = SQLiteDBClass(requireContext(), "SaifuDB", null, 1)
         val database = SQLiteDB.readableDatabase
-        val sql = "select * from shortcut order by 1 asc limit 4;"
+        val sql = "select * from shortcut order by 1 asc limit 8 offset 12;"
         val cursor = database.rawQuery(sql, null)
 
         var i = 0
@@ -46,12 +56,10 @@ class sub_fragment1 : Fragment() {
             cursor.moveToFirst()
             while (!cursor.isAfterLast) {
                 if (cursor.getString(1) == "") {
-                    shortcut[i].text =
-                        getString(R.string.currencyString, "%,d".format(cursor.getInt(2)))
+                    shortcut[i].text = getString(R.string.currencyString, "%,d".format(cursor.getInt(2)))
                     shortcut[i].setTextSize(30.0f)
                 } else {
-                    shortcut[i].text =
-                        getString(R.string.shortcutformat, cursor.getString(1), "%,d".format(cursor.getInt(2)))
+                    shortcut[i].text = getString(R.string.shortcutformat, cursor.getString(1), "%,d".format(cursor.getInt(2)))
                 }
                 nameal.add(cursor.getString(1))
                 priceal.add(cursor.getInt(2))
@@ -83,8 +91,6 @@ class sub_fragment1 : Fragment() {
                 i++
                 cursor.moveToNext()
             }
-        } else {
-            view.button4Layout.visibility = View.GONE
         }
         cursor.close()
     }
