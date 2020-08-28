@@ -14,7 +14,12 @@
     <Preference
         android:icon="@drawable/ic_baseline_folder_48"
         app:key="category"
-        app:title="@string/category_config" />
+        app:title="@string/category_list">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.ze20.saifu"
+            android:targetClass="com.ze20.saifu.ui.category.categoryList" />
+    </Preference>
 
 
 
