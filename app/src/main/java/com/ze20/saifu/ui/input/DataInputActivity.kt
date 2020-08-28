@@ -19,7 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.okCancelDialogFragment
 import kotlinx.android.synthetic.main.activity_data_input.*
 import java.text.ParseException
@@ -402,7 +402,7 @@ open class DataInputActivity : AppCompatActivity() {
         // DBに登録するときに呼び出されます
 
         try {
-            val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
+            val dbHelper = SQLiteDBClass(applicationContext, "SaifuDB", null, 1)
             val database = dbHelper.writableDatabase // 書き込み可能
 
             // log表
@@ -452,7 +452,7 @@ open class DataInputActivity : AppCompatActivity() {
     fun deleteDB(whereId: String) {
         try {
             val dbHelper =
-                SQLiteDB(applicationContext, "SaifuDB", null, 1)
+                SQLiteDBClass(applicationContext, "SaifuDB", null, 1)
             val database = dbHelper.writableDatabase
 
             val whereClauses = "id = ?"
@@ -468,7 +468,7 @@ open class DataInputActivity : AppCompatActivity() {
 
         try {
             if (!addShortcutflag) {
-                val dbHelper = SQLiteDB(
+                val dbHelper = SQLiteDBClass(
                     applicationContext,
                     "SaifuDB",
                     null,

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:background="@drawable/button_ripple"
+        android:background="@drawable/button_normal_ripple"
         android:contentDescription="@string/add"
         android:cropToPadding="true"
         android:foreground="@drawable/ic_baseline_edit_128"

@@ -5,7 +5,7 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.ze20.saifu.R
 
-class IncomeSettings : AppCompatActivity() {
+class IncomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_income_settings)
@@ -20,7 +20,7 @@ class IncomeSettings : AppCompatActivity() {
 
         val inflater = menuInflater
 
-        inflater.inflate(R.menu.budget_menu, menu)
+        inflater.inflate(R.menu.menu_spendadd, menu)
         return true
     }
 

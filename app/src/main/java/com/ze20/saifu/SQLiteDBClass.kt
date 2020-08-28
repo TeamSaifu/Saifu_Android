@@ -19,7 +19,7 @@ import android.database.sqlite.SQLiteOpenHelper
 //
 //  ここをみてね
 
-class SQLiteDB(
+class SQLiteDBClass(
     context: Context,
     databaseName: String,
     factory: SQLiteDatabase.CursorFactory?,

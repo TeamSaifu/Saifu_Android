@@ -15,7 +15,7 @@ import com.ze20.saifu.ui.input.DataInputActivity
 /**
  * Implementation of App Widget functionality.
  */
-class Shortcut4Widget : AppWidgetProvider() {
+class ShortcutShow4Widget : AppWidgetProvider() {
 
     companion object {
         const val BUTTON1 = "SHORTCUT_1"
@@ -128,7 +128,7 @@ class Shortcut4Widget : AppWidgetProvider() {
         val views = RemoteViews(
             context.packageName, R.layout.shortcut4_widget
         )
-        val sqLiteDB = SQLiteDB(
+        val sqLiteDB = SQLiteDBClass(
             context, "SaifuDB", null, 1
         )
         val database = sqLiteDB.readableDatabase
@@ -140,8 +140,8 @@ class Shortcut4Widget : AppWidgetProvider() {
         val name: ArrayList<String> = arrayListOf()
         val category: ArrayList<Int> = arrayListOf()
         val shortcut: ArrayList<Int> = arrayListOf(
-            R.id.shurtcut_button1, R.id.shurtcut_button2, R.id.shurtcut_button3,
-            R.id.shurtcut_button4
+            R.id.shortcut_button1, R.id.shortcut_button2, R.id.shortcut_button3,
+            R.id.shortcut_button4
         )
         var i = 0
         // ボタンに情報を設定
@@ -189,11 +189,11 @@ class Shortcut4Widget : AppWidgetProvider() {
         // エラーが出るまでボタンにオンクリックをセットする
         try {
             views.setOnClickPendingIntent(
-                R.id.shurtcut_button1,
+                R.id.shortcut_button1,
                 PendingIntent.getBroadcast(
                     context, appWidgetId,
                     Intent(
-                        context, Shortcut4Widget::class.java
+                        context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON1
                         putExtra(
@@ -210,11 +210,11 @@ class Shortcut4Widget : AppWidgetProvider() {
                 )
             )
             views.setOnClickPendingIntent(
-                R.id.shurtcut_button2,
+                R.id.shortcut_button2,
                 PendingIntent.getBroadcast(
                     context, appWidgetId,
                     Intent(
-                        context, Shortcut4Widget::class.java
+                        context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON2
                         putExtra("price", price[1])
@@ -225,11 +225,11 @@ class Shortcut4Widget : AppWidgetProvider() {
                 )
             )
             views.setOnClickPendingIntent(
-                R.id.shurtcut_button3,
+                R.id.shortcut_button3,
                 PendingIntent.getBroadcast(
                     context, appWidgetId,
                     Intent(
-                        context, Shortcut4Widget::class.java
+                        context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON3
                         putExtra(
@@ -246,11 +246,11 @@ class Shortcut4Widget : AppWidgetProvider() {
                 )
             )
             views.setOnClickPendingIntent(
-                R.id.shurtcut_button4,
+                R.id.shortcut_button4,
                 PendingIntent.getBroadcast(
                     context, appWidgetId,
                     Intent(
-                        context, Shortcut4Widget::class.java
+                        context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON4
                         putExtra(

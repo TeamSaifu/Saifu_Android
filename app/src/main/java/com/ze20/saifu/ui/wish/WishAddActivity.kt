@@ -15,10 +15,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
 import kotlinx.android.synthetic.main.activity_add_wish.*
 
-class AddWishActivity : AppCompatActivity() {
+class WishAddActivity : AppCompatActivity() {
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
@@ -122,7 +122,7 @@ class AddWishActivity : AppCompatActivity() {
 
         mainLayout.setOnClickListener {
             // 画面のどこかおしたらキーボードを消す
-            cFunc.hideKeyboard(this, this@AddWishActivity.currentFocus)
+            cFunc.hideKeyboard(this, this@WishAddActivity.currentFocus)
         }
         urlAdd.setOnClickListener {
             urlAdd.visibility = View.GONE
@@ -177,7 +177,7 @@ class AddWishActivity : AppCompatActivity() {
             busyFlag = true
             var tag = "GetData"
             try {
-                val dbHelper = SQLiteDB(applicationContext, "SaifuDB", null, 1)
+                val dbHelper = SQLiteDBClass(applicationContext, "SaifuDB", null, 1)
                 val database = dbHelper.writableDatabase // 書き込み可能
 
                 // wish表

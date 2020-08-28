@@ -5,7 +5,7 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.ze20.saifu.R
 
-class SpendSettings : AppCompatActivity() {
+class SpendActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spend_settings)
@@ -20,7 +20,7 @@ class SpendSettings : AppCompatActivity() {
 
         val inflater = menuInflater
 
-        inflater.inflate(R.menu.budget_menu, menu)
+        inflater.inflate(R.menu.menu_spendadd, menu)
         return true
     }
 
