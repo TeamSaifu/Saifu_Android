@@ -52,7 +52,7 @@ class SQLiteDBClass(
         database?.execSQL("insert into category VALUES(" + i++ + ",'給料',9)")
         database?.execSQL("insert into category VALUES(" + i++ + ",'ボーナス',10)")
         database?.execSQL("insert into category VALUES(" + i++ + ",'臨時収入',11)")
-        database?.execSQL("insert into category VALUES(" + i++ + ",'その他',12)")
+        database?.execSQL("insert into category VALUES(" + i + ",'その他',12)")
     }
 
     override fun onUpgrade(database: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

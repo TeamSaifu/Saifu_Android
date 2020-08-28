@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
+import com.ze20.saifu.UtilityFunClass
 
 class ViewAdapter(
 
@@ -29,8 +29,7 @@ class ViewAdapter(
         holder.itemView.setOnClickListener {
             listener.onClickRow(it, list[position])
         }
-        Log.i("DBBBBBB", list[position].image.toString())
-        ConvenientFunction().CategoryImage(list[position].image)?.let {
+        UtilityFunClass().CategoryImage(list[position].image)?.let {
             holder.imageView.setImageResource(it)
         } ?: holder.imageView.setImageDrawable(null)
     }

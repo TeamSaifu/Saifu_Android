@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.ui.category.Recyclerview.RowModel
 import com.ze20.saifu.ui.category.Recyclerview.ViewAdapter
 import kotlinx.android.synthetic.main.activity_category_list2.*
@@ -49,7 +49,7 @@ class categoryList : AppCompatActivity() {
     private fun createDataList(): List<RowModel> {
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
             // SQL文を構成
             val sql =
@@ -82,4 +82,3 @@ class categoryList : AppCompatActivity() {
         return dataList
     }
 }
-

@@ -9,9 +9,9 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
+import com.ze20.saifu.UtilityFunClass
 import com.ze20.saifu.ui.input.DataInputActivity
 import kotlinx.android.synthetic.main.activity_sub_fragment2.view.*
 
@@ -71,11 +71,24 @@ class SubFragment2 : Fragment() {
                     if (sharedPref.getBoolean("shortCutQuickAdd", false)) {
                         val tag = it.tag as Int
                         it.isEnabled = false
-                        if (ConvenientFunction().quickInsert(context, priceal[tag], nameal[tag], categoryal[tag])) {
-                            Toast.makeText(activity, getString(R.string.recordFinish), Toast.LENGTH_LONG).show()
+                        if (UtilityFunClass().quickInsert(
+                                context,
+                                priceal[tag],
+                                nameal[tag],
+                                categoryal[tag]
+                            )) {
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.recordFinish),
+                                Toast.LENGTH_LONG
+                            ).show()
                             it.isEnabled = true
                         } else {
-                            Toast.makeText(activity, getString(R.string.recordError), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.recordError),
+                                Toast.LENGTH_LONG
+                            ).show()
                             it.isEnabled = true
                         }
                     } else {

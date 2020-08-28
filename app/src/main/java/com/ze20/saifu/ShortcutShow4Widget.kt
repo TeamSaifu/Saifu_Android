@@ -84,7 +84,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
             )
         ) {
             // オンならばquickInsertを起動して即時登録
-            if (ConvenientFunction().quickInsert(
+            if (UtilityFunClass().quickInsert(
                     context, price, name!!, category
                 )
             ) {
