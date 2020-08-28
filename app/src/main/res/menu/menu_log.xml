@@ -4,15 +4,18 @@
 
    <item
        android:id="@+id/graph"
-       android:title="@string/graph" />
+       android:title="@string/graph"
+       android:visible="false" />
    <item
        android:id="@+id/report"
-       android:title="@string/report" />
+       android:title="@string/report"
+       android:visible="false" />
 
    <item
        android:id="@+id/search_view"
        android:icon="@drawable/ic_baseline_search_24"
        android:title="@string/search"
+       android:visible="false"
        app:showAsAction="always" />
 
 </menu>
