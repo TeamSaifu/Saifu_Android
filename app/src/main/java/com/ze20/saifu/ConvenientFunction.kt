@@ -45,6 +45,25 @@ internal class ConvenientFunction {
             manager.hideSoftInputFromWindow(view!!.windowToken, 0)
         }
     }
+
+    fun CategoryImage(no: Int): Int? {
+        return when (no) {
+            0 -> R.drawable.ic_baseline_restaurant_24
+            1 -> R.drawable.ic_baseline_sports_esports_24
+            2 -> R.drawable.ic_baseline_phonelink_ring_24
+            3 -> R.drawable.ic_baseline_train_24
+            4 -> R.drawable.ic_baseline_medical
+            5 -> R.drawable.ic_baseline_local_airport_24
+            6 -> R.drawable.ic_baseline_utility
+            7 -> R.drawable.ic_baseline_necessities
+            8 -> R.drawable.ic_baseline_house
+            9 -> R.drawable.ic_baseline_salary
+            10 -> R.drawable.ic_baseline_bonus
+            11 -> R.drawable.ic_baseline_extraordinary
+            12 -> R.drawable.ic_baseline_more_horiz_24
+            else -> null
+        }
+    }
 }
 
 class okCancelDialogFragment : DialogFragment() {
