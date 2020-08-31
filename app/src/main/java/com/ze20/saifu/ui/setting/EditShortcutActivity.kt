@@ -1,78 +1,49 @@
-package com.ze20.saifu.ui.log
+package com.ze20.saifu.ui.setting
 
-import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
-import com.ze20.saifu.ui.log.RecyclerView.LogRowModel
-import com.ze20.saifu.ui.log.RecyclerView.RecyclerViewHolder
-import com.ze20.saifu.ui.log.RecyclerView.ViewAdapter
+import com.ze20.saifu.ui.Recyclerview.ShortcutRowModel
+import com.ze20.saifu.ui.setting.RecyclerView.RecyclerViewHolder
+import com.ze20.saifu.ui.setting.RecyclerView.ShortcutViewAdapter
 import kotlinx.android.synthetic.main.fragment_log.*
 
-lateinit var root: View
-
-class logFragment : Fragment() {
-
+class EditShortcutActivity : AppCompatActivity() {
     private val dbName: String = "SaifuDB"
-    private val tableName: String = "log"
+    private val tableName: String = "shortcut"
     private val dbVersion: Int = 1
     private var arrayListlayout: ArrayList<View> = arrayListOf()
 
     // 削除用の配列
     private var deleteList: ArrayList<String> = arrayListOf()
-    val dataList = mutableListOf<LogRowModel>()
+    val dataList = mutableListOf<ShortcutRowModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        root = View.inflate(context, R.layout.fragment_log, null)
-
-        return root
-    }
-
-    // メニューアイテムを表示
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_log, menu)
-    }
-
-    // 検索アイコンを表示
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        activity?.setTitle(R.menu.menu_log)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_shortcut)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.title = "ショートカット編集"
 
         val recyclerView = recycler_list
-        val adapter = ViewAdapter(
+        val adapter = ShortcutViewAdapter(
             createDataList(),
-            object :
-                ViewAdapter.ListListener {
-                override fun onClickRow(tappedView: View, rowModel: LogRowModel) {
+            object : ShortcutViewAdapter.ListListener {
+                override fun onClickRow(tappedView: View, rowModel: ShortcutRowModel) {
                 }
             })
 
         // アダプターとレイアウトマネージャをセットする
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         // メソッドをインスタンス化しそれにrecyclerViewをアタッチする
@@ -80,43 +51,59 @@ class logFragment : Fragment() {
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    private fun createDataList(): List<LogRowModel> {
+    override fun onSupportNavigateUp(): Boolean {
+        // 戻るボタンを押したときの処理
+        finish()
+        return super.onSupportNavigateUp()
+    }
+
+    private fun createDataList(): List<ShortcutRowModel> {
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDBClass(requireContext(), dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
             // SQL文を構成
             val sql =
-                "select *,strftime('%Y/%m/%d', payDate) from " + tableName + " order by 1 desc;"
+                "select name,price,category,id from $tableName order by id asc;"
             val cursor = database.rawQuery(sql, null)
 
-            // log表
-            // inputDate primary key,payDate,name,price,category,splitCount,picture,sign
+            Log.i("DB", cursor.count.toString())
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
-                    arrayListlayout.add(View.inflate(context, R.layout.fragment_log_list, null))
+                    Log.i(
+                        "DB",
+                        cursor.getString(0) + " : " + cursor.getInt(1) + " : " + cursor.getString(2)
+                    )
+                    arrayListlayout.add(
+                        View.inflate(
+                            this,
+                            R.layout.activity_edit_shortcut_list,
+                            null
+                        )
+                    )
 
-                    val data: LogRowModel = LogRowModel()
+                    val data: ShortcutRowModel = ShortcutRowModel()
                         .also {
-                            it.day = cursor.getString(8) + " "
+                            it.name = cursor.getString(0) + " "
 
-                            if (cursor.getString(4) == "0") {
+                            if (cursor.getString(2) == "0") {
                                 it.category = ""
                             } else {
-                                it.category = cursor.getString(4)
+                                it.category = cursor.getString(2)
                             }
                             it.price =
-                                getString(R.string.currency) + cursor.getString(3).toString() + " "
+                                getString(R.string.currency) + cursor.getInt(1).toString() + " "
                         }
-                    deleteList.add(cursor.getString(0))
+                    deleteList.add(cursor.getString(3))
                     dataList.add(data)
                     cursor.moveToNext()
                 }
             }
+            cursor.close()
         } catch (e: Exception) {
-            Log.e("logShow", e.toString())
+            Log.e("ShortcutShow", e.toString())
         }
         return dataList
     }
@@ -195,29 +182,14 @@ class logFragment : Fragment() {
 
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDBClass(requireContext(), dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.writableDatabase
 
-            val whereClauses = "inputDate = ?"
+            val whereClauses = "id = ?"
             val whereArgs = arrayOf(delete)
             database.delete(tableName, whereClauses, whereArgs)
         } catch (e: Exception) {
-            Log.e("logDelete", e.toString())
+            Log.e("ShortcutDelete", e.toString())
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        // 画面遷移
-
-        when (item.itemId) {
-            R.id.graph -> {
-                startActivity(Intent(activity, GraphActivity::class.java))
-            }
-            R.id.report -> {
-                startActivity(Intent(activity, ReportActivity::class.java))
-            }
-        }
-        return true
     }
 }

@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.setting.EditShortcutActivity"></activity>
+
         <receiver android:name=".ShortcutShow4Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -26,7 +28,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/shortcut4_widget_info" />
         </receiver>
-
         <receiver android:name=".DataAddWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

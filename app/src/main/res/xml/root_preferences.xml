@@ -34,7 +34,12 @@
     <Preference
         android:icon="@drawable/ic_baseline_edit_48"
         app:key="shortCutEdit"
-        app:title="@string/shortcutEdit" />
+        app:title="@string/shortcutEdit">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.ze20.saifu"
+            android:targetClass="com.ze20.saifu.ui.setting.EditShortcutActivity" />
+    </Preference>
 
 
 </PreferenceScreen>
