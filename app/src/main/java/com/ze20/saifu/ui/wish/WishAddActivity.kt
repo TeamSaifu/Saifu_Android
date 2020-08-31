@@ -13,16 +13,16 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
+import com.ze20.saifu.UtilityFunClass
 import kotlinx.android.synthetic.main.activity_add_wish.*
 
 class WishAddActivity : AppCompatActivity() {
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
     private val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE) // カメラ撮影
-    private val cFunc = ConvenientFunction()
+    private val cFunc = UtilityFunClass()
     private var busyFlag: Boolean = false
     private var mode = "New"
     var id: String? = null
