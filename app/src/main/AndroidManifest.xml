@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <receiver android:name=".Shortcut4Widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -26,7 +27,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/shortcut4_widget_info" />
         </receiver>
-
         <receiver android:name=".SaifuAddWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -54,6 +54,7 @@
         <activity android:name=".ui.log.ReportActivity" />
         <activity android:name=".ui.wish.AddWishActivity" />
         <activity android:name=".ui.input.DataInputActivity" />
+        <activity android:name=".ui.budget.inCome_add" />
     </application>
 
 </manifest>

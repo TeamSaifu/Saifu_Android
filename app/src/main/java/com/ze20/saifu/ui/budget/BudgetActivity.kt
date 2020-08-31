@@ -14,7 +14,7 @@ class BudgetActivity : AppCompatActivity() {
         setTitle("予算設定画面")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         button_send.setOnClickListener {
-            startActivity(Intent(this, IncomeSettings::class.java))
+            startActivity(Intent(this, inCome_add::class.java))
         }
         button_send2.setOnClickListener {
             startActivity(Intent(this, SpendSettings::class.java))
