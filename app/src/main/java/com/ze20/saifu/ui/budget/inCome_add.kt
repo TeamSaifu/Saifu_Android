@@ -23,10 +23,13 @@ class inCome_add : AppCompatActivity() {
         setListeners()
 
         incomeAdd.setOnClickListener {
-            if (incomeName.text.toString()
-                    .equals("") == false && incomePrice.text.toString()
+            if (incomeName.text.toString().equals("") == false && incomePrice.text.toString()
                     .equals("") == false) {
                 insertData(incomeName.text.toString(), incomePrice.text.toString())
+                AlertDialog.Builder(this) // FragmentではActivityを取得して生成
+                    .setMessage("登録しました")
+                    .setPositiveButton("OK", { dialog, which -> })
+                    .show()
             } else {
                 AlertDialog.Builder(this) // FragmentではActivityを取得して生成
                     .setTitle("ERROR")

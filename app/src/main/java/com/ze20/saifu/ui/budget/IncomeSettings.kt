@@ -1,11 +1,13 @@
 package com.ze20.saifu.ui.budget
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -30,6 +32,7 @@ private val dbName: String = "SaifuDB"
 private val tableName: String = "budget"
 private val dbVersion: Int = 1
 val dataList = mutableListOf<RowModel>()
+private var aa: ArrayList<String> = arrayListOf()
 
 // 削除用の配列
 private var deleteList: ArrayList<String> = arrayListOf()
@@ -76,6 +79,8 @@ class IncomeSettings : AppCompatActivity() {
                     }
                     deleteList.add(cursor.getString(0))
                     dataList.add(data)
+                    aa.add(cursor.getString(1))
+                    Log.d("aaa", aa.toString())
                     cursor.moveToNext()
                 }
             }
@@ -176,6 +181,13 @@ class IncomeSettings : AppCompatActivity() {
         val inflater = menuInflater
 
         inflater.inflate(R.menu.budget_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.SpendButton -> startActivity(Intent(this, inCome_add::class.java))
+        }
         return true
     }
 

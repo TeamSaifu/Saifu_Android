@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/waku_black"
-            android:text="bbbbb"
+            android:text=""
             android:textSize="60dp"
             android:textColor="@color/colorBlack" />
     </LinearLayout>

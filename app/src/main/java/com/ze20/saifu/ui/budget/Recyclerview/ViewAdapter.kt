@@ -21,7 +21,7 @@ class ViewAdapter(
         Log.d("Adapter", "onCreateViewHolder")
         val rowView: View =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.activity_income_settings, parent, false)
+                .inflate(R.layout.activity_income_list, parent, false)
         return RecyclerViewHolder(rowView)
     }
 
