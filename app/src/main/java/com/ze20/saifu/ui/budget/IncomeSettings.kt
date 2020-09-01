@@ -166,11 +166,11 @@ class IncomeSettings : AppCompatActivity() {
             val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
             val database = SQLiteDB.writableDatabase
 
-            val whereClauses = "inputDate = ?"
+            val whereClauses = "id = ?"
             val whereArgs = arrayOf(delete)
             database.delete(tableName, whereClauses, whereArgs)
         } catch (e: Exception) {
-            Log.e("logDelete", e.toString())
+            Log.e("inComeDelete", e.toString())
         }
     }
 
