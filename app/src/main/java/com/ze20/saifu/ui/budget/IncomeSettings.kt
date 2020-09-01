@@ -32,18 +32,13 @@ private val dbName: String = "SaifuDB"
 private val tableName: String = "budget"
 private val dbVersion: Int = 1
 val dataList = mutableListOf<RowModel>()
-private var aa: ArrayList<String> = arrayListOf()
 
 // 削除用の配列
 private var deleteList: ArrayList<String> = arrayListOf()
 
 class IncomeSettings : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_income_settings)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        this.title = "固定収入"
-
+    override fun onResume() {
+        super.onResume()
         val recyclerView = recycler_list
         val adapter = ViewAdapter(createDataList(), object : ViewAdapter.ListListener {
             override fun onClickRow(tappedView: View, rowModel: RowModel) {
@@ -58,6 +53,19 @@ class IncomeSettings : AppCompatActivity() {
         // メソッドをインスタンス化しそれにrecyclerViewをアタッチする
         val swipeToDismissTouchHelper = getSwipeToDismissTouchHelper(adapter)
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_income_settings)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.title = "固定収入"
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        // 戻るボタンを押したときの処理
+        finish()
+        return super.onSupportNavigateUp()
     }
 
     private fun createDataList(): List<RowModel> {
@@ -75,12 +83,10 @@ class IncomeSettings : AppCompatActivity() {
                     arrayListlayout.add(View.inflate(this, R.layout.activity_income_list, null))
                     val data: RowModel = RowModel().also {
                         it.name = cursor.getString(1)
-                        it.price = getString(R.string.currency) + cursor.getShort(3)
+                        it.price = getString(R.string.currency) + cursor.getString(3)
                     }
                     deleteList.add(cursor.getString(0))
                     dataList.add(data)
-                    aa.add(cursor.getString(1))
-                    Log.d("aaa", aa.toString())
                     cursor.moveToNext()
                 }
             }
@@ -189,11 +195,5 @@ class IncomeSettings : AppCompatActivity() {
             R.id.SpendButton -> startActivity(Intent(this, inCome_add::class.java))
         }
         return true
-    }
-
-    // 一つ前の画面に戻るボタンを表示
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
     }
 }

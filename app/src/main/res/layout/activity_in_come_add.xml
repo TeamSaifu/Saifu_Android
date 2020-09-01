@@ -27,6 +27,8 @@
             android:background="@drawable/waku_black"
             android:text=""
             android:textSize="60dp"
+            android:maxLength="8"
+            android:inputType="text"
             android:textColor="@color/colorBlack" />
     </LinearLayout>
 
@@ -49,6 +51,9 @@
             android:background="@drawable/waku_black"
             android:text=""
             android:textSize="60dp"
+            android:maxLength="8"
+            android:maxLines="1"
+            android:inputType="number"
             android:textColor="@color/colorBlack" />
     </LinearLayout>
 

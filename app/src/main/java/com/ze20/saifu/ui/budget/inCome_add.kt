@@ -19,6 +19,7 @@ class inCome_add : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_in_come_add)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setListeners()
 
