@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_income_settings.*
 
 /*
 
-ここでは表示だけの処理
+ここでは表示と削除の処理
 追加は別画面
 
  */
@@ -62,16 +62,11 @@ class IncomeSettings : AppCompatActivity() {
         this.title = "固定収入"
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        // 戻るボタンを押したときの処理
-        finish()
-        return super.onSupportNavigateUp()
-    }
-
     private fun createDataList(): List<RowModel> {
         try {
             val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
+
             // budget表
             // id INTEGER primary key AUTOINCREMENT,name,type,price
             val sql = "select * from " + tableName + ";"
@@ -194,6 +189,12 @@ class IncomeSettings : AppCompatActivity() {
         when (item.itemId) {
             R.id.SpendButton -> startActivity(Intent(this, inCome_add::class.java))
         }
-        return true
+        return false
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        // 戻るボタンを押したときの処理
+        finish()
+        return super.onSupportNavigateUp()
     }
 }

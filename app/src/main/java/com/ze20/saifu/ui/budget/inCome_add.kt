@@ -10,6 +10,10 @@ import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDB
 import kotlinx.android.synthetic.main.activity_in_come_add.*
 
+/*
+    固定収入を追加する画面
+ */
+
 class inCome_add : AppCompatActivity() {
     private val dbName: String = "SaifuDB"
     private val tableName: String = "budget"
@@ -20,21 +24,24 @@ class inCome_add : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_in_come_add)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.title = "新規固定収入"
 
         setListeners()
 
         incomeAdd.setOnClickListener {
+            // 全項目が入力されている場合
             if (incomeName.text.toString().equals("") == false && incomePrice.text.toString()
                     .equals("") == false) {
                 insertData(incomeName.text.toString(), incomePrice.text.toString())
-                AlertDialog.Builder(this) // FragmentではActivityを取得して生成
-                    .setMessage("登録しました")
+
+                AlertDialog.Builder(this)
+                    .setMessage("登録しました。")
                     .setPositiveButton("OK", { dialog, which -> })
                     .show()
             } else {
-                AlertDialog.Builder(this) // FragmentではActivityを取得して生成
+                AlertDialog.Builder(this)
                     .setTitle("ERROR")
-                    .setMessage("入力して下さい")
+                    .setMessage("入力して下さい。")
                     .setPositiveButton("OK", { dialog, which -> })
                     .show()
             }
@@ -45,12 +52,20 @@ class inCome_add : AppCompatActivity() {
         }
     }
 
+    // 画面をクリックするとキーボードを非表示にする
+    private fun setListeners() {
+        mainLayout.setOnClickListener {
+            cFunc.hideKeyboard(this, this@inCome_add.currentFocus)
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         // 戻るボタンを押したときの処理
         finish()
         return super.onSupportNavigateUp()
     }
 
+    // Insert処理
     private fun insertData(name: String, price: String) {
         try {
             // budget表
@@ -68,12 +83,6 @@ class inCome_add : AppCompatActivity() {
             database.insertOrThrow(tableName, null, values)
         } catch (e: Exception) {
             Log.e("insertIncome", e.toString())
-        }
-    }
-
-    private fun setListeners() {
-        mainLayout.setOnClickListener {
-            cFunc.hideKeyboard(this, this@inCome_add.currentFocus)
         }
     }
 }

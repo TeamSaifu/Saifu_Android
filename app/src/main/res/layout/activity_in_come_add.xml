@@ -17,16 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="収入名"
-            android:textSize="40dp"
+            android:textSize="25dp"
             android:textColor="@color/colorBlack" />
 
         <EditText
             android:id="@+id/incomeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/waku_black"
+            android:background="@drawable/horizon_line"
             android:text=""
-            android:textSize="60dp"
+            android:hint="@string/inComeNameHint"
+            android:textSize="30dp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
             android:maxLength="8"
             android:inputType="text"
             android:textColor="@color/colorBlack" />
@@ -41,16 +44,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="収入額"
-            android:textSize="40dp"
+            android:textSize="25dp"
             android:textColor="@color/colorBlack" />
 
         <EditText
             android:id="@+id/incomePrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/waku_black"
+            android:background="@drawable/horizon_line"
             android:text=""
-            android:textSize="60dp"
+            android:textSize="30dp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:hint="@string/inComePriceHint"
             android:maxLength="8"
             android:maxLines="1"
             android:inputType="number"
@@ -67,6 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_margin="5sp"
+            android:background="@drawable/button_ripple"
             android:text="@string/inComeCancel" />
 
         <Button
@@ -74,6 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/inComeAdd"
+            android:textSize="15dp"
+            android:layout_margin="5sp"
+            android:background="@drawable/button_ripple"
             android:layout_weight="1" />
     </LinearLayout>
 </LinearLayout>
