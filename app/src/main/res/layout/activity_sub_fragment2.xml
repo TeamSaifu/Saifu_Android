@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.home.sub_fragment1">
+    tools:context=".ui.home.SubFragment1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,23 +13,23 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/shurtcut_button5"
+            android:id="@+id/shortcut_button5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
+            android:background="@drawable/button_white_ripple"
             android:text="Button"
             android:textSize="18sp"
             android:visibility="invisible" />
 
         <Button
-            android:id="@+id/shurtcut_button6"
+            android:id="@+id/shortcut_button6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
+            android:background="@drawable/button_white_ripple"
             android:text="Button"
             android:textSize="18sp"
             android:visibility="invisible" />
@@ -42,52 +42,23 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/shurtcut_button7"
+            android:id="@+id/shortcut_button7"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
+            android:background="@drawable/button_white_ripple"
             android:text="Button"
             android:textSize="18sp"
             android:visibility="invisible" />
 
         <Button
-            android:id="@+id/shurtcut_button8"
+            android:id="@+id/shortcut_button8"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
-            android:text="Button"
-            android:textSize="18sp"
-            android:visibility="invisible" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/shurtcut_button9"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8sp"
-            android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
-            android:text="Button"
-            android:textSize="18sp"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/shurtcut_button10"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8sp"
-            android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
+            android:background="@drawable/button_white_ripple"
             android:text="Button"
             android:textSize="18sp"
             android:visibility="invisible" />
@@ -100,23 +71,52 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/shurtcut_button11"
+            android:id="@+id/shortcut_button9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
+            android:background="@drawable/button_white_ripple"
             android:text="Button"
             android:textSize="18sp"
             android:visibility="invisible" />
 
         <Button
-            android:id="@+id/shurtcut_button12"
+            android:id="@+id/shortcut_button10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8sp"
             android:layout_weight="1"
-            android:background="@drawable/shortcut_button_ripple"
+            android:background="@drawable/button_white_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/shortcut_button11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_white_ripple"
+            android:text="Button"
+            android:textSize="18sp"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/shortcut_button12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_white_ripple"
             android:text="Button"
             android:textSize="18sp"
             android:visibility="invisible" />

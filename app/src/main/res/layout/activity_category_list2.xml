@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.budget.IncomeActivity">
+    tools:context=".ui.category.categoryList">
 
-    <!--コードで項目と金額を入力する枠を追加する部分-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/caRecycle" />
 
 </LinearLayout>

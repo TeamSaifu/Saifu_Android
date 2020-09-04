@@ -1,8 +1,8 @@
-package com.ze20.saifu.ui.log.Recyclerview
+package com.ze20.saifu.ui.setting.RecyclerView
 
-class RowModel {
+class ShortcutRowModel {
     // リストのアイテムを表すクラス
-    var day: String = ""
+    var name: String = ""
     var category: String = ""
     var price: String = ""
 }

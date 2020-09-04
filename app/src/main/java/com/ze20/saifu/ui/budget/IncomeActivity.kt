@@ -1,4 +1,4 @@
-package com.ze20.saifu.ui.log
+package com.ze20.saifu.ui.budget
 
 import android.content.Intent
 import android.graphics.Canvas
@@ -6,73 +6,48 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDBClass
-import com.ze20.saifu.ui.log.RecyclerView.LogRowModel
-import com.ze20.saifu.ui.log.RecyclerView.RecyclerViewHolder
-import com.ze20.saifu.ui.log.RecyclerView.ViewAdapter
-import kotlinx.android.synthetic.main.fragment_log.*
+import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.ui.budget.Recyclerview.RecyclerViewHolder
+import com.ze20.saifu.ui.budget.Recyclerview.RowModel
+import com.ze20.saifu.ui.budget.Recyclerview.ViewAdapter
+import kotlinx.android.synthetic.main.activity_income_settings.*
 
-lateinit var root: View
+/*
 
-class logFragment : Fragment() {
+ここでは表示と削除の処理
+追加は別画面
 
-    private val dbName: String = "SaifuDB"
-    private val tableName: String = "log"
-    private val dbVersion: Int = 1
-    private var arrayListlayout: ArrayList<View> = arrayListOf()
+ */
 
-    // 削除用の配列
-    private var deleteList: ArrayList<String> = arrayListOf()
-    val dataList = mutableListOf<LogRowModel>()
+private var arrayListlayout: ArrayList<View> = arrayListOf()
+private val dbName: String = "SaifuDB"
+private val tableName: String = "budget"
+private val dbVersion: Int = 1
+val dataList = mutableListOf<RowModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        root = View.inflate(context, R.layout.fragment_log, null)
+// 削除用の配列
+private var deleteList: ArrayList<String> = arrayListOf()
 
-        return root
-    }
-
-    // メニューアイテムを表示
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_log, menu)
-    }
-
-    // 検索アイコンを表示
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        activity?.setTitle(R.menu.menu_log)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+class IncomeActivity : AppCompatActivity() {
+    override fun onResume() {
+        super.onResume()
         val recyclerView = recycler_list
-        val adapter = ViewAdapter(
-            createDataList(),
-            object :
-                ViewAdapter.ListListener {
-                override fun onClickRow(tappedView: View, rowModel: LogRowModel) {
-                }
-            })
+        val adapter = ViewAdapter(createDataList(), object : ViewAdapter.ListListener {
+            override fun onClickRow(tappedView: View, rowModel: RowModel) {
+            }
+        })
 
         // アダプターとレイアウトマネージャをセットする
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         // メソッドをインスタンス化しそれにrecyclerViewをアタッチする
@@ -80,43 +55,38 @@ class logFragment : Fragment() {
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    private fun createDataList(): List<LogRowModel> {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_income_settings)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.title = "固定収入"
+    }
+
+    private fun createDataList(): List<RowModel> {
         try {
-            // DBにアクセス
-            val SQLiteDB = SQLiteDBClass(requireContext(), dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
-            // SQL文を構成
-            val sql =
-                "select *,strftime('%Y/%m/%d', payDate) from " + tableName + " order by 1 desc;"
+            // budget表
+            // id INTEGER primary key AUTOINCREMENT,name,type,price
+            val sql = "select * from " + tableName + ";"
             val cursor = database.rawQuery(sql, null)
 
-            // log表
-            // inputDate primary key,payDate,name,price,category,splitCount,picture,sign
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
-                    arrayListlayout.add(View.inflate(context, R.layout.fragment_log_list, null))
-
-                    val data: LogRowModel = LogRowModel()
-                        .also {
-                            it.day = cursor.getString(8) + " "
-
-                            if (cursor.getString(4) == "0") {
-                                it.category = ""
-                            } else {
-                                it.category = cursor.getString(4)
-                            }
-                            it.price =
-                                getString(R.string.currency) + cursor.getString(3).toString() + " "
-                        }
+                    arrayListlayout.add(View.inflate(this, R.layout.activity_income_list, null))
+                    val data: RowModel = RowModel().also {
+                        it.name = cursor.getString(1)
+                        it.price = getString(R.string.currency) + cursor.getString(3)
+                    }
                     deleteList.add(cursor.getString(0))
                     dataList.add(data)
                     cursor.moveToNext()
                 }
             }
         } catch (e: Exception) {
-            Log.e("logShow", e.toString())
+            Log.e("inCome", e.toString())
         }
         return dataList
     }
@@ -139,9 +109,8 @@ class logFragment : Fragment() {
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
-            }
+            }// スワイプ時の処理
 
-            // スワイプ時の処理
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 // データベースから削除
@@ -195,29 +164,37 @@ class logFragment : Fragment() {
 
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDBClass(requireContext(), dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
             val database = SQLiteDB.writableDatabase
 
-            val whereClauses = "inputDate = ?"
+            val whereClauses = "id = ?"
             val whereArgs = arrayOf(delete)
             database.delete(tableName, whereClauses, whereArgs)
         } catch (e: Exception) {
-            Log.e("logDelete", e.toString())
+            Log.e("inComeDelete", e.toString())
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    // メニューアイテムを表示
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
 
-        // 画面遷移
+        val inflater = menuInflater
 
-        when (item.itemId) {
-            R.id.graph -> {
-                startActivity(Intent(activity, GraphActivity::class.java))
-            }
-            R.id.report -> {
-                startActivity(Intent(activity, ReportActivity::class.java))
-            }
-        }
+        inflater.inflate(R.menu.menu_spendadd, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.SpendButton -> startActivity(Intent(this, inCome_add::class.java))
+        }
+        return false
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        // 戻るボタンを押したときの処理
+        finish()
+        return super.onSupportNavigateUp()
     }
 }

@@ -11,7 +11,7 @@
         android:layout_weight="1"
         android:autoText="true"
         android:background="#FFFFFF"
-        android:foreground="@drawable/waku"
+        android:foreground="@drawable/border_primary"
         android:gravity="center"
         android:autoSizeTextType="uniform"
         android:padding="10sp"
@@ -33,25 +33,25 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/shurtcut_button1"
+                android:id="@+id/shortcut_button1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shortcut_button_ripple"
+                android:background="@drawable/button_white_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/shurtcut_button2"
+                android:id="@+id/shortcut_button2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shortcut_button_ripple"
+                android:background="@drawable/button_white_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />
@@ -65,25 +65,25 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/shurtcut_button3"
+                android:id="@+id/shortcut_button3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shortcut_button_ripple"
+                android:background="@drawable/button_white_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/shurtcut_button4"
+                android:id="@+id/shortcut_button4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8sp"
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
-                android:background="@drawable/shortcut_button_ripple"
+                android:background="@drawable/button_white_ripple"
                 android:text="Button"
                 android:textSize="20sp"
                 android:visibility="gone" />

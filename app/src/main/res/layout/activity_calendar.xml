@@ -21,7 +21,7 @@
             android:layout_marginVertical="10dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/button_normal"
             android:text="@string/prev_month"
             android:textSize="22sp" />
 
@@ -44,7 +44,7 @@
             android:layout_marginVertical="10dp"
             android:layout_marginRight="9dp"
             android:layout_weight="1"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/button_normal"
             android:text="@string/next_month"
             android:textSize="22sp" />
     </LinearLayout>

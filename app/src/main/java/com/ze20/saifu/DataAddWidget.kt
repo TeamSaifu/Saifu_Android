@@ -15,17 +15,21 @@ import com.ze20.saifu.ui.input.DataInputActivity
 /**
  * アプリウィジェット機能の実装。
  */
-class SaifuAddWidget : AppWidgetProvider() {
+class DataAddWidget : AppWidgetProvider() {
 
     companion object {
         const val CLICK_ACTION = "CLICK_WIDGET"
     }
 
-    internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+    internal fun updateAppWidget(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int
+    ) {
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, R.layout.saifu_add_widget)
 
-        val intent = Intent(context, SaifuAddWidget::class.java).apply {
+        val intent = Intent(context, DataAddWidget::class.java).apply {
             action = CLICK_ACTION
         }
         val pIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, 0)
@@ -56,4 +60,3 @@ class SaifuAddWidget : AppWidgetProvider() {
         }
     }
 }
-

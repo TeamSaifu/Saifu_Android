@@ -1,49 +1,45 @@
-package com.ze20.saifu.ui.budget
+package com.ze20.saifu.ui.setting
 
-import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
-import com.ze20.saifu.ui.budget.Recyclerview.RecyclerViewHolder
-import com.ze20.saifu.ui.budget.Recyclerview.RowModel
-import com.ze20.saifu.ui.budget.Recyclerview.ViewAdapter
-import kotlinx.android.synthetic.main.activity_income_settings.*
+import com.ze20.saifu.SQLiteDBClass
+import com.ze20.saifu.ui.Recyclerview.ShortcutRowModel
+import com.ze20.saifu.ui.setting.RecyclerView.RecyclerViewHolder
+import com.ze20.saifu.ui.setting.RecyclerView.ShortcutViewAdapter
+import kotlinx.android.synthetic.main.fragment_log.*
 
-/*
+class EditShortcutActivity : AppCompatActivity() {
+    private val dbName: String = "SaifuDB"
+    private val tableName: String = "shortcut"
+    private val dbVersion: Int = 1
+    private var arrayListlayout: ArrayList<View> = arrayListOf()
 
-ここでは表示と削除の処理
-追加は別画面
+    // 削除用の配列
+    private var deleteList: ArrayList<String> = arrayListOf()
+    val dataList = mutableListOf<ShortcutRowModel>()
 
- */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_shortcut)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        this.title = "ショートカット編集"
 
-private var arrayListlayout: ArrayList<View> = arrayListOf()
-private val dbName: String = "SaifuDB"
-private val tableName: String = "budget"
-private val dbVersion: Int = 1
-val dataList = mutableListOf<RowModel>()
-
-// 削除用の配列
-private var deleteList: ArrayList<String> = arrayListOf()
-
-class IncomeSettings : AppCompatActivity() {
-    override fun onResume() {
-        super.onResume()
         val recyclerView = recycler_list
-        val adapter = ViewAdapter(createDataList(), object : ViewAdapter.ListListener {
-            override fun onClickRow(tappedView: View, rowModel: RowModel) {
-            }
-        })
+        val adapter = ShortcutViewAdapter(
+            createDataList(),
+            object : ShortcutViewAdapter.ListListener {
+                override fun onClickRow(tappedView: View, rowModel: ShortcutRowModel) {
+                }
+            })
 
         // アダプターとレイアウトマネージャをセットする
         recyclerView.setHasFixedSize(true)
@@ -55,38 +51,59 @@ class IncomeSettings : AppCompatActivity() {
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_income_settings)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        this.title = "固定収入"
+    override fun onSupportNavigateUp(): Boolean {
+        // 戻るボタンを押したときの処理
+        finish()
+        return super.onSupportNavigateUp()
     }
 
-    private fun createDataList(): List<RowModel> {
+    private fun createDataList(): List<ShortcutRowModel> {
         try {
-            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
+            // DBにアクセス
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
-            // budget表
-            // id INTEGER primary key AUTOINCREMENT,name,type,price
-            val sql = "select * from " + tableName + ";"
+            // SQL文を構成
+            val sql =
+                "select name,price,category,id from $tableName order by id asc;"
             val cursor = database.rawQuery(sql, null)
 
+            Log.i("DB", cursor.count.toString())
             if (cursor.count > 0) {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
-                    arrayListlayout.add(View.inflate(this, R.layout.activity_income_list, null))
-                    val data: RowModel = RowModel().also {
-                        it.name = cursor.getString(1)
-                        it.price = getString(R.string.currency) + cursor.getString(3)
-                    }
-                    deleteList.add(cursor.getString(0))
+                    Log.i(
+                        "DB",
+                        cursor.getString(0) + " : " + cursor.getInt(1) + " : " + cursor.getString(2)
+                    )
+                    arrayListlayout.add(
+                        View.inflate(
+                            this,
+                            R.layout.activity_edit_shortcut_list,
+                            null
+                        )
+                    )
+
+                    val data: ShortcutRowModel = ShortcutRowModel()
+                        .also {
+                            it.name = cursor.getString(0) + " "
+
+                            if (cursor.getString(2) == "0") {
+                                it.category = ""
+                            } else {
+                                it.category = cursor.getString(2)
+                            }
+                            it.price =
+                                getString(R.string.currency) + cursor.getInt(1).toString() + " "
+                        }
+                    deleteList.add(cursor.getString(3))
                     dataList.add(data)
                     cursor.moveToNext()
                 }
             }
+            cursor.close()
         } catch (e: Exception) {
-            Log.e("inCome", e.toString())
+            Log.e("ShortcutShow", e.toString())
         }
         return dataList
     }
@@ -109,8 +126,9 @@ class IncomeSettings : AppCompatActivity() {
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
-            }// スワイプ時の処理
+            }
 
+            // スワイプ時の処理
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 // データベースから削除
@@ -164,37 +182,14 @@ class IncomeSettings : AppCompatActivity() {
 
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.writableDatabase
 
             val whereClauses = "id = ?"
             val whereArgs = arrayOf(delete)
             database.delete(tableName, whereClauses, whereArgs)
         } catch (e: Exception) {
-            Log.e("inComeDelete", e.toString())
+            Log.e("ShortcutDelete", e.toString())
         }
-    }
-
-    // メニューアイテムを表示
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        super.onCreateOptionsMenu(menu)
-
-        val inflater = menuInflater
-
-        inflater.inflate(R.menu.budget_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.SpendButton -> startActivity(Intent(this, inCome_add::class.java))
-        }
-        return false
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        // 戻るボタンを押したときの処理
-        finish()
-        return super.onSupportNavigateUp()
     }
 }

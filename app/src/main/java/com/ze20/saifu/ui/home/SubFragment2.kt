@@ -9,14 +9,18 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
+import com.ze20.saifu.UtilityFunClass
 import com.ze20.saifu.ui.input.DataInputActivity
 import kotlinx.android.synthetic.main.activity_sub_fragment2.view.*
 
-class sub_fragment2 : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+class SubFragment2 : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.activity_sub_fragment2, container, false)
         reload(view)
         return view
@@ -29,11 +33,20 @@ class sub_fragment2 : Fragment() {
 
     private fun reload(view: View) {
         val shortcut: ArrayList<Button> =
-            arrayListOf(view.shurtcut_button5, view.shurtcut_button6, view.shurtcut_button7, view.shurtcut_button8, view.shurtcut_button9, view.shurtcut_button10, view.shurtcut_button11, view.shurtcut_button12)
+            arrayListOf(
+                view.shortcut_button5,
+                view.shortcut_button6,
+                view.shortcut_button7,
+                view.shortcut_button8,
+                view.shortcut_button9,
+                view.shortcut_button10,
+                view.shortcut_button11,
+                view.shortcut_button12
+            )
         val nameal: ArrayList<String> = arrayListOf()
         val priceal: ArrayList<Int> = arrayListOf()
         val categoryal: ArrayList<Int> = arrayListOf()
-        val SQLiteDB = SQLiteDB(requireContext(), "SaifuDB", null, 1)
+        val SQLiteDB = SQLiteDBClass(requireContext(), "SaifuDB", null, 1)
         val database = SQLiteDB.readableDatabase
         val sql = "select * from shortcut order by 1 asc limit 8 offset 4;"
         val cursor = database.rawQuery(sql, null)
@@ -58,11 +71,24 @@ class sub_fragment2 : Fragment() {
                     if (sharedPref.getBoolean("shortCutQuickAdd", false)) {
                         val tag = it.tag as Int
                         it.isEnabled = false
-                        if (ConvenientFunction().quickInsert(context, priceal[tag], nameal[tag], categoryal[tag])) {
-                            Toast.makeText(activity, getString(R.string.recordFinish), Toast.LENGTH_LONG).show()
+                        if (UtilityFunClass().quickInsert(
+                                context,
+                                priceal[tag],
+                                nameal[tag],
+                                categoryal[tag]
+                            )) {
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.recordFinish),
+                                Toast.LENGTH_LONG
+                            ).show()
                             it.isEnabled = true
                         } else {
-                            Toast.makeText(activity, getString(R.string.recordError), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.recordError),
+                                Toast.LENGTH_LONG
+                            ).show()
                             it.isEnabled = true
                         }
                     } else {

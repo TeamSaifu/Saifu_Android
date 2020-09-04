@@ -10,7 +10,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -35,17 +35,17 @@ class HomeFragment : Fragment() {
 
     private fun reload(view: View) {
         // スワイプできるフラグメント一覧
-        val fragmentList = arrayListOf<Fragment>(sub_fragment1())
+        val fragmentList = arrayListOf<Fragment>(SubFragment1())
 
-        val SQLiteDB = SQLiteDB(requireContext(), "SaifuDB", null, 1)
+        val SQLiteDB = SQLiteDBClass(requireContext(), "SaifuDB", null, 1)
         val database = SQLiteDB.readableDatabase
         val sql = "select * from shortcut order by 1 asc;"
         val cursor = database.rawQuery(sql, null)
         if (cursor.count >= 5) {
             tablayout.visibility = View.VISIBLE
-            fragmentList.add(sub_fragment2())
+            fragmentList.add(SubFragment2())
         }
-        if (cursor.count >= 13) fragmentList.add(sub_fragment3())
+        if (cursor.count >= 13) fragmentList.add(SubFragment3())
         cursor.close()
 
         // レイアウト呼び出し
