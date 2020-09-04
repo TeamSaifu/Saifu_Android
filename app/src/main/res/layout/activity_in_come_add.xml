@@ -72,19 +72,19 @@
             android:id="@+id/incomeCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="5sp"
-            android:background="@drawable/button_ripple"
+            android:layout_weight="1"
+            android:background="@drawable/button_normal_ripple"
             android:text="@string/inComeCancel" />
 
         <Button
             android:id="@+id/incomeAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/inComeAdd"
-            android:textSize="15dp"
             android:layout_margin="5sp"
-            android:background="@drawable/button_ripple"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/button_normal_ripple"
+            android:text="@string/inComeAdd"
+            android:textSize="15dp" />
     </LinearLayout>
 </LinearLayout>
