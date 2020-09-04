@@ -31,12 +31,13 @@ private var arrayListlayout: ArrayList<View> = arrayListOf()
 private val dbName: String = "SaifuDB"
 private val tableName: String = "budget"
 private val dbVersion: Int = 1
+
+private // 削除用の配列
+var deleteList: ArrayList<String> = arrayListOf()
 val dataList = mutableListOf<RowModel>()
 
-// 削除用の配列
-private var deleteList: ArrayList<String> = arrayListOf()
-
 class IncomeActivity : AppCompatActivity() {
+
     override fun onResume() {
         super.onResume()
         val recyclerView = recycler_list
@@ -63,10 +64,13 @@ class IncomeActivity : AppCompatActivity() {
     }
 
     private fun createDataList(): List<RowModel> {
+
         try {
             val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
+            dataList.clear()
+            deleteList.clear()
             // budget表
             // id INTEGER primary key AUTOINCREMENT,name,type,price
             val sql = "select * from " + tableName + ";"
