@@ -27,7 +27,6 @@ class inCome_add : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         this.title = "新規固定収入"
 
-
         incomeAdd.setOnClickListener {
             // 全項目が入力されている場合
             if (incomeName.text.toString().equals("") == false && incomePrice.text.toString()

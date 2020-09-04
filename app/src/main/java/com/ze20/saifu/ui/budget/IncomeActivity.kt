@@ -113,7 +113,7 @@ class IncomeActivity : AppCompatActivity() {
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return false
-            }// スワイプ時の処理
+            } // スワイプ時の処理
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
