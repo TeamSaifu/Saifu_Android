@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.ui.budget.Recyclerview.RecyclerViewHolder
 import com.ze20.saifu.ui.budget.Recyclerview.RowModel
 import com.ze20.saifu.ui.budget.Recyclerview.ViewAdapter
@@ -64,7 +64,7 @@ class IncomeActivity : AppCompatActivity() {
 
     private fun createDataList(): List<RowModel> {
         try {
-            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
             // budget表
@@ -164,7 +164,7 @@ class IncomeActivity : AppCompatActivity() {
 
         try {
             // DBにアクセス
-            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.writableDatabase
 
             val whereClauses = "id = ?"

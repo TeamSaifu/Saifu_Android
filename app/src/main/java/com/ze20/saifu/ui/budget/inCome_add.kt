@@ -5,9 +5,9 @@ import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.ze20.saifu.ConvenientFunction
 import com.ze20.saifu.R
-import com.ze20.saifu.SQLiteDB
+import com.ze20.saifu.SQLiteDBClass
+import com.ze20.saifu.UtilityFunClass
 import kotlinx.android.synthetic.main.activity_in_come_add.*
 
 /*
@@ -18,7 +18,7 @@ class inCome_add : AppCompatActivity() {
     private val dbName: String = "SaifuDB"
     private val tableName: String = "budget"
     private val dbVersion: Int = 1
-    private val cFunc = ConvenientFunction()
+    private val cFunc = UtilityFunClass()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +36,13 @@ class inCome_add : AppCompatActivity() {
 
                 AlertDialog.Builder(this)
                     .setMessage("登録しました。")
-                    .setPositiveButton("OK", { dialog, which -> })
+                    .setPositiveButton("OK", { _, _ -> })
                     .show()
             } else {
                 AlertDialog.Builder(this)
                     .setTitle("ERROR")
                     .setMessage("入力して下さい。")
-                    .setPositiveButton("OK", { dialog, which -> })
+                    .setPositiveButton("OK", { _, _ -> })
                     .show()
             }
         }
@@ -72,7 +72,7 @@ class inCome_add : AppCompatActivity() {
             // id INTEGER primary key AUTOINCREMENT,name,type,price
 
             // DBにアクセス
-            val SQLiteDB = SQLiteDB(this, dbName, null, dbVersion)
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.writableDatabase
 
             val values = ContentValues()
