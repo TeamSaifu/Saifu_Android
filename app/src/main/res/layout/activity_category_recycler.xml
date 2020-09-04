@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/border_primary"
     android:orientation="vertical">
 
@@ -15,6 +16,7 @@
             android:id="@+id/categoryImage"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            app:tint="@color/colorPrimaryDark"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
