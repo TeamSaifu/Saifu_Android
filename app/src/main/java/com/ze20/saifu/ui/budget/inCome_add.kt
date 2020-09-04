@@ -46,10 +46,6 @@ class inCome_add : AppCompatActivity() {
                     .show()
             }
         }
-
-        incomeCancel.setOnClickListener {
-            onSupportNavigateUp()
-        }
     }
 
     // 画面をクリックするとキーボードを非表示にする

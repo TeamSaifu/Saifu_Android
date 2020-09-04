@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/horizon_line"
             android:text=""
-            android:hint="@string/inComeNameHint"
+            android:hint="@string/inComeHint"
             android:textSize="30dp"
             android:layout_marginLeft="5sp"
             android:layout_marginRight="5sp"
@@ -56,9 +56,10 @@
             android:textSize="30dp"
             android:layout_marginLeft="5sp"
             android:layout_marginRight="5sp"
-            android:hint="@string/inComePriceHint"
+            android:hint="@string/inComeHint"
             android:maxLength="8"
             android:maxLines="1"
+            android:layout_marginBottom="25sp"
             android:inputType="number"
             android:textColor="@color/colorBlack" />
     </LinearLayout>
@@ -69,22 +70,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/incomeCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5sp"
-            android:layout_weight="1"
-            android:background="@drawable/button_normal_ripple"
-            android:text="@string/inComeCancel" />
-
-        <Button
             android:id="@+id/incomeAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5sp"
+            android:layout_margin="30sp"
             android:layout_weight="1"
             android:background="@drawable/button_normal_ripple"
             android:text="@string/inComeAdd"
-            android:textSize="15dp" />
+            android:textSize="20dp" />
     </LinearLayout>
 </LinearLayout>
