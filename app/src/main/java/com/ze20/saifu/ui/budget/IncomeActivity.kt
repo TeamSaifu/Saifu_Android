@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
-import com.ze20.saifu.ui.budget.Recyclerview.RecyclerViewHolder
-import com.ze20.saifu.ui.budget.Recyclerview.RowModel
-import com.ze20.saifu.ui.budget.Recyclerview.ViewAdapter
+import com.ze20.saifu.ui.budget.incomeRecyclerview.RecyclerViewHolder
+import com.ze20.saifu.ui.budget.incomeRecyclerview.RowModel
+import com.ze20.saifu.ui.budget.incomeRecyclerview.ViewAdapter
 import kotlinx.android.synthetic.main.activity_income_settings.*
 
 /*
@@ -34,7 +34,7 @@ private val dbVersion: Int = 1
 
 private // 削除用の配列
 var deleteList: ArrayList<String> = arrayListOf()
-val dataList = mutableListOf<RowModel>()
+val incomeDataList = mutableListOf<RowModel>()
 
 class IncomeActivity : AppCompatActivity() {
 
@@ -69,11 +69,11 @@ class IncomeActivity : AppCompatActivity() {
             val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
             val database = SQLiteDB.readableDatabase
 
-            dataList.clear()
+            incomeDataList.clear()
             deleteList.clear()
             // budget表
             // id INTEGER primary key AUTOINCREMENT,name,type,price
-            val sql = "select * from " + tableName + ";"
+            val sql = "select * from " + tableName + " where type = 'isincome';"
             val cursor = database.rawQuery(sql, null)
 
             if (cursor.count > 0) {
@@ -85,14 +85,14 @@ class IncomeActivity : AppCompatActivity() {
                         it.price = getString(R.string.currency) + cursor.getString(3)
                     }
                     deleteList.add(cursor.getString(0))
-                    dataList.add(data)
+                    incomeDataList.add(data)
                     cursor.moveToNext()
                 }
             }
         } catch (e: Exception) {
             Log.e("inCome", e.toString())
         }
-        return dataList
+        return incomeDataList
     }
 
     // 項目を左にスワイプすると一覧とDBからデータを削除する
@@ -123,7 +123,7 @@ class IncomeActivity : AppCompatActivity() {
                 deleteList.removeAt(viewHolder.adapterPosition)
 
                 // データリストからスワイプしたデータを削除
-                dataList.removeAt(viewHolder.adapterPosition)
+                incomeDataList.removeAt(viewHolder.adapterPosition)
 
                 // リストからスワイプしたカードを削除
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
