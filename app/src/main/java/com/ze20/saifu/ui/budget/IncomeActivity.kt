@@ -31,14 +31,16 @@ private var arrayListlayout: ArrayList<View> = arrayListOf()
 private val dbName: String = "SaifuDB"
 private val tableName: String = "budget"
 private val dbVersion: Int = 1
-val dataList = mutableListOf<RowModel>()
 
 // 削除用の配列
 private var deleteList: ArrayList<String> = arrayListOf()
 
 class IncomeActivity : AppCompatActivity() {
+    val dataList = mutableListOf<RowModel>()
+
     override fun onResume() {
         super.onResume()
+        dataList.clear()
         val recyclerView = recycler_list
         val adapter = ViewAdapter(createDataList(), object : ViewAdapter.ListListener {
             override fun onClickRow(tappedView: View, rowModel: RowModel) {

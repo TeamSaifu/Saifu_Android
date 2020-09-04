@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
@@ -26,18 +27,14 @@ class inCome_add : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         this.title = "新規固定収入"
 
-        setListeners()
 
         incomeAdd.setOnClickListener {
             // 全項目が入力されている場合
             if (incomeName.text.toString().equals("") == false && incomePrice.text.toString()
                     .equals("") == false) {
                 insertData(incomeName.text.toString(), incomePrice.text.toString())
-
-                AlertDialog.Builder(this)
-                    .setMessage("登録しました。")
-                    .setPositiveButton("OK", { _, _ -> })
-                    .show()
+                Toast.makeText(this, "登録しました。", Toast.LENGTH_LONG).show()
+                finish()
             } else {
                 AlertDialog.Builder(this)
                     .setTitle("ERROR")
@@ -45,13 +42,6 @@ class inCome_add : AppCompatActivity() {
                     .setPositiveButton("OK", { _, _ -> })
                     .show()
             }
-        }
-    }
-
-    // 画面をクリックするとキーボードを非表示にする
-    private fun setListeners() {
-        mainLayout.setOnClickListener {
-            cFunc.hideKeyboard(this, this@inCome_add.currentFocus)
         }
     }
 

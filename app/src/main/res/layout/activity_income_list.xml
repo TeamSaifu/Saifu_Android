@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/colorBlack"
-            android:textSize="40dp" />
+            android:textSize="50dp" />
 
         <TextView
             android:id="@+id/incomePrice"
@@ -25,6 +25,6 @@
             android:layout_weight="1"
             android:textColor="@color/colorBlack"
             android:gravity="right"
-            android:textSize="40dp" />
+            android:textSize="50dp" />
     </LinearLayout>
 </LinearLayout>
