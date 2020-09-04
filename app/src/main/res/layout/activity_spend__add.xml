@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/mainLayout"
+    tools:context=".ui.budget.spend_add">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="支出名"
+            android:textSize="25dp"
+            android:textColor="@color/colorBlack" />
+
+        <EditText
+            android:id="@+id/spendName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/horizon_line"
+            android:text=""
+            android:hint="@string/inComeHint"
+            android:textSize="30dp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:maxLength="8"
+            android:inputType="text"
+            android:textColor="@color/colorBlack" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="支出額額"
+            android:textSize="25dp"
+            android:textColor="@color/colorBlack" />
+
+        <EditText
+            android:id="@+id/spendPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/horizon_line"
+            android:text=""
+            android:textSize="30dp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:hint="@string/inComeHint"
+            android:maxLength="8"
+            android:maxLines="1"
+            android:layout_marginBottom="25sp"
+            android:inputType="number"
+            android:textColor="@color/colorBlack" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/spendAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_normal_ripple"
+            android:text="@string/inComeAdd"
+            android:textSize="20dp" />
+    </LinearLayout>
+</LinearLayout>
