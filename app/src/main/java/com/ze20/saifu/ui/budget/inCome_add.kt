@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
-import com.ze20.saifu.UtilityFunClass
 import kotlinx.android.synthetic.main.activity_in_come_add.*
 
 /*
@@ -19,7 +18,6 @@ class inCome_add : AppCompatActivity() {
     private val dbName: String = "SaifuDB"
     private val tableName: String = "budget"
     private val dbVersion: Int = 1
-    private val cFunc = UtilityFunClass()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +61,7 @@ class inCome_add : AppCompatActivity() {
             val values = ContentValues()
             values.put("name", name)
             values.put("price", price)
-            values.put("isincome", 1)
+            values.put("type", "isincome")
 
             database.insertOrThrow(tableName, null, values)
         } catch (e: Exception) {
