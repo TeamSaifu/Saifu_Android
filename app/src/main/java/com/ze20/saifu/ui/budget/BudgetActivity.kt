@@ -71,7 +71,7 @@ class BudgetActivity : AppCompatActivity() {
                 incomeSum = cursor.getInt(0)
             }
         } catch (e: Exception) {
-            Log.e("logShow", e.toString())
+            Log.e("DBSelectError", e.toString())
         }
         return incomeSum
     }
