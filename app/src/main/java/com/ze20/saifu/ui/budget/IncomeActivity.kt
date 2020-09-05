@@ -73,7 +73,7 @@ class IncomeActivity : AppCompatActivity() {
             deleteList.clear()
             // budget表
             // id INTEGER primary key AUTOINCREMENT,name,type,price
-            val sql = "select * from " + tableName + ";"
+            val sql = "select * from " + tableName + " where type = 'income';"
             val cursor = database.rawQuery(sql, null)
 
             if (cursor.count > 0) {
