@@ -11,7 +11,9 @@ import kotlinx.android.synthetic.main.budget_config.*
 
 class BudgetActivity : AppCompatActivity() {
 
-    private var sum: Int = 0
+    private var budgetSum: Int = 0
+    private var incomeSum: Int = 0
+    private var spendSum: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +30,17 @@ class BudgetActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        sum = incomeSum()
-        val sumText: TextView = findViewById(R.id.incomeSumText)
-        sumText.text = sum.toString() + "円"
+        val budgetSumText: TextView = findViewById(R.id.budgetSum)
+        val incomeSumText: TextView = findViewById(R.id.incomeSumText)
+        val spendSumText: TextView = findViewById(R.id.spendSumText)
+
+        incomeSum = incomeSum()
+        spendSum = spendSum()
+        budgetSum = incomeSum() - spendSum()
+
+        budgetSumText.text = budgetSum.toString() + "円"
+        incomeSumText.text = incomeSum.toString() + "円"
+        spendSumText.text = spendSum.toString() + "円"
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -58,11 +68,39 @@ class BudgetActivity : AppCompatActivity() {
 
             if (cursor.count > 0) {
                 cursor.moveToFirst()
-                sum = cursor.getInt(0)
+                incomeSum = cursor.getInt(0)
             }
         } catch (e: Exception) {
-            Log.e("logShow", e.toString())
+            Log.e("DBSelectError", e.toString())
         }
-        return sum
+        return incomeSum
+    }
+
+    private fun spendSum(): Int {
+        val dbName: String = "SaifuDB"
+        val tableName: String = "budget"
+        val dbVersion: Int = 1
+
+        try {
+            // DBにアクセス
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
+            val database = SQLiteDB.readableDatabase
+
+            // SQL文を構成
+
+            // budget表
+            // id INTEGER primary key AUTOINCREMENT,name,type,price
+            val sql =
+                "select sum(price) from " + tableName + " where type = 'spend';"
+            val cursor = database.rawQuery(sql, null)
+
+            if (cursor.count > 0) {
+                cursor.moveToFirst()
+                spendSum = cursor.getInt(0)
+            }
+        } catch (e: Exception) {
+            Log.e("DBSelectError", e.toString())
+        }
+        return spendSum
     }
 }

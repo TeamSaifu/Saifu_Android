@@ -20,7 +20,7 @@
             android:textSize="30dp" />
 
         <TextView
-            android:id="@+id/Budgettext"
+            android:id="@+id/budgetSum"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_gravity="right"
@@ -81,7 +81,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/Spendingtext"
+            android:id="@+id/spendSumText"
             android:layout_width="327dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
