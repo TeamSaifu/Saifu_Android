@@ -88,7 +88,7 @@ class logFragment : Fragment() {
 
             // SQL文を構成
             val sql =
-                "select *,strftime('%Y/%m/%d', payDate) from " + tableName + " order by 1 desc;"
+                "select *,strftime('%m/%d', payDate) from " + tableName + " order by 1 desc;"
             val cursor = database.rawQuery(sql, null)
 
             // log表
@@ -102,11 +102,10 @@ class logFragment : Fragment() {
                         .also {
                             it.day = cursor.getString(8) + " "
 
-                            if (cursor.getString(4) == "0") {
-                                it.category = ""
-                            } else {
-                                it.category = cursor.getString(4)
-                            }
+                            it.image = cursor.getInt(4)
+
+                            it.name = cursor.getString(2)
+
                             it.price =
                                 getString(R.string.currency) + cursor.getString(3).toString() + " "
                         }
