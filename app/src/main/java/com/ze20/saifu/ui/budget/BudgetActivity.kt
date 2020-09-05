@@ -53,7 +53,7 @@ class BudgetActivity : AppCompatActivity() {
             // budget表
             // id INTEGER primary key AUTOINCREMENT,name,type,price
             val sql =
-                "select sum(price) from " + tableName + " where type = 'isincome';"
+                "select sum(price) from " + tableName + " where type = 'income';"
             val cursor = database.rawQuery(sql, null)
 
             if (cursor.count > 0) {

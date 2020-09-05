@@ -61,7 +61,7 @@ class inCome_add : AppCompatActivity() {
             val values = ContentValues()
             values.put("name", name)
             values.put("price", price)
-            values.put("type", "isincome")
+            values.put("type", "income")
 
             database.insertOrThrow(tableName, null, values)
         } catch (e: Exception) {
