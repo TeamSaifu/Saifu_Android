@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.budget_config.*
 
 class BudgetActivity : AppCompatActivity() {
 
+    private var budgetSum: Int = 0
     private var incomeSum: Int = 0
     private var spendSum: Int = 0
 
@@ -31,8 +32,11 @@ class BudgetActivity : AppCompatActivity() {
         super.onResume()
         incomeSum = incomeSum()
         spendSum = spendSum()
+        budgetSum = incomeSum() - spendSum()
+        val budgetSumText: TextView = findViewById(R.id.budgetSum)
         val incomeSumText: TextView = findViewById(R.id.incomeSumText)
         val spendSumText: TextView = findViewById(R.id.spendSumText)
+        budgetSumText.text = budgetSum.toString() + "円"
         incomeSumText.text = incomeSum.toString() + "円"
         spendSumText.text = spendSum.toString() + "円"
     }
