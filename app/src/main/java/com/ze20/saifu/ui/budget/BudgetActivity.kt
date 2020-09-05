@@ -30,12 +30,14 @@ class BudgetActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        incomeSum = incomeSum()
-        spendSum = spendSum()
-        budgetSum = incomeSum() - spendSum()
         val budgetSumText: TextView = findViewById(R.id.budgetSum)
         val incomeSumText: TextView = findViewById(R.id.incomeSumText)
         val spendSumText: TextView = findViewById(R.id.spendSumText)
+
+        incomeSum = incomeSum()
+        spendSum = spendSum()
+        budgetSum = incomeSum() - spendSum()
+
         budgetSumText.text = budgetSum.toString() + "円"
         incomeSumText.text = incomeSum.toString() + "円"
         spendSumText.text = spendSum.toString() + "円"
