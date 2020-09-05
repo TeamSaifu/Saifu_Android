@@ -1,4 +1,4 @@
-package com.ze20.saifu.ui.budget.Recyclerview
+package com.ze20.saifu.ui.budget.incomeRecyclerview
 
 import android.util.Log
 import android.view.LayoutInflater
