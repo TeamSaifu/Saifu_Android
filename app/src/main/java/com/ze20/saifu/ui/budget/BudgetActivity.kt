@@ -99,7 +99,7 @@ class BudgetActivity : AppCompatActivity() {
                 spendSum = cursor.getInt(0)
             }
         } catch (e: Exception) {
-            Log.e("logShow", e.toString())
+            Log.e("DBSelectError", e.toString())
         }
         return spendSum
     }
