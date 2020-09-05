@@ -56,7 +56,7 @@ class spend_add : AppCompatActivity() {
             val values = ContentValues()
             values.put("name", name)
             values.put("price", price)
-            values.put("type", "isspend")
+            values.put("type", "spend")
 
             database.insertOrThrow(tableName, null, values)
         } catch (e: Exception) {

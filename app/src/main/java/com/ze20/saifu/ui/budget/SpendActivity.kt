@@ -75,7 +75,7 @@ class SpendActivity : AppCompatActivity() {
             deleteList.clear()
             // budget表
             // id INTEGER primary key AUTOINCREMENT,name,type,price
-            val sql = "select * from " + tableName + " where type = 'isspend';"
+            val sql = "select * from " + tableName + " where type = 'spend';"
             val cursor = database.rawQuery(sql, null)
 
             if (cursor.count > 0) {
