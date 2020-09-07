@@ -106,8 +106,19 @@ class logFragment : Fragment() {
 
                             it.name = cursor.getString(2)
 
-                            it.price =
-                                getString(R.string.currency) + cursor.getString(3).toString() + " "
+                            if (cursor.getInt(7) == 1) {
+                                it.price =
+                                    getString(R.string.plus) + getString(R.string.currency) + cursor.getString(
+                                        3
+                                    )
+                                        .toString() + " "
+                            } else {
+                                it.price =
+                                    getString(R.string.minus) + getString(R.string.currency) + cursor.getString(
+                                        3
+                                    )
+                                        .toString() + " "
+                            }
                         }
                     deleteList.add(cursor.getString(0))
                     dataList.add(data)
