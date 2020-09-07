@@ -21,6 +21,7 @@ import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.UtilityFunClass
 import com.ze20.saifu.okCancelDialogFragment
+import com.ze20.saifu.ui.category.categoryList
 import kotlinx.android.synthetic.main.activity_data_input.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -35,6 +36,7 @@ open class DataInputActivity : AppCompatActivity() {
     private var mode = "New" // 現在のモード
     private var id: String? = null // 欲しい物リストのID
     private var busyFlag = false // ローディング中はいろいろ動かなくするためのフラグ
+    private var category = -1 // カテゴリの情報
     private var addShortcutflag = false
 
     private val fileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT) // ファイルの選択
@@ -44,6 +46,7 @@ open class DataInputActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_IMAGE_CAPTURE: Int = 1
         private const val READ_REQUEST_CODE: Int = 42
+        private const val CATEGORY_SELECT_CODE: Int = 25
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +61,7 @@ open class DataInputActivity : AppCompatActivity() {
         cFunc.checkIntent(this, cameraIntent, picturePhoto)
         modeCheck()
         setListeners()
+        categoryFreqSet()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -75,14 +79,29 @@ open class DataInputActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
-        cFunc.photoOrCamera(
-            this,
-            contentResolver,
-            requestCode,
-            resultCode,
-            resultData,
-            photoImageView
-        )
+        if (requestCode == CATEGORY_SELECT_CODE) {
+            category = resultData?.run {
+                categoryText.text = resultData.getStringExtra("name")
+                UtilityFunClass().CategoryImage(getIntExtra("image", -1))?.let {
+                    categoryImage.setImageResource(it)
+                    categoryImage.visibility = View.VISIBLE
+                } ?: run {
+                    categoryImage.setImageDrawable(null)
+                    categoryImage.visibility = View.GONE
+                }
+
+                getIntExtra("id", -1)
+            } ?: -1
+        } else {
+            cFunc.photoOrCamera(
+                this,
+                contentResolver,
+                requestCode,
+                resultCode,
+                resultData,
+                photoImageView
+            )
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -203,6 +222,9 @@ open class DataInputActivity : AppCompatActivity() {
         }
         applyButton.setOnClickListener {
             apply()
+        }
+        categoryButton.setOnClickListener {
+            categorySelect()
         }
     }
 
@@ -428,7 +450,7 @@ open class DataInputActivity : AppCompatActivity() {
                 )
                 put("name", memoEdit.text.toString())
                 put("price", cFunc.editToInt(moneyEdit))
-                put("category", 0)
+                put("category", category)
                 put("splitCount", cFunc.editToInt(editTimes))
                 // bmpがnullでなければ、ByteArray型にbmpを変換する
                 bmp?.let { put("picture", cFunc.getBinaryFromBitmap(it)) }
@@ -496,6 +518,118 @@ open class DataInputActivity : AppCompatActivity() {
         } catch (exception: Exception) {
             Toast.makeText(this, getString(R.string.recordError), Toast.LENGTH_LONG).show()
             Log.e("insertData", exception.toString()) // エラーをログに出力
+        }
+    }
+
+    private fun categorySelect() {
+        val intent = Intent(this, categoryList::class.java)
+        intent.putExtra("mode", "Select")
+        startActivityForResult(intent, CATEGORY_SELECT_CODE)
+    }
+
+    private fun categoryFreqSet() {
+        val dbName: String = "SaifuDB"
+        val tableName: String = "log inner join category on log.category = category.id"
+        val dbVersion: Int = 1
+
+        try {
+            // DBにアクセス
+            val SQLiteDB = SQLiteDBClass(this, dbName, null, dbVersion)
+            val database = SQLiteDB.readableDatabase
+            var arrayListlayoutid: ArrayList<Int> = arrayListOf()
+            var arrayListlayoutname: ArrayList<String> = arrayListOf()
+            var arrayListlayoutpicture: ArrayList<Int> = arrayListOf()
+            // SQL文を構成
+
+            // budget表
+            // id INTEGER primary key AUTOINCREMENT,name,type,price
+            val sql =
+                "select category.name,count(log.price),category.id,category.picture from " + tableName + " group by category.id,category.name,category.picture order by 2 desc limit 4;"
+            val cursor = database.rawQuery(sql, null)
+
+            if (cursor.count > 0) {
+                frequentcateText.visibility = View.VISIBLE
+                frequentcateButton1.visibility = View.VISIBLE
+                frequentcateButton2.visibility = View.INVISIBLE
+                frequentcateButton3.visibility = View.INVISIBLE
+                frequentcateButton4.visibility = View.INVISIBLE
+                cursor.moveToFirst()
+
+                frequentcateButton1.text = cursor.getString(0)
+                arrayListlayoutid.add(cursor.getInt(2))
+                arrayListlayoutname.add(cursor.getString(0))
+                arrayListlayoutpicture.add(cursor.getInt(3))
+                frequentcateButton1.setOnClickListener {
+                    category = arrayListlayoutid[0]
+                    categoryText.text = arrayListlayoutname[0]
+                    UtilityFunClass().CategoryImage(arrayListlayoutpicture[0])?.let {
+                        categoryImage.setImageResource(it)
+                        categoryImage.visibility = View.VISIBLE
+                    } ?: run {
+                        categoryImage.setImageDrawable(null)
+                        categoryImage.visibility = View.GONE
+                    }
+                }
+                if (cursor.count > 1) {
+                    cursor.moveToNext()
+                    frequentcateButton2.text = cursor.getString(0)
+                    frequentcateButton2.visibility = View.VISIBLE
+                    arrayListlayoutid.add(cursor.getInt(2))
+                    arrayListlayoutname.add(cursor.getString(0))
+                    arrayListlayoutpicture.add(cursor.getInt(3))
+                    frequentcateButton2.setOnClickListener {
+                        category = arrayListlayoutid[1]
+                        categoryText.text = arrayListlayoutname[1]
+                        UtilityFunClass().CategoryImage(arrayListlayoutpicture[1])?.let {
+                            categoryImage.setImageResource(it)
+                            categoryImage.visibility = View.VISIBLE
+                        } ?: run {
+                            categoryImage.setImageDrawable(null)
+                            categoryImage.visibility = View.GONE
+                        }
+                    }
+                }
+                if (cursor.count > 2) {
+                    cursor.moveToNext()
+                    frequentcateButton3.text = cursor.getString(0)
+                    frequentcateButton3.visibility = View.VISIBLE
+                    arrayListlayoutid.add(cursor.getInt(2))
+                    arrayListlayoutname.add(cursor.getString(0))
+                    arrayListlayoutpicture.add(cursor.getInt(3))
+                    frequentcateButton3.setOnClickListener {
+                        category = arrayListlayoutid[2]
+                        categoryText.text = arrayListlayoutname[2]
+                        UtilityFunClass().CategoryImage(arrayListlayoutpicture[2])?.let {
+                            categoryImage.setImageResource(it)
+                            categoryImage.visibility = View.VISIBLE
+                        } ?: run {
+                            categoryImage.setImageDrawable(null)
+                            categoryImage.visibility = View.GONE
+                        }
+                    }
+                }
+                if (cursor.count > 3) {
+                    cursor.moveToNext()
+                    frequentcateButton4.text = cursor.getString(0)
+                    frequentcateButton4.visibility = View.VISIBLE
+                    arrayListlayoutid.add(cursor.getInt(2))
+                    arrayListlayoutname.add(cursor.getString(0))
+                    arrayListlayoutpicture.add(cursor.getInt(3))
+                    frequentcateButton4.setOnClickListener {
+                        category = arrayListlayoutid[3]
+                        categoryText.text = arrayListlayoutname[3]
+                        UtilityFunClass().CategoryImage(arrayListlayoutpicture[3])?.let {
+                            categoryImage.setImageResource(it)
+                            categoryImage.visibility = View.VISIBLE
+                        } ?: run {
+                            categoryImage.setImageDrawable(null)
+                            categoryImage.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("DBSelectError", e.toString())
         }
     }
 }
