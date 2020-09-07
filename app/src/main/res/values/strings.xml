@@ -103,4 +103,6 @@
     <string name="needShortcut">このウィジェットの使用には1つ以上のショートカット項目が必要です。\nアプリ内でショートカットを登録してからお使いください。</string>
     <string name="inComeAdd">登録</string>
     <string name="inComeHint">入力して下さい。</string>
+    <string name="plus_hankaku">+</string>
+    <string name="minus_hankaku">-</string>
 </resources>

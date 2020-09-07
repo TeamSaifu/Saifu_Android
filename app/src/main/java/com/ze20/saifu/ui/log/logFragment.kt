@@ -108,13 +108,13 @@ class logFragment : Fragment() {
 
                             if (cursor.getInt(7) == 1) {
                                 it.price =
-                                    getString(R.string.plus) + getString(R.string.currency) + cursor.getString(
+                                    getString(R.string.plus_hankaku) + getString(R.string.currency) + cursor.getString(
                                         3
                                     )
                                         .toString() + " "
                             } else {
                                 it.price =
-                                    getString(R.string.minus) + getString(R.string.currency) + cursor.getString(
+                                    getString(R.string.minus_hankaku) + getString(R.string.currency) + cursor.getString(
                                         3
                                     )
                                         .toString() + " "
