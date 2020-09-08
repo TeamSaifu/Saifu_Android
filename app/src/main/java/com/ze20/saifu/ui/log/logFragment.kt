@@ -106,8 +106,22 @@ class logFragment : Fragment() {
 
                             it.name = cursor.getString(2)
 
-                            it.price =
-                                getString(R.string.currency) + cursor.getString(3).toString() + " "
+                            // プラス・マイナスの判定
+                            if (cursor.getInt(7) == 1) {
+                                it.price =
+                                    getString(R.string.plus_hankaku) + getString(R.string.currency) + cursor.getString(
+                                        3
+                                    )
+                                        .toString() + " "
+                            } else {
+                                it.price =
+                                    getString(R.string.minus_hankaku) + getString(R.string.currency) + cursor.getString(
+                                        3
+                                    )
+                                        .toString() + " "
+                            }
+                            // プラス・マイナスの判定
+                            it.sign = cursor.getInt(7)
                         }
                     deleteList.add(cursor.getString(0))
                     dataList.add(data)

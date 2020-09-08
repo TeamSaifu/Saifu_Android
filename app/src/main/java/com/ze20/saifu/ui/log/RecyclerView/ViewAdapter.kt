@@ -1,5 +1,6 @@
 package com.ze20.saifu.ui.log.RecyclerView
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,9 +31,15 @@ class ViewAdapter(
         holder.dayView.text = list[position].day
         holder.nameView.text = list[position].name
         holder.priceView.text = list[position].price
+        if (list[position].sign == 1) {
+            holder.priceView.setTextColor(Color.BLUE)
+        } else {
+            holder.priceView.setTextColor(Color.RED)
+        }
         holder.itemView.setOnClickListener {
             listener.onClickRow(it, list[position])
         }
+
         UtilityFunClass().CategoryImage(list[position].image)?.let {
             holder.imageView.setImageResource(it)
         } ?: holder.imageView.setImageDrawable(null)

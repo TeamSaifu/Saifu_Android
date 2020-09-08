@@ -6,4 +6,5 @@ class LogRowModel {
     var image: Int = -1
     var name: String = ""
     var price: String = ""
+    var sign: Int = -1
 }
