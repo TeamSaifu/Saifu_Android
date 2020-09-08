@@ -43,9 +43,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="支出額額"
-            android:textSize="25dp"
-            android:textColor="@color/colorBlack" />
+            android:text="支出額"
+            android:textColor="@color/colorBlack"
+            android:textSize="25dp" />
 
         <EditText
             android:id="@+id/spendPrice"
