@@ -1,0 +1,29 @@
+name: reviewdog
+on: [pull_request]
+jobs:
+  misspell:
+    name: ミススペルをチェック
+    runs-on: ubuntu-latest
+    steps:
+      - name: コードをチェックアウト
+        uses: actions/checkout@v1
+      - name: misspellでミススペルをチェック
+        uses: reviewdog/action-misspell@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          locale: "US"
+  ktlint:
+    name: コードの品質をチェック
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: レポジトリをクローン
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: ktlintでコードの品質をチェック
+        uses: ScaCap/action-ktlint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_on_error: false
+          Android: true

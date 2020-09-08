@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.saifu_android">
+    package="com.ze20.saifu">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -9,13 +13,51 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.budget.spend_add"></activity>
+        <activity android:name=".ui.setting.EditShortcutActivity" />
+
+        <receiver android:name=".ShortcutShow4Widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="SHORTCUT_1" />
+                <action android:name="SHORTCUT_2" />
+                <action android:name="SHORTCUT_3" />
+                <action android:name="SHORTCUT_4" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/shortcut4_widget_info" />
+        </receiver>
+        <receiver android:name=".DataAddWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="CLICK_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/saifu_add_widget_info" />
+        </receiver>
+
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.category.categoryList" />
+        <activity android:name=".ui.budget.BudgetActivity" />
+        <activity android:name=".ui.budget.IncomeActivity" />
+        <activity android:name=".ui.budget.SpendActivity" />
+        <activity android:name=".ui.calendar.CalendarActivity" />
+        <activity android:name=".ui.home.NotificationActivity" />
+        <activity android:name=".ui.log.GraphActivity" />
+        <activity android:name=".ui.log.ReportActivity" />
+        <activity android:name=".ui.wish.WishAddActivity" />
+        <activity android:name=".ui.input.DataInputActivity" />
+        <activity android:name=".ui.budget.inCome_add" />
     </application>
 
 </manifest>

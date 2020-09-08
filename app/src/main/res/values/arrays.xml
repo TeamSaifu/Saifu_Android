@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- 設定画面でリスト型の設定項目を作成するときに使用します。 以下はサンプル -->
+
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+</resources>

@@ -1,0 +1,6 @@
+publishDay: sun
+canPublishIssues: false
+canPublishPullRequests: true
+canPublishContributors: true
+canPublishStargazers: true
+canPublishCommits: false

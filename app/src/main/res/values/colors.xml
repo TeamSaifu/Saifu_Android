@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#66BB6A</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorPrimaryLight">#81C784</color>
+    <color name="colorPrimaryLight2">#A5D6A7</color>
+    <color name="colorAccent">#FFAB00</color>
+    <color name="grayColor">#777</color>
+    <color name="blueColor">#00F</color>
+    <color name="redColor">#F00</color>
+    <color name="whiteColor">#FFF</color>
+    <color name="blackColor">#000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorlightgreen">#90ee90</color>
+    <color name="usuigreen">#beedbe</color>
+    <color name="material_blue">#64b5f6</color>
+    <color name="material_green">#81c784</color>
+    <color name="material_yellow">#fff176</color>
+    <color name="whitesmoke">#f5f5f5</color>
+    <color name="Black">#222222</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#737373</color>
+    <color name="divider">#DBDBDB</color>
+    <color name="disabled_text">#9B9B9B</color>
+    <color name="background">#FAFAFA</color>
+    <color name="colorWhite.focused">#CCCCCC</color>
+    <color name="colorGreen.focused">#66BB6A</color>
 </resources>

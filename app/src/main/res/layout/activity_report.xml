@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainActivity">
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="413dp"
+        android:layout_height="106dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/kikantext"
+                android:layout_width="152dp"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="@string/period_kari" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/incometext"
+                android:layout_width="136dp"
+                android:layout_height="match_parent"
+                android:text="@string/income_kari" />
+
+            <TextView
+                android:id="@+id/income_yentext"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/income_yen_kari" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/spndingtext"
+                android:layout_width="153dp"
+                android:layout_height="match_parent"
+                android:text="@string/spending_kari" />
+
+            <TextView
+                android:id="@+id/spending_yentext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/spending_yen_kari" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/profittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profit_kari" />
+
+            <TextView
+                android:id="@+id/profit_yentext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profit_yen_kari" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/reporthyouzitext"
+        android:layout_width="164dp"
+        android:layout_height="21dp"
+        android:text="@string/report_hyouzi_kari"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.638" />
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="411dp"
+        android:layout_height="106dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.396">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/category_bartext"
+                android:layout_width="264dp"
+                android:layout_height="match_parent"
+                android:layout_span="2"
+                android:text="@string/category_kari" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/category1text"
+                android:layout_width="143dp"
+                android:layout_height="wrap_content"
+                android:text="@string/category1_kari" />
+
+            <TextView
+                android:id="@+id/category1_yentext"
+                android:layout_width="129dp"
+                android:layout_height="wrap_content"
+                android:text="@string/category1_yen_kari" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/category2text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category2_kari" />
+
+            <TextView
+                android:id="@+id/category2_yentext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category2_yen_kari" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/category3text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category3_kari" />
+
+            <TextView
+                android:id="@+id/category3_yentext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category3_yen_kari" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/reporthyouzitext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toEndOf="@+id/reporthyouzitext"
+        app:layout_constraintTop_toTopOf="@+id/reporthyouzitext"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="164dp"
+        android:layout_height="23dp"
+        app:layout_constraintEnd_toEndOf="@+id/reporthyouzitext"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/reporthyouzitext"
+        app:layout_constraintTop_toBottomOf="@+id/reporthyouzitext" />
+
+    <!-- <com.github.mikephil.charting.charts.BarChart
+          android:id="@+id/bar_chart"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:layout_editor_absoluteX="69dp"
+          tools:layout_editor_absoluteY="-123dp">
+
+      </com.github.mikephil.charting.charts.BarChart>-->
+</androidx.constraintlayout.widget.ConstraintLayout>
+
