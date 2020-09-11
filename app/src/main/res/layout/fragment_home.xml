@@ -53,8 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="今月使える金額"
-                android:textColor="@color/colorPrimary"
+                android:text="￥ 2,000"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="36dp"
                 tools:ignore="MissingConstraints" />
 
@@ -65,15 +65,31 @@
                 android:layout_marginRight="16dp"
                 android:gravity="right"
                 android:text="使える上限"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="20dp" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="16dp" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border_primary"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:indeterminate="false"
+                    android:max="1000"
+                    android:padding="2dp"
+                    android:progress="70"
+                    android:progressDrawable="@drawable/custom_progress" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
