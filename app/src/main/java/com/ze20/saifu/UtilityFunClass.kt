@@ -176,6 +176,77 @@ internal class UtilityFunClass {
             else -> null
         }
     }
+
+    fun monthEnd(month: Int, year: Int = 1999): Int {
+        return when (month) {
+            2 -> {
+                when {
+                    year % 400 == 0 -> 28
+                    year % 100 == 0 -> 29
+                    else -> 28
+                }
+            }
+            4, 6, 9, 11 -> 30
+            else -> 31
+        }
+    }
+
+    fun incomeSum(context: Context): Int {
+        val dbName: String = "SaifuDB"
+        val tableName: String = "budget"
+        val dbVersion: Int = 1
+        var incomeSum: Int = 0
+        try {
+            // DBにアクセス
+            val SQLiteDB = SQLiteDBClass(context, dbName, null, dbVersion)
+            val database = SQLiteDB.readableDatabase
+
+            // SQL文を構成
+
+            // budget表
+            // id INTEGER primary key AUTOINCREMENT,name,type,price
+            val sql =
+                "select sum(price) from " + tableName + " where type = 'income';"
+            val cursor = database.rawQuery(sql, null)
+
+            if (cursor.count > 0) {
+                cursor.moveToFirst()
+                incomeSum = cursor.getInt(0)
+            }
+        } catch (e: Exception) {
+            Log.e("DBSelectError", e.toString())
+        }
+        return incomeSum
+    }
+
+    fun spendSum(context: Context): Int {
+        val dbName: String = "SaifuDB"
+        val tableName: String = "budget"
+        val dbVersion: Int = 1
+        var spendSum: Int = 0
+
+        try {
+            // DBにアクセス
+            val SQLiteDB = SQLiteDBClass(context, dbName, null, dbVersion)
+            val database = SQLiteDB.readableDatabase
+
+            // SQL文を構成
+
+            // budget表
+            // id INTEGER primary key AUTOINCREMENT,name,type,price
+            val sql =
+                "select sum(price) from " + tableName + " where type = 'spend';"
+            val cursor = database.rawQuery(sql, null)
+
+            if (cursor.count > 0) {
+                cursor.moveToFirst()
+                spendSum = cursor.getInt(0)
+            }
+        } catch (e: Exception) {
+            Log.e("DBSelectError", e.toString())
+        }
+        return spendSum
+    }
 }
 
 class okCancelDialogFragment : DialogFragment() {
