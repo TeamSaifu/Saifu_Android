@@ -181,8 +181,8 @@ internal class UtilityFunClass {
         return when (month) {
             2 -> {
                 when {
-                    (year % 400 == 0) -> 28
-                    (year % 100 == 0) -> 29
+                    year % 400 == 0 -> 28
+                    year % 100 == 0 -> 29
                     else -> 28
                 }
             }

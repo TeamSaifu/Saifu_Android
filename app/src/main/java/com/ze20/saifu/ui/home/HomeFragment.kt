@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
             UtilityFunClass().incomeSum(requireContext()) - UtilityFunClass().spendSum(
                 requireContext()
             )
-        var per = (dayOfMonth * 1.0 / monthend * 1.0)
+        var per = dayOfMonth * 1.0 / monthend * 1.0
         var maxv = budgetSum * per
         limit.text = " / " + maxv.toInt().toString()
         var now = maxv - monthSum(
@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
             SimpleDateFormat("M", Locale.JAPANESE).format(date).toInt()
         )
         money.text = getString(R.string.currency) + " " + now.toInt().toString()
-        progressBar.progress = ((now / maxv) * 1000).toInt()
+        progressBar.progress = (now / maxv * 1000).toInt()
     }
 
     fun monthSum(year: Int, month: Int): Int {
