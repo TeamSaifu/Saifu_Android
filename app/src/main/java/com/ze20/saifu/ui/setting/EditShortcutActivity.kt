@@ -88,8 +88,8 @@ class EditShortcutActivity : AppCompatActivity() {
                         .also {
                             it.name = cursor.getString(0) + " "
 
-                            if (cursor.getString(2) == "0") {
-                                it.category = ""
+                            if (cursor.getString(2) == "-1") {
+                                it.category = "-1"
                             } else {
                                 it.category = cursor.getString(2)
                             }
