@@ -8,31 +8,32 @@
 
     <ImageView
         android:id="@+id/categoryImage"
-        android:layout_width="120px"
-        android:layout_height="118px"
+        android:layout_width="192px"
+        android:layout_height="192px"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="4px"
         android:visibility="gone"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        app:tint="@color/colorPrimaryDark" />
 
     <TextView
         android:id="@+id/textViewMain"
         android:layout_width="match_parent"
-        android:layout_height="128px"
+        android:layout_height="192px"
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/Black"
-        android:textSize="30sp"
-        app:autoSizeTextType="uniform" />
+        android:textSize="40sp"
+        app:autoSizeTextType="none" />
 
     <TextView
         android:id="@+id/textViewSub"
         android:layout_width="match_parent"
-        android:layout_height="128px"
+        android:layout_height="192px"
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/Black"
-        android:textSize="30sp"
-        app:autoSizeTextType="uniform" />
+        android:textSize="40sp"
+        app:autoSizeTextType="none" />
 
 </LinearLayout>

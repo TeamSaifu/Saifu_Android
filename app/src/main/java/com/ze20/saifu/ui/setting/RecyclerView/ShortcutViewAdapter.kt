@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ze20.saifu.R
+import com.ze20.saifu.UtilityFunClass
 import com.ze20.saifu.ui.Recyclerview.ShortcutRowModel
 
 // ViewHolderを生成しViewModelをセットする
@@ -28,6 +29,15 @@ class ShortcutViewAdapter(
 
     // positionをlistのindexとしてRecyclerViewHolderに値をセットする
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+        if (list[position].category != "-1") {
+            UtilityFunClass().CategoryImage(list[position].category.toInt())?.let {
+                holder.categoryView.setImageResource(it)
+                holder.categoryView.visibility = View.VISIBLE
+            } ?: run {
+                holder.categoryView.setImageDrawable(null)
+                holder.categoryView.visibility = View.GONE
+            }
+        }
         if (list[position].name == "" || list[position].name == " " || list[position].name.isEmpty()) {
             holder.mainView.text = list[position].price
             holder.subView.visibility = View.GONE
