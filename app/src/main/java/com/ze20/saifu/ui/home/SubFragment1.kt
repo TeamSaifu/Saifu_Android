@@ -83,6 +83,7 @@ class SubFragment1 : Fragment() {
                                 getString(R.string.recordFinish),
                                 Toast.LENGTH_LONG
                             ).show()
+                            activity?.recreate()
                             it.isEnabled = true
                         } else {
                             Toast.makeText(
