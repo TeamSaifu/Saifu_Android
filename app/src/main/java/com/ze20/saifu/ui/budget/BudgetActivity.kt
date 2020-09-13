@@ -37,9 +37,9 @@ class BudgetActivity : AppCompatActivity() {
         spendSum = utilityFunClass.spendSum(this)
         budgetSum = incomeSum - spendSum
 
-        budgetSumText.text = budgetSum.toString() + "円"
-        incomeSumText.text = incomeSum.toString() + "円"
-        spendSumText.text = spendSum.toString() + "円"
+        budgetSumText.text = "%,d".format(budgetSum) + "円"
+        incomeSumText.text = "%,d".format(incomeSum) + "円"
+        spendSumText.text = "%,d".format(spendSum) + "円"
     }
 
     override fun onSupportNavigateUp(): Boolean {
