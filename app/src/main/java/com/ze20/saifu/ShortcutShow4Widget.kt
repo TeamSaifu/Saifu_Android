@@ -76,6 +76,9 @@ class ShortcutShow4Widget : AppWidgetProvider() {
         val category = intent.getIntExtra(
             "category", 0
         )
+        val sign = intent.getIntExtra(
+            "sign", 0
+        )
 
         // ショートカット即時がオンがどうかの確認
 
@@ -85,7 +88,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
         ) {
             // オンならばquickInsertを起動して即時登録
             if (UtilityFunClass().quickInsert(
-                    context, price, name!!, category
+                    context, price, name!!, category, sign
                 )
             ) {
                 Toast.makeText(
@@ -113,6 +116,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
             dataIntent.putExtra(
                 "category", category
             )
+            dataIntent.putExtra("sign", sign)
             startActivity(
                 context, dataIntent, null
             )
@@ -139,6 +143,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
         val price: ArrayList<Int> = arrayListOf()
         val name: ArrayList<String> = arrayListOf()
         val category: ArrayList<Int> = arrayListOf()
+        val sign: ArrayList<Int> = arrayListOf()
         val shortcut: ArrayList<Int> = arrayListOf(
             R.id.shortcut_button1, R.id.shortcut_button2, R.id.shortcut_button3,
             R.id.shortcut_button4
@@ -162,8 +167,9 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                 if (cursor.getString(1) == "") {
                     views.setTextViewText(
                         shortcut[i],
-                        context.getString(
-                            R.string.currencyString, "%,d".format(cursor.getInt(2))
+                        (if (cursor.getInt(4) == 1) "+" else "") + context.getString(
+                            R.string.currencyString,
+                            "%,d".format(cursor.getInt(2))
                         )
                     )
                 } else {
@@ -171,13 +177,15 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         shortcut[i],
                         context.getString(
                             R.string.shortcutformat, cursor.getString(1),
-                            "%,d".format(cursor.getInt(2))
+                            "%,d".format(cursor.getInt(2)),
+                            if (cursor.getInt(4) == 1) "+" else ""
                         )
                     )
                 }
                 price.add(cursor.getInt(2))
                 name.add(cursor.getString(1))
                 category.add(cursor.getInt(3))
+                sign.add(cursor.getInt(4))
                 views.setViewVisibility(
                     shortcut[i], View.VISIBLE
                 )
@@ -205,6 +213,9 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         putExtra(
                             "category", category[0]
                         )
+                        putExtra(
+                            "sign", sign[0]
+                        )
                     },
                     0
                 )
@@ -220,6 +231,9 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         putExtra("price", price[1])
                         putExtra("name", name[1])
                         putExtra("category", category[1])
+                        putExtra(
+                            "sign", sign[1]
+                        )
                     },
                     0
                 )
@@ -241,6 +255,9 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         putExtra(
                             "category", category[2]
                         )
+                        putExtra(
+                            "sign", sign[2]
+                        )
                     },
                     0
                 )
@@ -261,6 +278,9 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         )
                         putExtra(
                             "category", category[3]
+                        )
+                        putExtra(
+                            "sign", sign[3]
                         )
                     },
                     0

@@ -94,7 +94,11 @@ class EditShortcutActivity : AppCompatActivity() {
                                 it.category = cursor.getString(2)
                             }
                             it.price =
-                                getString(R.string.currency) + cursor.getInt(1).toString() + " "
+                                getString(R.string.currency) + "%,d".format(
+                                    cursor.getInt(
+                                        1
+                                    )
+                                ) + " "
                         }
                     deleteList.add(cursor.getString(3))
                     dataList.add(data)

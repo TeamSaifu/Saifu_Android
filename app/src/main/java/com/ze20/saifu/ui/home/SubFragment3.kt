@@ -46,6 +46,7 @@ class SubFragment3 : Fragment() {
         val nameal: ArrayList<String> = arrayListOf()
         val priceal: ArrayList<Int> = arrayListOf()
         val categoryal: ArrayList<Int> = arrayListOf()
+        val signal: ArrayList<Int> = arrayListOf()
         val SQLiteDB = SQLiteDBClass(requireContext(), "SaifuDB", null, 1)
         val database = SQLiteDB.readableDatabase
         val sql = "select * from shortcut order by 1 asc limit 8 offset 12;"
@@ -56,14 +57,23 @@ class SubFragment3 : Fragment() {
             cursor.moveToFirst()
             while (!cursor.isAfterLast) {
                 if (cursor.getString(1) == "") {
-                    shortcut[i].text = getString(R.string.currencyString, "%,d".format(cursor.getInt(2)))
+                    shortcut[i].text = (if (cursor.getInt(4) == 1) "+" else "") + getString(
+                        R.string.currencyString,
+                        "%,d".format(cursor.getInt(2))
+                    )
                     shortcut[i].setTextSize(30.0f)
                 } else {
-                    shortcut[i].text = getString(R.string.shortcutformat, cursor.getString(1), "%,d".format(cursor.getInt(2)))
+                    shortcut[i].text = getString(
+                        R.string.shortcutformat,
+                        cursor.getString(1),
+                        "%,d".format(cursor.getInt(2)),
+                        if (cursor.getInt(4) == 1) "+" else ""
+                    )
                 }
                 nameal.add(cursor.getString(1))
                 priceal.add(cursor.getInt(2))
                 categoryal.add(cursor.getInt(3))
+                signal.add(cursor.getInt(4))
                 shortcut[i].tag = i
                 shortcut[i].visibility = View.VISIBLE
                 shortcut[i].setOnClickListener {
@@ -75,13 +85,15 @@ class SubFragment3 : Fragment() {
                                 context,
                                 priceal[tag],
                                 nameal[tag],
-                                categoryal[tag]
+                                categoryal[tag],
+                                signal[tag]
                             )) {
                             Toast.makeText(
                                 activity,
                                 getString(R.string.recordFinish),
                                 Toast.LENGTH_LONG
                             ).show()
+                            activity?.recreate()
                             it.isEnabled = true
                         } else {
                             Toast.makeText(
@@ -98,6 +110,7 @@ class SubFragment3 : Fragment() {
                         intent.putExtra("name", nameal[tag])
                         intent.putExtra("price", priceal[tag])
                         intent.putExtra("category", categoryal[tag])
+                        intent.putExtra("sign", signal[tag])
                         startActivity(intent)
                     }
                 }

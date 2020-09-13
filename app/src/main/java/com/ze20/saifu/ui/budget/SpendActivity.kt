@@ -85,7 +85,11 @@ class SpendActivity : AppCompatActivity() {
                     val data: RowModel = RowModel()
                         .also {
                             it.name = cursor.getString(1)
-                            it.price = getString(R.string.currency) + cursor.getString(3)
+                            it.price = getString(R.string.currency) + "%,d".format(
+                                cursor.getInt(
+                                    3
+                                )
+                            )
                         }
                     deleteList.add(cursor.getString(0))
                     spendDataList.add(data)

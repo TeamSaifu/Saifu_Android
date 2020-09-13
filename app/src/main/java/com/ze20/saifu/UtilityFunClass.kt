@@ -119,7 +119,14 @@ internal class UtilityFunClass {
         }
         return false
     }
-    fun quickInsert(context: Context?, price: Int, name: String = "", category: Int = 0): Boolean {
+
+    fun quickInsert(
+        context: Context?,
+        price: Int,
+        name: String = "",
+        category: Int = 0,
+        sign: Int = 0
+    ): Boolean {
         try {
             val dbHelper = SQLiteDBClass(context!!, "SaifuDB", null, 1)
             val database = dbHelper.writableDatabase // 書き込み可能
@@ -147,7 +154,7 @@ internal class UtilityFunClass {
                 put("price", price)
                 put("category", category)
                 put("splitCount", 1)
-                put("sign", 0)
+                put("sign", sign)
             }
             // DBに登録する できなければエラーを返す
             database.insertOrThrow("log", null, values)
