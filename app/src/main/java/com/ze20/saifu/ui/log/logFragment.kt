@@ -115,10 +115,11 @@ class logFragment : Fragment() {
                                         .toString() + " "
                             } else {
                                 it.price =
-                                    getString(R.string.minus_hankaku) + getString(R.string.currency) + cursor.getString(
-                                        3
-                                    )
-                                        .toString() + " "
+                                    getString(R.string.minus_hankaku) + getString(R.string.currency) + "%,d".format(
+                                        cursor.getInt(
+                                            3
+                                        )
+                                    ) + " "
                             }
                             // プラス・マイナスの判定
                             it.sign = cursor.getInt(7)
