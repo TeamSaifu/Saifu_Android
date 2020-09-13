@@ -13,7 +13,6 @@ import com.google.android.material.tabs.TabLayout
 import com.ze20.saifu.R
 import com.ze20.saifu.SQLiteDBClass
 import com.ze20.saifu.UtilityFunClass
-import com.ze20.saifu.ui.budget.BudgetActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -98,10 +97,12 @@ class HomeFragment : Fragment() {
         progressBar.progress = (now / maxv * 1000).toInt()
     }
 
-    fun monthSum(year: Int, month: Int): Int {
+    fun monthSum(year: Int, month: Int, day: Int): Int {
         val dbName: String = "SaifuDB"
         val tableName: String = "log"
         val dbVersion: Int = 1
+        var minusy = 0
+        var plusy = 0
 
         try {
             // DBにアクセス
@@ -110,17 +111,34 @@ class HomeFragment : Fragment() {
 
             // SQL文を構成
 
-            val sql =
-                "select sum(price),count(price) from $tableName WHERE payDate >= '" + year + "-" + "%02d".format(
+            var sql =
+                "select sum(price),count(price) from $tableName where sign = 0 AND payDate >= '$year-" + "%02d".format(
                     month
-                ) + "-01' AND payDate < '" + year + "-" + "%02d".format(month + 1) + "-01';"
+                ) + "-01' AND payDate < '" + year + "-" + "%02d".format(month) + "-" + "%02d".format(
+                    day
+                ) + "'"
 
-            val cursor = database.rawQuery(sql, null)
+            var cursor = database.rawQuery(sql, null)
 
             if (cursor.count > 0) {
                 cursor.moveToFirst()
-                return cursor.getInt(0)
+                minusy = cursor.getInt(0)
             }
+            cursor.close()
+            sql =
+                "select sum(price),count(price) from $tableName WHERE sign = 1 AND payDate >= '$year-" + "%02d".format(
+                    month
+                ) + "-01' AND payDate <= '" + year + "-" + "%02d".format(month) + "-" + "%02d".format(
+                    day
+                ) + "';"
+
+            var cursor2 = database.rawQuery(sql, null)
+
+            if (cursor2.count > 0) {
+                cursor2.moveToFirst()
+                plusy = cursor2.getInt(0)
+            }
+            return minusy - plusy
         } catch (e: Exception) {
             Log.e("DBSelectError", e.toString())
         }
