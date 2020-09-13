@@ -116,7 +116,7 @@ class HomeFragment : Fragment() {
         )
         when (mode) {
             "Standard" -> {
-                money.setTextSize(56F);
+                money.setTextSize(56F)
                 money.text =
                     getString(R.string.currency) + " " + "%,d".format(now.toInt())
                 today.text = SimpleDateFormat(
@@ -126,7 +126,7 @@ class HomeFragment : Fragment() {
                 progressBar.progress = (now / maxv * 1000).toInt()
             }
             "Now / Max" -> {
-                money.setTextSize(36F);
+                money.setTextSize(36F)
                 money.text =
                     getString(R.string.currency) + " " + "%,d".format(now.toInt())
                 limit.visibility = View.VISIBLE
@@ -139,7 +139,7 @@ class HomeFragment : Fragment() {
                 progressBar.progress = (now / maxv * 1000).toInt()
             }
             "Monthly" -> {
-                money.setTextSize(36F);
+                money.setTextSize(36F)
                 money.text =
                     getString(R.string.currency) + " " + "%,d".format(nowm.toInt())
                 limit.visibility = View.VISIBLE
@@ -150,7 +150,7 @@ class HomeFragment : Fragment() {
                 today.text = SimpleDateFormat(
                     "yyyy 年 M 月 の予算", Locale.JAPANESE
                 ).format(date)
-                progressBar.progress = ((nowm * 1.0 / budgetSum * 1.0) * 1000).toInt()
+                progressBar.progress = (nowm * 1.0 / budgetSum * 1.0 * 1000).toInt()
             }
         }
     }
