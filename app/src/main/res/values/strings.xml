@@ -93,7 +93,7 @@
     <string name="recordError">データ登録エラー</string>
     <string name="shortcutQuickAdd">ショートカット即時登録</string>
     <string name="shortcutEdit">ショートカット編集</string>
-    <string name="shortcutformat">%1$s\n¥%2$s</string>
+    <string name="shortcutformat">%1$s\n%3$s¥%2$s</string>
     <string name="recordFinish">記録完了</string>
     <string name="completeAdd">追加しました。</string>
     <string name="duplicationAdd">すでに登録済みです。</string>
