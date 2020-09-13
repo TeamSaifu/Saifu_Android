@@ -55,7 +55,7 @@
                 android:gravity="center"
                 android:text="￥ 2,000"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="36dp"
+                android:textSize="56dp"
                 tools:ignore="MissingConstraints" />
 
             <TextView
@@ -66,7 +66,8 @@
                 android:gravity="right"
                 android:text="使える上限"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
