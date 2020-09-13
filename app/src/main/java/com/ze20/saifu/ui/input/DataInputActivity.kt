@@ -507,6 +507,7 @@ open class DataInputActivity : AppCompatActivity() {
                     put("name", memoEdit.text.toString())
                     put("price", cFunc.editToInt(moneyEdit))
                     put("category", category)
+                    put("sign", sign)
                 }
                 // DBに登録する できなければエラーを返す
                 database.insertOrThrow("shortcut", null, values)
