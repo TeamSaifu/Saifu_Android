@@ -81,7 +81,6 @@ class HomeFragment : Fragment() {
         today.text = SimpleDateFormat(
             "yyyy 年 M 月 d 日 ( d / ", Locale.JAPANESE
         ).format(date) + monthend.toString() + " )"
-        val budgetActuvity = BudgetActivity()
         var budgetSum: Int =
             UtilityFunClass().incomeSum(requireContext()) - UtilityFunClass().spendSum(
                 requireContext()
@@ -91,7 +90,8 @@ class HomeFragment : Fragment() {
         limit.text = " / " + maxv.toInt().toString()
         var now = maxv - monthSum(
             SimpleDateFormat("yyyy", Locale.JAPANESE).format(date).toInt(),
-            SimpleDateFormat("M", Locale.JAPANESE).format(date).toInt()
+            SimpleDateFormat("M", Locale.JAPANESE).format(date).toInt(),
+            SimpleDateFormat("d", Locale.JAPANESE).format(date).toInt()
         )
         money.text = getString(R.string.currency) + " " + now.toInt().toString()
         progressBar.progress = (now / maxv * 1000).toInt()
