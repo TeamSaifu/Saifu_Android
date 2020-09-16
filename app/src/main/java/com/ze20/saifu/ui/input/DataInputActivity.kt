@@ -310,7 +310,7 @@ open class DataInputActivity : AppCompatActivity() {
                     // UserSetDate に選択された日付を格納
                     userSetDate = SimpleDateFormat(
                         "yyyy/M/d", Locale.JAPANESE
-                    ).parse(getString(R.string.dateformat, year, month, dayOfMonth))!!
+                    ).parse(getString(R.string.dateformat, year, month + 1, dayOfMonth))!!
                     // フォーマットを作成
                     val sdFormat = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
                     // 表示テキストを作成
@@ -321,7 +321,7 @@ open class DataInputActivity : AppCompatActivity() {
                     diffShow(dateDiff)
                 }, // Dateピッカーの初期値にUserSetDateを設定
                 SimpleDateFormat("yyyy", Locale.JAPANESE).format(userSetDate).toInt(),
-                SimpleDateFormat("MM", Locale.JAPANESE).format(userSetDate).toInt(),
+                SimpleDateFormat("MM", Locale.JAPANESE).format(userSetDate).toInt() - 1,
                 SimpleDateFormat("dd", Locale.JAPANESE).format(userSetDate).toInt()
             )
             // 表示します
