@@ -93,14 +93,17 @@ open class DataInputActivity : AppCompatActivity() {
                 getIntExtra("id", -1)
             } ?: -1
         } else {
-            cFunc.photoOrCamera(
-                this,
-                contentResolver,
-                requestCode,
-                resultCode,
-                resultData,
-                photoImageView
-            )
+            if (cFunc.photoOrCamera(
+                    this,
+                    contentResolver,
+                    requestCode,
+                    resultCode,
+                    resultData,
+                    photoImageView
+                )
+            ) {
+                showPicture()
+            }
         }
     }
 
