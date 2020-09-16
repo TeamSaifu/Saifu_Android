@@ -8,18 +8,18 @@
 
     <ImageView
         android:id="@+id/categoryImage"
-        android:layout_width="192px"
-        android:layout_height="192px"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="4px"
         android:visibility="gone"
-        tools:srcCompat="@tools:sample/avatars"
-        app:tint="@color/colorPrimaryDark" />
+        app:tint="@color/colorPrimaryDark"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textViewMain"
         android:layout_width="match_parent"
-        android:layout_height="192px"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/Black"
@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/textViewSub"
         android:layout_width="match_parent"
-        android:layout_height="192px"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/Black"
