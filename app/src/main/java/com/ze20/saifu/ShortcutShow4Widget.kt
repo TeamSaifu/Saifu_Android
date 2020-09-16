@@ -77,7 +77,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
             "category", 0
         )
         val sign = intent.getIntExtra(
-            "sign", 0
+            "signpm", -1
         )
 
         // ショートカット即時がオンがどうかの確認
@@ -116,7 +116,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
             dataIntent.putExtra(
                 "category", category
             )
-            dataIntent.putExtra("sign", sign)
+            dataIntent.putExtra("sign", sign == 1)
             startActivity(
                 context, dataIntent, null
             )
@@ -204,6 +204,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON1
+                        putExtra("mode", "Shortcut")
                         putExtra(
                             "price", price[0]
                         )
@@ -214,7 +215,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                             "category", category[0]
                         )
                         putExtra(
-                            "sign", sign[0]
+                            "signpm", sign[0]
                         )
                     },
                     0
@@ -228,11 +229,12 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON2
+                        putExtra("mode", "Shortcut")
                         putExtra("price", price[1])
                         putExtra("name", name[1])
                         putExtra("category", category[1])
                         putExtra(
-                            "sign", sign[1]
+                            "signpm", sign[1]
                         )
                     },
                     0
@@ -246,6 +248,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON3
+                        putExtra("mode", "Shortcut")
                         putExtra(
                             "price", price[2]
                         )
@@ -256,7 +259,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                             "category", category[2]
                         )
                         putExtra(
-                            "sign", sign[2]
+                            "signpm", sign[2]
                         )
                     },
                     0
@@ -270,6 +273,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                         context, ShortcutShow4Widget::class.java
                     ).apply {
                         action = BUTTON4
+                        putExtra("mode", "Shortcut")
                         putExtra(
                             "price", price[3]
                         )
@@ -280,7 +284,7 @@ class ShortcutShow4Widget : AppWidgetProvider() {
                             "category", category[3]
                         )
                         putExtra(
-                            "sign", sign[3]
+                            "signpm", sign[3]
                         )
                     },
                     0
