@@ -1,6 +1,9 @@
 package com.ze20.saifu.ui.home
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class HomeFragment : Fragment() {
-    var mode = "Standard"
+    lateinit var mode: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +29,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val pref = requireActivity().getSharedPreferences("Mode", Context.MODE_PRIVATE)
+        mode = pref.getString("Mode", "Standard")!!
         return root
     }
 
@@ -90,6 +95,11 @@ class HomeFragment : Fragment() {
             "Monthly" -> "Standard"
             else -> "Standard"
         }
+        val prefs: SharedPreferences =
+            requireActivity().getSharedPreferences("Mode", Context.MODE_PRIVATE)
+        val editor: Editor = prefs.edit()
+        editor.putString("Mode", mode)
+        editor.apply()
         saifuCalculation()
     }
 
