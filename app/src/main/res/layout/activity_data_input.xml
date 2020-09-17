@@ -515,7 +515,7 @@
                         android:layout_marginRight="2sp"
                         android:layout_marginBottom="10sp"
                         android:layout_weight="1"
-                        android:background="@drawable/button_normal"
+                        android:background="@drawable/button_normal_ripple"
                         android:text="@string/picture_delete"
                         android:textSize="16sp"
                         android:visibility="gone" />

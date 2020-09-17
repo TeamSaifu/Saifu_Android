@@ -111,7 +111,7 @@ class SubFragment2 : Fragment() {
                         intent.putExtra("name", nameal[tag])
                         intent.putExtra("price", priceal[tag])
                         intent.putExtra("category", categoryal[tag])
-                        intent.putExtra("sign", signal[tag])
+                        intent.putExtra("sign", signal[tag] == 1)
                         startActivity(intent)
                     }
                 }

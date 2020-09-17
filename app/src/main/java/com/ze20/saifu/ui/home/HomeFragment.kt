@@ -1,6 +1,9 @@
 package com.ze20.saifu.ui.home
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class HomeFragment : Fragment() {
-    var mode = "Standard"
+    lateinit var mode: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +29,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val pref = requireActivity().getSharedPreferences("Mode", Context.MODE_PRIVATE)
+        mode = pref.getString("Mode", "Standard")!!
         return root
     }
 
@@ -85,11 +90,17 @@ class HomeFragment : Fragment() {
 
     private fun modeChange() {
         mode = when (mode) {
-            "Standard" -> "Now / Max"
+            "Standard" -> "Daily"
+            "Daily" -> "Now / Max"
             "Now / Max" -> "Monthly"
             "Monthly" -> "Standard"
             else -> "Standard"
         }
+        val prefs: SharedPreferences =
+            requireActivity().getSharedPreferences("Mode", Context.MODE_PRIVATE)
+        val editor: Editor = prefs.edit()
+        editor.putString("Mode", mode)
+        editor.apply()
         saifuCalculation()
     }
 
@@ -152,6 +163,26 @@ class HomeFragment : Fragment() {
                 ).format(date)
                 progressBar.progress = (nowm * 1.0 / budgetSum * 1.0 * 1000).toInt()
             }
+            "Daily" -> {
+                money.setTextSize(36F)
+                var nowd = daySum(
+                    SimpleDateFormat("yyyy", Locale.JAPANESE).format(date).toInt(),
+                    SimpleDateFormat("M", Locale.JAPANESE).format(date).toInt(),
+                    SimpleDateFormat("d", Locale.JAPANESE).format(date).toInt()
+                )
+                var maxd = (budgetSum * 1 * 1.0 / monthend * 1.0).toInt()
+                money.text =
+                    getString(R.string.currency) + " " + "%,d".format(
+                        maxd - nowd
+                    )
+                limit.visibility = View.VISIBLE
+                limit.text =
+                    " / " + getString(R.string.currency) + " " + "%,d".format(maxd)
+                today.text = SimpleDateFormat(
+                    "yyyy 年 M 月 d 日 の予算", Locale.JAPANESE
+                ).format(date)
+                progressBar.progress = ((maxd - nowd) * 1.0 / maxd * 1.0 * 1000).toInt()
+            }
         }
     }
 
@@ -189,6 +220,62 @@ class HomeFragment : Fragment() {
                 ) + "-01' AND payDate <= '" + year + "-" + "%02d".format(month) + "-" + "%02d".format(
                     day
                 ) + "';"
+
+            var cursor2 = database.rawQuery(sql, null)
+
+            if (cursor2.count > 0) {
+                cursor2.moveToFirst()
+                plusy = cursor2.getInt(0)
+            }
+            return minusy - plusy
+        } catch (e: Exception) {
+            Log.e("DBSelectError", e.toString())
+        }
+        return 0
+    }
+
+    fun daySum(year: Int, month: Int, day: Int): Int {
+        val dbName: String = "SaifuDB"
+        val tableName: String = "log"
+        val dbVersion: Int = 1
+        var minusy = 0
+        var plusy = 0
+
+        try {
+            // DBにアクセス
+            val SQLiteDB = SQLiteDBClass(requireContext(), dbName, null, dbVersion)
+            val database = SQLiteDB.readableDatabase
+
+            // SQL文を構成
+
+            var sql =
+                "select sum(price),count(price) from $tableName where sign = 0 AND payDate >= '$year-" + "%02d".format(
+                    month
+                ) + "-" + "%02d".format(
+                    day
+                ) + "' AND payDate <= '$year-" + "%02d".format(
+                    month
+                ) + "-" + "%02d".format(
+                    day + 1
+                ) + "'"
+
+            var cursor = database.rawQuery(sql, null)
+
+            if (cursor.count > 0) {
+                cursor.moveToFirst()
+                minusy = cursor.getInt(0)
+            }
+            cursor.close()
+            sql =
+                "select sum(price),count(price) from $tableName WHERE sign = 1 AND payDate >= '$year-" + "%02d".format(
+                    month
+                ) + "-" + "%02d".format(
+                    day
+                ) + "' AND payDate <= '$year-" + "%02d".format(
+                    month
+                ) + "-" + "%02d".format(
+                    day + 1
+                ) + "'"
 
             var cursor2 = database.rawQuery(sql, null)
 

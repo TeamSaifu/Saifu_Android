@@ -93,14 +93,17 @@ open class DataInputActivity : AppCompatActivity() {
                 getIntExtra("id", -1)
             } ?: -1
         } else {
-            cFunc.photoOrCamera(
-                this,
-                contentResolver,
-                requestCode,
-                resultCode,
-                resultData,
-                photoImageView
-            )
+            if (cFunc.photoOrCamera(
+                    this,
+                    contentResolver,
+                    requestCode,
+                    resultCode,
+                    resultData,
+                    photoImageView
+                )
+            ) {
+                showPicture()
+            }
         }
     }
 
@@ -259,6 +262,28 @@ open class DataInputActivity : AppCompatActivity() {
                     memoEdit.visibility = View.VISIBLE
                 }
                 moneyEdit.setText(intent.getIntExtra("price", -1).toString())
+                sign = intent.getBooleanExtra("sign", false)
+                plusMinusButton.setText(if (sign) R.string.plus else R.string.minus)
+                plusMinusButton.setBackgroundResource(if (sign) R.drawable.ic_baseline_fiber_manual_record_24_orange else R.drawable.ic_baseline_fiber_manual_record_24)
+                category = intent.getIntExtra("category", -1)
+                if (category != -1) {
+                    val SQLiteDB = SQLiteDBClass(this, "SaifuDB", null, 1)
+                    val database = SQLiteDB.readableDatabase
+                    val sql =
+                        "select id,name,picture from category where id = " + category + ";"
+                    val cursor = database.rawQuery(sql, null)
+                    if (cursor.count > 0) {
+                        cursor.moveToFirst()
+                        categoryText.text = cursor.getString(1)
+                        UtilityFunClass().CategoryImage(cursor.getInt(2))?.let {
+                            categoryImage.setImageResource(it)
+                            categoryImage.visibility = View.VISIBLE
+                        } ?: run {
+                            categoryImage.setImageDrawable(null)
+                            categoryImage.visibility = View.GONE
+                        }
+                    }
+                }
                 emsAutoSet()
             }
         }
@@ -310,7 +335,7 @@ open class DataInputActivity : AppCompatActivity() {
                     // UserSetDate に選択された日付を格納
                     userSetDate = SimpleDateFormat(
                         "yyyy/M/d", Locale.JAPANESE
-                    ).parse(getString(R.string.dateformat, year, month, dayOfMonth))!!
+                    ).parse(getString(R.string.dateformat, year, month + 1, dayOfMonth))!!
                     // フォーマットを作成
                     val sdFormat = SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE)
                     // 表示テキストを作成
@@ -321,7 +346,7 @@ open class DataInputActivity : AppCompatActivity() {
                     diffShow(dateDiff)
                 }, // Dateピッカーの初期値にUserSetDateを設定
                 SimpleDateFormat("yyyy", Locale.JAPANESE).format(userSetDate).toInt(),
-                SimpleDateFormat("MM", Locale.JAPANESE).format(userSetDate).toInt(),
+                SimpleDateFormat("MM", Locale.JAPANESE).format(userSetDate).toInt() - 1,
                 SimpleDateFormat("dd", Locale.JAPANESE).format(userSetDate).toInt()
             )
             // 表示します
