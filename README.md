@@ -2,8 +2,8 @@
 
 [![Android CI](https://github.com/tak-st/Saifu-Android/workflows/Android%20CI/badge.svg)](https://github.com/tak-st/Saifu-Android/actions?query=workflow%3A%22Android+CI%22)
 [![reviewdog](https://github.com/tak-st/Saifu-Android/workflows/reviewdog/badge.svg)](https://github.com/tak-st/Saifu-Android/actions?query=workflow%3Areviewdog)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=tak-st/Saifu-Android&identifier=269261483)](https://dependabot.com)
-[![CodeFactor](https://www.codefactor.io/repository/github/tak-st/saifu-android/badge/develop?s=ebf473de9e2914e51999c35d6035be573e978abf)](https://www.codefactor.io/repository/github/tak-st/saifu-android/overview/develop)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=TeamSaifu/Saifu-Android&identifier=269261483)](https://dependabot.com)
+[![CodeFactor](https://www.codefactor.io/repository/github/TeamSaifu/saifu-android/badge/develop?s=ebf473de9e2914e51999c35d6035be573e978abf)](https://www.codefactor.io/repository/github/tak-st/saifu-android/overview/develop)
 
 [![commitActivity](https://img.shields.io/github/commit-activity/w/tak-st/Saifu-Android)](https://github.com/tak-st/Saifu-Android/pulse)
 [![lastCommit](https://img.shields.io/github/last-commit/tak-st/Saifu-Android/develop)](https://github.com/tak-st/Saifu-Android/commits/develop)
